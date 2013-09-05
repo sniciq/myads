@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="advert.BarProportion">
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.advert.BarProportion">
+		SELECT * FROM t_bar_proportion WHERE id=#value#
+	</select >
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.advert.BarProportion" resultClass="java.lang.Integer">
+		SELECT COUNT(1) FROM t_bar_proportion WHERE status != 1
+		<isNotEmpty property="barId" prepend=" and ">barId = #barId#</isNotEmpty>
+		<isNotEmpty property="proportion" prepend=" and ">proportion = #proportion#</isNotEmpty>
+		<isNotEmpty property="startTime" prepend=" and ">
+		<![CDATA[((startTime >= #startTime# and endTime <= #endTime#) or 
+				 (startTime >= #startTime# and endTime >= #endTime# and startTime <= #endTime#) or 
+				 (startTime <= #startTime# and endTime <= #endTime# and endTime >= #startTime#) or 
+				 (startTime <= #startTime# and endTime >= #endTime#))
+		]]></isNotEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<select id="selectByLimit" resultClass="com.ku6ads.dao.entity.advert.BarProportion" parameterClass="com.ku6ads.dao.entity.advert.BarProportion">
+		select * from t_bar_proportion where status != 1
+			<isNotEmpty property="barId" prepend=" and ">barId = #barId#</isNotEmpty>
+			<isNotEmpty property="startTime" prepend=" and ">
+			<![CDATA[((startTime >= #startTime# and endTime <= #endTime#) or 
+					 (startTime >= #startTime# and endTime >= #endTime# and startTime <= #endTime#) or 
+					 (startTime <= #startTime# and endTime <= #endTime# and endTime >= #startTime#) or 
+					 (startTime <= #startTime# and endTime >= #endTime#))
+			]]></isNotEmpty>
+ 			<isNotEmpty property="proportion" prepend=" and ">proportion = #proportion#</isNotEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isEmpty property="extLimit.sort">order by id desc </isEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<select id="selectProportionByDate" resultClass="com.ku6ads.dao.entity.advert.BarProportion" parameterClass="com.ku6ads.dao.entity.advert.BarProportion">
+		select * from t_bar_proportion where status != 1
+			<isNotEmpty property="barId" prepend=" and ">barId = #barId#</isNotEmpty>
+			<isNotEmpty property="startTime" prepend=" and ">
+			<![CDATA[((startTime >= #startTime# and endTime <= #endTime#) or 
+					 (startTime >= #startTime# and endTime >= #endTime# and startTime <= #endTime#) or 
+					 (startTime <= #startTime# and endTime <= #endTime# and endTime >= #startTime#) or 
+					 (startTime <= #startTime# and endTime >= #endTime#))
+			]]></isNotEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isEmpty property="extLimit.sort">order by id desc </isEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.advert.BarProportion">
+		INSERT INTO t_bar_proportion(
+			<isNotEmpty property="startTime">startTime,</isNotEmpty>
+			<isNotEmpty property="endTime">endTime,</isNotEmpty>
+			<isNotEmpty property="proportion">proportion,</isNotEmpty>
+			<isNotEmpty property="barId">barId,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime</isNotEmpty>
+		)VALUES(
+			<isNotEmpty property="startTime">#startTime#,</isNotEmpty>
+			<isNotEmpty property="endTime">#endTime#,</isNotEmpty>
+			<isNotEmpty property="proportion">#proportion#,</isNotEmpty>
+			<isNotEmpty property="barId">#barId#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="createTime">#createTime#</isNotEmpty>
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		UPDATE t_bar_proportion SET status = 1 WHERE id=#value#
+	</delete>
+	
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.advert.BarProportion">
+		UPDATE t_bar_proportion SET 
+			<isNotEmpty property="startTime">startTime=#startTime#,</isNotEmpty>
+			<isNotEmpty property="endTime">endTime=#endTime#,</isNotEmpty>
+			<isNotEmpty property="proportion">proportion=#proportion#,</isNotEmpty>
+			<isNotEmpty property="barId">barId=#barId#,</isNotEmpty>
+			<isNotEmpty property="status">status=#status#,</isNotEmpty>
+			<isNotEmpty property="creator">creator=#creator#,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime=#createTime#</isNotEmpty>
+			id=#id#
+		WHERE id=#id#
+	</update>
+	
+	<select id="selectByAdvbarIdAndTime" parameterClass="java.util.HashMap" resultClass="com.ku6ads.dao.entity.advert.BarProportion">
+		select * from t_bar_proportion where barId=#advbarId# and status = 0 
+		and (
+			(
+			  (startTime >= #dayTime# and startTime <![CDATA[ <=  ]]> DATE_ADD(createTime,INTERVAL 1 MONTH) ) or
+			  ( endTime >= #dayTime# and endTime <![CDATA[ <=  ]]> DATE_ADD(createTime,INTERVAL 1 MONTH))
+			)
+			or
+			(startTime <![CDATA[ <=  ]]> #dayTime# and endTime >= DATE_ADD(createTime,INTERVAL 1 MONTH))
+		)
+	</select>
+	
+	<select id="selectByBaridAndBookTime" parameterClass="java.util.HashMap" resultClass="com.ku6ads.dao.entity.advert.BarProportion">
+		select * from t_bar_proportion where barId=#advbarId# and status = 0 
+			and <![CDATA[ startTime <= #dayTime# and  endTime >= #dayTime# ]]> 
+	</select>
+</sqlMap>

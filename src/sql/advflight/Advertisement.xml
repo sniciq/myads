@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="advflight.Advertisement">
+
+	<cacheModel type="LRU" id="AdvertisementCache">
+		<flushOnExecute statement="advflight.Advertisement.insert"/>
+		<flushOnExecute statement="advflight.Advertisement.deleteById"/>
+		<flushOnExecute statement="advflight.Advertisement.updateById"/>
+		<flushInterval hours="4"/>
+		<property name="size" value="2"/>
+	</cacheModel>
+
+	<select id="selectByEntity" resultClass="com.ku6ads.dao.entity.advflight.Advertisement" cacheModel="AdvertisementCache">
+		SELECT id,name FROM t_advertisement WHERE status != 1
+	</select>
+	
+	<select id="selectAll" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.advflight.Advertisement">
+		SELECT * FROM t_advertisement WHERE status != 1 and advActiveId=#value#
+	</select>
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.advflight.Advertisement">
+		SELECT * FROM t_advertisement WHERE id=#value# and status != 1
+	</select >
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.advflight.Advertisement" resultClass="java.lang.Integer">
+		SELECT COUNT(1) FROM t_advertisement WHERE status !=1 and advActiveId = #advActiveId#
+	</select>
+	
+	<select id="selectBarTemType" parameterClass="java.lang.Integer" resultClass="java.lang.Integer">
+		SELECT type FROM t_bartemplate Where id IN
+		(SELECT bartemplateId FROM t_advertisement WHERE id= #value#)  
+	</select>
+	
+	<select id="selectByLimit" resultClass="com.ku6ads.dao.entity.advflight.Advertisement" parameterClass="com.ku6ads.dao.entity.advflight.Advertisement">
+		SELECT a.*,b.name as bartemplateName FROM t_advertisement a,t_bartemplate b
+			WHERE a.bartemplateId = b.id and a.status !=1 and advActiveId = #advActiveId# 
+			<isNotEmpty property="name" prepend=" and ">a.name like '%$name$%'</isNotEmpty>
+			<isNotEmpty property="id" prepend=" and ">a.id = #id#</isNotEmpty>
+			<isNotEmpty property="bartemplateName" prepend=" and ">b.name like '%$bartemplateName$%'</isNotEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isEmpty property="extLimit.sort">order by id desc</isEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.advflight.Advertisement">
+		INSERT INTO t_advertisement(
+			<isNotEmpty property="name">name,</isNotEmpty>
+			<isNotEmpty property="bartemplateId">bartemplateId,</isNotEmpty>
+			<isNotEmpty property="advparUrl">advparUrl,</isNotEmpty>
+			<isNotEmpty property="redirect">redirect,</isNotEmpty>
+
+			<isNotEmpty property="monition">monition,</isNotEmpty>
+			<isNotEmpty property="advActiveId">advActiveId,</isNotEmpty>
+			<isNotEmpty property="editable">editable,</isNotEmpty>
+			<isNotEmpty property="isFrequency">isFrequency,</isNotEmpty>
+			<isNotEmpty property="frequencyType">frequencyType,</isNotEmpty>
+			<isNotEmpty property="frequencyNum">frequencyNum,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="isProduct">isProduct,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime</isNotEmpty>
+		)VALUES(
+			<isNotEmpty property="name">#name#,</isNotEmpty>
+			<isNotEmpty property="bartemplateId">#bartemplateId#,</isNotEmpty>
+			<isNotEmpty property="advparUrl">#advparUrl#,</isNotEmpty>
+			<isNotEmpty property="redirect">#redirect#,</isNotEmpty>
+			<isNotEmpty property="monition">#monition#,</isNotEmpty>
+			<isNotEmpty property="advActiveId">#advActiveId#,</isNotEmpty>
+			<isNotEmpty property="editable">#editable#,</isNotEmpty>
+			<isNotEmpty property="isFrequency">#isFrequency#,</isNotEmpty>
+			<isNotEmpty property="frequencyType">#frequencyType#,</isNotEmpty>
+			<isNotEmpty property="frequencyNum">#frequencyNum#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="isProduct">#isProduct#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="modifier">#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">#modifyTime#,</isNotEmpty>
+			<isNotEmpty property="createTime">#createTime#</isNotEmpty>
+		)
+	 <selectKey resultClass="int" keyProperty="id" >  
+          SELECT @@IDENTITY AS id
+     </selectKey>  
+	</insert>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		UPDATE t_advertisement SET status = 1 WHERE id=#value#
+	</delete>
+	
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.advflight.Advertisement">
+		UPDATE t_advertisement SET 
+			<isNotEmpty property="name">name=#name#,</isNotEmpty>
+			<isNotEmpty property="bartemplateId">bartemplateId=#bartemplateId#,</isNotEmpty>
+			<isNotEmpty property="advparUrl">advparUrl=#advparUrl#,</isNotEmpty>
+			<isNotEmpty property="redirect">redirect=#redirect#,</isNotEmpty>
+			<isNotEmpty property="monition">monition=#monition#,</isNotEmpty>
+			<isNotEmpty property="advActiveId">advActiveId=#advActiveId#,</isNotEmpty>
+			<isNotEmpty property="editable">editable=#editable#,</isNotEmpty>
+			<isNotEmpty property="isProduct">isProduct=#isProduct#,</isNotEmpty>
+			<isNotNull property="frequencyType">frequencyType=#frequencyType#, </isNotNull>
+			<isNotNull property="frequencyNum">frequencyNum=#frequencyNum#, </isNotNull>
+			<isNotNull property="isFrequency">isFrequency=#isFrequency#, </isNotNull>
+			<isNotEmpty property="status">status=#status#,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier=#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime=#modifyTime#,</isNotEmpty>
+			id=#id#
+		 WHERE id=#id#
+	</update>
+
+	<select id="selectMailNotify" resultClass="com.ku6ads.dao.entity.advflight.Advertisement" parameterClass="java.util.Date">
+		select * from t_advertisement adv,t_adv_book,t_book where adv.id= t_adv_book.advId and t_adv_book.bookId = t_book.id and t_book.startTime <![CDATA[<]]> #value# 
+		and t_book.bussinessStatus=3 and not exists (select 1 from t_adv_material where t_adv_material.advId = adv.id)
+	</select>
+</sqlMap>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC  
+     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
+     "http://struts.apache.org/dtds/struts-2.0.dtd"> 
+
+<struts>
+	<package name="HTML/webdata" extends="basePackage">
+	
+		<action name="ConstantAction_getProdNameList" method="getProdNameList" class="ConstantAction"></action>
+		<action name="ConstantAction_getDimAreaList" method="getDimAreaList" class="ConstantAction"></action>
+		
+		<action name="FlowDataAction_search" method="search" class="FlowDataAction"></action>
+		
+		<action name="FlowDataAction_searchCityReportData" method="searchCityReportData" class="FlowDataAction"></action>
+		<action name="FlowDataAction_searcProvinceData" method="searcProvinceData" class="FlowDataAction"></action>
+		<action name="FlowDataAction_searchHourReportData" method="searchHourReportData" class="FlowDataAction"></action>
+		<action name="FlowDataAction_searchProdReport" method="searchProdReport" class="FlowDataAction"></action>
+		<action name="FlowDataAction_searchReportWeekDay" method="searchReportWeekDay" class="FlowDataAction"></action>
+		
+		<action name="HotProgramAction_search" method="search" class="HotProgramAction"></action>
+		<action name="HotProgramAction_save" method="save" class="HotProgramAction"></action>
+		<action name="HotProgramAction_showDetail" method="showDetail" class="HotProgramAction"></action>
+		<action name="HotProgramAction_deleteById" method="deleteById" class="HotProgramAction"></action>
+		
+		<action name="HotFilmAction_search" method="search" class="HotFilmAction"></action>
+		<action name="HotFilmAction_save" method="save" class="HotFilmAction"></action>
+		<action name="HotFilmAction_deleteById" method="deleteById" class="HotFilmAction"></action>
+		<action name="HotFilmAction_showDetail" method="showDetail" class="HotFilmAction"></action>
+		
+		<action name="HotFilmVideoAction_search" method="search" class="HotFilmVideoAction"></action>
+		<action name="HotFilmVideoAction_save" method="save" class="HotFilmVideoAction"></action>
+		<action name="HotFilmVideoAction_showDetail" method="showDetail" class="HotFilmVideoAction"></action>
+		<action name="HotFilmVideoAction_deleteById" method="deleteById" class="HotFilmVideoAction"></action>
+		<action name="HotFilmVideoAction_export" method="export" class="HotFilmVideoAction"></action>
+		
+		<action name="HotFilmService_getStateData" method="getStateData" class="HotFilmService"></action>
+		
+		<!-- 热播活动PV查询 -->
+		<action name="ProgramDataAction_search" method="search" class="ProgramDataAction"></action>
+		<action name="ProgramDataAction_export" method="export" class="ProgramDataAction"></action>
+		
+		<!-- 热播剧PV查询 -->
+		<action name="HotFilmDataAction_search" method="search" class="HotFilmDataAction"></action>
+		<action name="HotFilmDataAction_getAreaCityList" method="getAreaCityList" class="HotFilmDataAction"></action>
+		<action name="HotFilmDataAction_export" method="export" class="HotFilmDataAction"></action>
+		
+		<!-- VV查询 -->
+		<action name="HotFilmDataVVAction_search" method="search" class="HotFilmDataVVAction"></action>
+		<action name="HotFilmDataVVAction_export" method="export" class="HotFilmDataVVAction"></action>
+		<action name="HotFilmDataVVAction_getProndList" method="getProndList" class="HotFilmDataVVAction"></action>
+		
+	</package>
+</struts>

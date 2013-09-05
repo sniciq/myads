@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="WebdataMoviesDao" class="com.ku6ads.dao.impl.webdata.WebdataMoviesDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.webdata.WebdataMovies"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="WebdataMoviesService" class="com.ku6ads.services.impl.webdata.WebdataMoviesServiceImpl" scope="singleton">
+		<property name="baseDao" ref="WebdataMoviesDao"></property>
+	</bean>
+	
+	<bean id="WebdataMoviesMaintainDao" class="com.ku6ads.dao.impl.webdata.WebdataMoviesMaintainDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.Webdata.WebdataMovies.Maintain"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="WebdataMoviesMaintainService" class="com.ku6ads.services.impl.webdata.WebdataMoviesMaintainServiceImpl" scope="singleton">
+		<property name="baseDao" ref="WebdataMoviesMaintainDao"></property>
+	</bean>
+	
+	
+	<bean id="WebdataMoviesSellstateDao" class="com.ku6ads.dao.impl.webdata.WebdataMoviesSellstateDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.webdata.WebdataMovies.Sellstate"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="WebdataMoviesSellstateService" class="com.ku6ads.services.impl.webdata.WebdataMoviesSellstateServiceImpl" scope="singleton">
+		<property name="baseDao" ref="WebdataMoviesSellstateDao"></property>
+	</bean>
+	
+	<bean id="WebdataMoviesAction" class="com.ku6ads.struts.webdata.WebdataMoviesAction" scope="prototype">
+		<property name="webdatamoviesService" ref="WebdataMoviesService"></property>
+		<property name="webdataMoviesMaintainService" ref="WebdataMoviesMaintainService"></property>
+		<property name="webdataMoviesSellstateService" ref="WebdataMoviesSellstateService"></property>
+	</bean>
+	
+	  <!-- Spring片单接口定时任务   开始 -->
+	 
+	 <bean name="reportTask" class="org.springframework.scheduling.quartz.JobDetailBean">   
+        <property name="jobClass" value="com.ku6ads.struts.sys.STimerTask"></property>
+        <property name="jobDataAsMap"> 
+        	<map>
+        		<entry key="webdataMoviesService" value-ref="WebdataMoviesService">
+        		</entry>
+        	</map>
+        </property>
+    </bean>   
+    
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">   
+        <!-- 指向我们的任务 -->   
+        <property name="jobDetail" ref="reportTask" />   
+        <!--  每天定时运行一次片单任务 -->   
+        <property name="cronExpression" value="0 0 3 * * ?" />   
+    </bean>  
+</beans>

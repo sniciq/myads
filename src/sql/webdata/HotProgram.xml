@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="webdata.HotProgram">
+
+	<select id="searchByHotProgram" parameterClass="com.ku6ads.dao.entity.webdata.HotProgram" resultClass="com.ku6ads.dao.entity.webdata.HotProgram">
+		select * from HotProgram where 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="name" prepend=" AND ">name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="remark" prepend=" AND ">name like '%$remark$%'</isNotEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isEmpty property="extLimit.sort">order by name </isEmpty>
+	</select>
+	
+	<select id="searchByHotProgramCount" parameterClass="com.ku6ads.dao.entity.webdata.HotProgram" resultClass="java.lang.Integer">
+		select count(1) from HotProgram where 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="name" prepend=" AND ">name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="remark" prepend=" AND ">remark like '%$remark$%'</isNotEmpty>
+	</select>
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.webdata.HotProgram">
+		select * from HotProgram where id=#value#
+	</select>
+	
+	<insert id="insertHotProgram" parameterClass="com.ku6ads.dao.entity.webdata.HotProgram">
+		insert into HotProgram(
+			<isNotEmpty property="remark">remark,</isNotEmpty>
+			name
+		) values(
+			<isNotEmpty property="remark">#remark#,</isNotEmpty>
+			#name#
+		)
+	</insert>
+	
+	<update id="updateHotProgram" parameterClass="com.ku6ads.dao.entity.webdata.HotProgram">
+		update HotProgram set 
+		<isNotEmpty property="name">name=#name#,</isNotEmpty>
+		<isNotEmpty property="remark">remark=#remark#,</isNotEmpty>
+		id=#id#
+		where id=#id# 
+	</update>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		delete from HotProgram where id=#value#
+	</delete>
+</sqlMap>

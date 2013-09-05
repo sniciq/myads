@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.advbarprebook">
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.advflight.AdvbarPreBook">
+ 		insert into t_advbarprebook(
+			<isNotEmpty property="advbarId">advbarId,</isNotEmpty>
+			<isNotEmpty property="saleType">saleType,</isNotEmpty>
+			<isNotEmpty property="bookDate">bookDate,</isNotEmpty>
+			<isNotEmpty property="bookedFlight">bookedFlight,</isNotEmpty>
+			<isNotEmpty property="canBook">canBook,</isNotEmpty>
+			<isNotEmpty property="priority">priority,</isNotEmpty>
+			id
+		) values (
+			<isNotEmpty property="advbarId">#advbarId#,</isNotEmpty>
+			<isNotEmpty property="saleType">#saleType#,</isNotEmpty>
+			<isNotEmpty property="bookDate">#bookDate#,</isNotEmpty>
+			<isNotEmpty property="bookedFlight">#bookedFlight#,</isNotEmpty>
+			<isNotEmpty property="canBook">#canBook#,</isNotEmpty>
+			<isNotEmpty property="priority">#priority#,</isNotEmpty>
+			#id#
+		)
+	</insert>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.advflight.AdvbarPreBook" resultClass="com.ku6ads.dao.entity.advflight.AdvbarPreBook">
+ 		SELECT id,advbarId,saleType,bookDate,bookedFlight,canBook,priority 
+		FROM t_advbarprebook
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="advbarId" prepend=" AND ">advbarId=#advbarId#</isNotEmpty>
+		<isNotEmpty property="saleType" prepend=" AND ">saleType=#saleType#</isNotEmpty>
+		<isNotEmpty property="priority" prepend=" AND ">priority=#priority#</isNotEmpty>
+		<isNotEmpty property="bookDate" prepend=" AND ">bookDate=#bookDate#</isNotEmpty>
+		<isNotEmpty property="bookedFlight" prepend=" AND ">bookedFlight=#bookedFlight#</isNotEmpty>
+		<isNotEmpty property="canBook" prepend=" AND ">canBook=#canBook#</isNotEmpty>
+	</select>
+
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.advflight.AdvbarPreBook">
+ 		UPDATE t_advbarprebook SET 
+		<isNotNull property="advbarId">advbarId=#advbarId#, </isNotNull>
+		<isNotNull property="saleType">saleType=#saleType#, </isNotNull>
+		<isNotNull property="priority">priority=#priority#, </isNotNull>
+		<isNotNull property="bookDate">bookDate=#bookDate#, </isNotNull>
+		<isNotNull property="bookedFlight">bookedFlight=#bookedFlight#, </isNotNull>
+		<isNotNull property="canBook">canBook=#canBook#, </isNotNull>
+		 id=#id#
+		WHERE
+		 id=#id#
+	</update>
+
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+ 		DELETE FROM t_advbarprebook WHERE id=#id#
+	</delete>
+	
+	<select id="searchMonthBookedList" parameterClass="com.ku6ads.dao.entity.advflight.AdvbarPreBook" resultClass="com.ku6ads.dao.entity.advflight.AdvbarPreBook">
+		select * from t_advbarprebook 
+		where advbarId=#advbarId# 
+		<isNotEmpty property="priority" prepend=" AND ">priority=#priority#</isNotEmpty>
+		and bookDate between #bookDate# and DATE_ADD(#bookDate#,INTERVAL 1 MONTH)
+	</select>
+	
+	<update id="releasePreBooks" parameterClass="java.util.HashMap">
+		update t_advbarprebook t,
+		(
+		  select sum(flightNum) as flightNum, startTime
+		  from t_book
+		  where bookPackageId = #bookPackageId# and priority = #priority#
+		  and advbarId=#advbarId# 
+		  <isNotEmpty property="notDelBookIds" prepend=" AND ">id not in($notDelBookIds$)</isNotEmpty>
+		  group by startTime
+		) v
+			set t.bookedFlight = if(t.bookedFlight - v.flightNum >=0, t.bookedFlight - v.flightNum, 0),
+			t.canBook = if(t.bookedFlight > 0, true, t.canBook)
+		where
+			t.advbarId = #advbarId#
+			and t.priority = #priority#
+			and t.bookDate = v.startTime;
+	</update>
+	
+	<update id="releaseBookPackagePreBooks" parameterClass="com.ku6ads.dao.entity.advflight.BookPackage">
+		update t_advbarprebook t,
+		(
+		  select sum(flightNum) as flightNum, startTime
+		  from t_book
+		  where bookPackageId = #id# 
+		  group by startTime
+		) v
+			set t.bookedFlight = if(t.bookedFlight - v.flightNum >=0, t.bookedFlight - v.flightNum, 0),
+			t.canBook = if(t.bookedFlight > 0, true, t.canBook)
+		where
+			t.advbarId in (select distinct advbarId from t_book where bookPackageId = #id#) 
+			and t.priority = #priority#
+			and t.bookDate = v.startTime;
+	</update>
+
+</sqlMap>

@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+            http://www.springframework.org/schema/context  
+            http://www.springframework.org/schema/context/spring-context-2.5.xsd  
+            http://www.springframework.org/schema/tx  
+            http://www.springframework.org/schema/tx/spring-tx-2.5.xsd  
+            http://www.springframework.org/schema/jdbc  
+            http://www.springframework.org/schema/jdbc/spring-jdbc-2.5.xsd">
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/ku6ads?useUnicode=true&amp;characterEncoding=GBK"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="123456"></property>
+		<property name="maxActive" value="5"></property>
+		<property name="initialSize" value="3"></property>
+		<property name="maxIdle" value="3"></property>
+		<property name="maxWait" value="30"></property>
+		<property name="validationQuery" value="select now()"></property>
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" >
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<context:annotation-config></context:annotation-config>
+	
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap-config.xml"></property>
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<bean id="ibatisTemplate" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+		<property name="sqlMapClient" ref="sqlMapClient"></property>
+	</bean>
+	
+	<bean id="BaseDataDao" class="com.ku6ads.dao.impl.basic.BaseDataDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="basic.BaseData"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="BaseDataService" class="com.ku6ads.services.impl.basic.BaseDataServiceImpl" scope="singleton">
+		<property name="baseDao" ref="BaseDataDao"></property>
+	</bean>
+	
+	<!-- 角色dao -->
+	<bean id="RoleDao" class="com.ku6ads.dao.impl.sysconfig.RoleDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="sysconfig.Role"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 角色service -->
+	<bean id="RoleService" class="com.ku6ads.services.impl.sysconfig.RoleServiceImpl" scope="singleton">
+		<property name="baseDao" ref="RoleDao"></property>
+		<property name="userDao" ref="UserDao"></property>
+	</bean>
+	
+	<!-- 部门dao -->
+	<bean id="DepartmentDao" class="com.ku6ads.dao.impl.sysconfig.DepartmentDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="sysconfig.Department"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 部门service -->
+	<bean id="DepartmentService" class="com.ku6ads.services.impl.sysconfig.DepartmentServiceImpl" scope="singleton">
+		<property name="baseDao" ref="DepartmentDao"></property>
+	</bean>
+	
+	<!-- 网站dao -->
+	<bean id="SiteDao" class="com.ku6ads.dao.impl.sysconfig.SiteDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="sysconfig.Site"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 网站service -->
+	<bean id="SiteService" class="com.ku6ads.services.impl.sysconfig.SiteServiceImpl" scope="singleton">
+		<property name="baseDao" ref="SiteDao"></property>
+		<property name="siteDao" ref="SiteDao"></property>
+		<property name="channelService" ref="ChannelService"></property>
+	</bean>
+	
+	<!-- 频道dao -->
+	<bean id="ChannelDao" class="com.ku6ads.dao.impl.sysconfig.ChannelDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="sysconfig.Channel"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 频道service -->
+	<bean id="ChannelService" class="com.ku6ads.services.impl.sysconfig.ChannelServiceImpl" scope="singleton">
+		<property name="baseDao" ref="ChannelDao"></property>
+		<property name="advpositionService" ref="AdvpositionService"></property>
+	</bean>
+	
+	<!-- 账号dao -->
+	<bean id="UserDao" class="com.ku6ads.dao.impl.sysconfig.UserDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="sysconfig.User"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 账号service -->
+	<bean id="UserService" class="com.ku6ads.services.impl.sysconfig.UserServiceImpl" scope="singleton">
+		<property name="baseDao" ref="UserDao"></property>
+	</bean>
+	
+	<!--广告主 -->
+	<bean id="AdvertiserDao" class="com.ku6ads.dao.impl.sysconfig.AdvertiserDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+	</bean>
+	
+	<!--广告主类别 -->
+	<bean id="AdvertiserCateGoryDao" class="com.ku6ads.dao.impl.sysconfig.AdvertiserCateGoryDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+	</bean>
+	
+	<!-- 区域 -->
+	<bean id="AreaDao" class="com.ku6ads.dao.impl.sysconfig.AreaDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="sysconfig.area"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="AreaService" class="com.ku6ads.services.impl.sysconfig.AreaServiceImpl" scope="singleton">
+		<property name="baseDao" ref="AreaDao"></property>
+	</bean>
+	
+	<!-- 行业 -->
+	<bean id="IndustryDao" class="com.ku6ads.dao.impl.sysconfig.IndustryDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+	</bean>
+	
+	<!-- 客户 下单公司-->
+	<bean id="ConsumerDao" class="com.ku6ads.dao.impl.sysconfig.ConsumerDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+	</bean>
+	
+	<!-- 联系人-->
+	<bean id="ContactPersonDao" class="com.ku6ads.dao.impl.sysconfig.ContactPersonDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+	</bean>
+	
+	<!-- 产品-->
+	<bean id="ProductDao" class="com.ku6ads.dao.impl.sysconfig.ProductDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+	</bean>
+	
+	<!-- 产品线-->
+	<bean id="ProductLineDao" class="com.ku6ads.dao.impl.sysconfig.ProductLineDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		
+	</bean>
+	
+	<!-- 广告位 Dao -->
+	<bean id="AdvpositionDao" class="com.ku6ads.dao.impl.advert.AdvpositionDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="advert.Advposition"></property>
+			</bean>
+		</property>
+	</bean>	
+	
+	<!-- 广告位service -->
+	<bean id="AdvpositionService" class="com.ku6ads.services.impl.advert.AdvpositionServiceImpl" scope="singleton">
+		<property name="baseDao" ref="AdvpositionDao"></property>
+	</bean>
+	
+	<!-- 广告条 Dao -->
+	<bean id="AdvbarDao" class="com.ku6ads.dao.impl.advert.AdvbarDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="advert.Advbar"></property>
+			</bean>
+		</property>
+	</bean>	
+	
+	<!-- 广告条service -->
+	<bean id="AdvbarService" class="com.ku6ads.services.impl.advert.AdvbarServiceImpl" scope="singleton">
+		<property name="baseDao" ref="AdvbarDao"></property>
+	</bean>
+	
+	<!-- 广告条刊例service -->
+	<bean id="AdvbarPriceService" class="com.ku6ads.services.impl.advert.AdvbarPriceServiceImpl" scope="singleton">
+		<property name="baseDao" ref="AdvbarPriceDao"></property>
+		<property name="advbarPriceDao" ref="AdvbarPriceDao"></property>
+	</bean>
+	
+	<!-- 广告条刊例 Dao -->
+	<bean id="AdvbarPriceDao" class="com.ku6ads.dao.impl.advert.AdvbarPriceDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="advert.AdvbarPrice"></property>
+			</bean>
+		</property>
+	</bean>	
+	
+	<!-- 广告service -->
+	<bean id="AdvertisementService" class="com.ku6ads.services.impl.advflight.AdvertisementServiceImpl" scope="singleton">
+		<property name="baseDao" ref="AdvertisementDao"></property>
+	</bean>
+	
+	<!-- 广告 Dao -->
+	<bean id="AdvertisementDao" class="com.ku6ads.dao.impl.advflight.AdvertisementDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="advflight.Advertisement"></property>
+			</bean>
+		</property>
+	</bean>	
+	
+	<!-- 广告条模板service -->
+	<bean id="BartemplateService" class="com.ku6ads.services.impl.advert.BartemplateServiceImpl" scope="singleton">
+		<property name="baseDao" ref="BartemplateDao"></property>
+		<property name="bartemplateDao" ref="BartemplateDao"></property>
+	</bean>
+	
+	<!-- 广告条模板 Dao -->
+	<bean id="BartemplateDao" class="com.ku6ads.dao.impl.advert.BartemplateDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="advert.Bartemplate"></property>
+			</bean>
+		</property>
+	</bean>	
+	
+	<!-- 广告位模板service -->
+	<bean id="PostemplateService" class="com.ku6ads.services.impl.advert.PostemplateServiceImpl" scope="singleton">
+		<property name="baseDao" ref="PostemplateDao"></property>
+		<property name="postemplateDao" ref="PostemplateDao"></property>
+	</bean>
+	
+	<!-- 广告位模板 Dao -->
+	<bean id="PostemplateDao" class="com.ku6ads.dao.impl.advert.PostemplateDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="advert.Postemplate"></property>
+			</bean>
+		</property>
+	</bean>	
+	
+	
+	<!-- 广告位规格service -->
+	<bean id="PositionsizeService" class="com.ku6ads.services.impl.advert.PositionsizeServiceImpl" scope="singleton">
+		<property name="baseDao" ref="PositionsizeDao"></property>
+		<property name="positionsizeDao" ref="PositionsizeDao"></property>
+	</bean>
+	
+	<!-- 广告位规格 Dao -->
+	<bean id="PositionsizeDao" class="com.ku6ads.dao.impl.advert.PositionsizeDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="advert.Positionsize"></property>
+			</bean>
+		</property>
+	</bean>	
+	
+	<!-- 权重参数 Dao -->
+	<bean id="ProportionDao" class="com.ku6ads.dao.impl.sysconfig.ProportionDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+	</bean>
+	
+	<!-- 物料service -->
+	<bean id="MaterialService" class="com.ku6ads.services.impl.advflight.MaterialServiceImpl" scope="singleton">
+		<property name="advMaterialService" ref="AdvMaterialService"></property>
+		<property name="baseDao" ref="MaterialDao"></property>
+	</bean>
+	
+	<!-- 物料 Dao -->
+	<bean id="MaterialDao" class="com.ku6ads.dao.impl.advflight.MaterialDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="advflight.Material"></property>
+			</bean>
+		</property>
+		
+	</bean>
+	
+	
+	<bean id="ku6ads.config" class="com.ku6ads.dao.entity.sys.Config">
+		<property name="config">
+			<map>
+				<entry key="httpURL" value=""></entry>
+				<entry key="upload" value="/usr/materiel/"></entry>
+				<entry key="ftpURL" value="10.228.130.116"></entry>
+				<entry key="userName" value="root"></entry>
+				<entry key="password" value="123321"></entry>
+				<entry key="port" value="21"></entry>
+				
+				<entry key="moviesURL" value="http://admin2.ku6.com/api/filmInfo4ads.jsp?dec=no&amp;key=ku6ads"></entry>
+			</map>
+		</property>
+	</bean>
+	 
+    
+    <!-- 调度器  -->   
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    	<property name="startupDelay" value="10"></property>
+        <property name="triggers">   
+            <list>   
+                <!--  触发器列表
+                 	<ref bean="cronTrigger" /> 
+	                <ref bean="mailTrigger" />   
+	                <ref bean="makeMpathTrigger" />  
+	                <ref bean="flightCompleteTrigger" />
+                 -->   
+                <ref bean="advbarBookRefreshTrigger"/>
+                <ref bean="flowForecastTaskTrigger"/>
+            </list>   
+        </property>   
+    </bean>  
+    
+    <!-- MenuDao -->
+    <bean id="MenuDao" class="com.ku6ads.dao.impl.sysconfig.MenuDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="sysconfig.Menu"></property>
+			</bean>
+		</property>
+	</bean> 
+	
+	<!-- IP -->
+    <bean id="IPDao" class="com.ku6ads.dao.impl.sysconfig.IPDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="sysconfig.IP"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 本地Group -->
+	<bean id="GroupDao" class="com.ku6ads.dao.impl.sysconfig.GroupDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="sysconfig.Group"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 本地Group -->
+	<bean id="GroupService" class="com.ku6ads.services.impl.sysconfig.GroupServiceImpl" scope="singleton">
+		<property name="baseDao" ref="GroupDao"></property>
+	</bean>
+</beans>

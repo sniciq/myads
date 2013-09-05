@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="advflight.AdvRelationBook">
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.advflight.AdvRelationBook">
+ 		insert into t_advrelationbook(
+			<isNotEmpty property="advertisementId">advertisementId,</isNotEmpty>
+			<isNotEmpty property="bartemplateId">bartemplateId,</isNotEmpty>
+			bookId
+		) values (
+			<isNotEmpty property="advertisementId">#advertisementId#,</isNotEmpty>
+			<isNotEmpty property="bartemplateId">#bartemplateId#,</isNotEmpty>
+			#bookId#
+		)
+	</insert>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.advflight.AdvRelationBook" resultClass="com.ku6ads.dao.entity.advflight.AdvRelationBook">
+ 		SELECT id,advertisementId,bartemplateId,bookId 
+		FROM t_advrelationbook
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="advertisementId" prepend=" AND ">advertisementId=#advertisementId#</isNotEmpty>
+		<isNotEmpty property="bartemplateId" prepend=" AND ">bartemplateId=#bartemplateId#</isNotEmpty>
+		<isNotEmpty property="bookId" prepend=" AND ">bookId=#bookId#</isNotEmpty>
+	</select>
+	
+	<select id="selectByProperty" parameterClass="com.ku6ads.dao.entity.advflight.AdvRelationBook" resultClass="com.ku6ads.dao.entity.advflight.AdvRelationBook">
+		SELECT * FROM t_advrelationbook WHERE 1=1
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="advertisementId" prepend=" AND ">advertisementId=#advertisementId#</isNotEmpty>
+		<isNotEmpty property="bookId" prepend=" AND ">bookId=#bookId#</isNotEmpty>
+	</select >
+
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.advflight.AdvRelationBook">
+ 		UPDATE t_advrelationbook SET 
+		<isNotNull property="advertisementId">advertisementId=#advertisementId#, </isNotNull>
+		<isNotNull property="bartemplateId">bartemplateId=#bartemplateId#, </isNotNull>
+		<isNotNull property="bookId">bookId=#bookId#, </isNotNull>
+		 id=#id#
+		WHERE
+		 id=#id#
+	</update>
+
+	<delete id="deleteById" parameterClass="com.ku6ads.dao.entity.advflight.AdvRelationBook">
+ 		DELETE FROM t_advrelationbook
+		WHERE 
+		 id=#id#
+	</delete>
+	
+	<delete id="deleteByAdvertisementId" parameterClass="java.lang.Integer">
+		DELETE FROM t_advrelationbook WHERE  advertisementId=#value#
+	</delete>
+
+	<select id="selectAdvflightRelationAdv" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.advflight.Advertisement">
+		SELECT b.name,b.advparUrl,b.redirect,b.monition,c.consumerName,c.advertiserName,b.creator,b.createtime as createTime FROM t_advrelationbook as a
+			LEFT JOIN t_advertisement as b ON a.advertisementId = b.id
+			LEFT JOIN t_advactive as c ON b.advActiveId = c.id
+		 WHERE a.bookId = #value#
+	</select>
+	
+	<select id="selectRelationProduct" parameterClass="java.util.HashMap" resultClass="com.ku6ads.struts.advflight.AdvRelationBookForm">
+		select a.*,ba.dataName as saleTypeName,ba2.dataName as useTypeName,m.unRelationBookCount
+		 from (
+			select t.id,t.projectId,t.saleType,t.priceId,t.useType,t.advproductId,t.bookpackageType,tp.advproductName 
+			from t_bookpackage t
+			left join t_advproduct tp on t.advproductId = tp.id 
+			where  tp.type=#type#
+			and t.status = 0 and t.bookpackageType = 2
+			and projectId = (select projectId from t_advactive where id =
+				    (select advActiveId from  t_advertisement where id = #advertisementId#)
+		    )
+		    and exists (
+	            select 1 from t_book tb, t_advbar ta
+	            where ta.bartemId = #bartemplateId# and ta.id = tb.advbarId and tb.bookPackageId = t.id
+			)
+		)a
+		left join t_basedata ba on ba.dataType='saletype' and ba.dataValue=a.saleType
+		left join t_basedata ba2 on ba2.dataType='usetype' and ba2.dataValue=a.useType
+		left join (
+		  select bookPackageId, count(1) as unRelationBookCount 
+		  from t_book b where b.status=0
+		  and  not exists(select 1 from t_advrelationbook ar where ar.bookId = b.id)
+		  group by bookPackageId
+		) m on a.id=m.bookPackageId
+	</select>
+	
+	<select id="selectRelationProductBooks" parameterClass="java.util.HashMap" resultClass="com.ku6ads.struts.advflight.BookForm">
+		select a.*,c.format,c.materiel,d.name as channelName,b.name as advbarName,ba.dataName as saleTypeName,ba2.dataName as useTypeName, r.id as relationId,
+			ifnull(ra.relationAdsIds, '') as relationAdsIds
+		 from (
+			select id,projectId,bookPackageId,channelId,advbarId, saleType,priceId,useType,startTime,flightNum from t_book t where
+			projectId = (
+			  select projectId from t_advactive where id =
+			    (select advActiveId from  t_advertisement where id = #advertisementId#)
+			)
+			and exists (
+			  select 1 from t_advbar ta where bartemId = #bartemplateId# and ta.id = t.advbarId
+			)
+			and bookPackageId = #bookPackageId#
+			and status = 0
+		) a
+		left join t_advrelationbook r on a.id = r.bookId and advertisementId=#advertisementId#
+		left join t_advbar b on a.advbarId = b.id
+		left join t_channel d    on a.channelId = d.channelId
+		left join t_advbar_price c  on c.barId = b.id and c.id = a.priceId
+		left join t_basedata ba on ba.dataType='saletype' and ba.dataValue=a.saleType
+		left join t_basedata ba2 on ba2.dataType='usetype' and ba2.dataValue=a.useType
+		left join (select bookId,group_concat(advertisementId) as relationAdsIds from t_advrelationbook group by bookId) ra
+			on ra.bookId = a.id
+		order by startTime
+	</select>
+	
+</sqlMap>

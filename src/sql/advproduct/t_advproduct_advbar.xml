@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.t_advproduct_advbar">
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.advproduct.AdvproductAdvbarEty">
+ 		insert into t_advproduct_advbar(
+			<isNotEmpty property="advproductId">advproductId,</isNotEmpty>
+			<isNotEmpty property="advbarId">advbarId,</isNotEmpty>
+			id
+		) values (
+			<isNotEmpty property="advproductId">#advproductId#,</isNotEmpty>
+			<isNotEmpty property="advbarId">#advbarId#,</isNotEmpty>
+			#id#
+		)
+	</insert>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.advproduct.AdvproductAdvbarEty" resultClass="com.ku6ads.dao.entity.advproduct.AdvproductAdvbarEty">
+ 		SELECT t.*,b.status, b.name as advbarName, b.num as sortOrder, b.content, p.name as barsizeName, b.channelId, b.channelName, p.id as barsizeId
+		FROM t_advproduct_advbar t
+		left join t_advbar b on t.advbarId=b.id
+		left join t_positionsize p on b.barsizeId = p.id
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="advproductId" prepend=" AND ">advproductId=#advproductId#</isNotEmpty>
+		<isNotEmpty property="advbarId" prepend=" AND ">advbarId=#advbarId#</isNotEmpty>
+	</select>
+
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.advproduct.AdvproductAdvbarEty">
+ 		UPDATE t_advproduct_advbar SET 
+		<isNotNull property="advproductId">advproductId=#advproductId#, </isNotNull>
+		<isNotNull property="advbarId">advbarId=#advbarId#, </isNotNull>
+		 id=#id#
+		WHERE
+		 id=#id#
+	</update>
+
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.advproduct.AdvproductAdvbarEty">
+		select * from t_advproduct_advbar WHERE id=#value#
+	</select>
+
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+ 		DELETE FROM t_advproduct_advbar WHERE 
+		 id=#id#
+	</delete>
+
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.advproduct.AdvproductAdvbarEty" resultClass="java.lang.Integer">
+ 		SELECT count(1) 		
+ 		FROM t_advproduct_advbar
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="advproductId" prepend=" AND ">advproductId=#advproductId#</isNotEmpty>
+		<isNotEmpty property="advbarId" prepend=" AND ">advbarId=#advbarId#</isNotEmpty>
+	</select>
+
+	<select id="selectByLimit" parameterClass="com.ku6ads.dao.entity.advproduct.AdvproductAdvbarEty" resultClass="com.ku6ads.dao.entity.advproduct.AdvproductAdvbarEty">
+ 		SELECT t.*,b.status, b.name as advbarName, b.num as sortOrder, b.content, p.name as barsizeName, b.channelId, b.channelName, p.id as barsizeId
+		FROM t_advproduct_advbar t
+		left join t_advbar b on t.advbarId=b.id
+		left join t_positionsize p on b.barsizeId = p.id
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">t.id=#id#</isNotEmpty>
+		<isNotEmpty property="advproductId" prepend=" AND ">t.advproductId=#advproductId#</isNotEmpty>
+		<isNotEmpty property="advbarId" prepend=" AND ">t.advbarId=#advbarId#</isNotEmpty>
+		<isNotEmpty property="extLimit.sort">order by t.$extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+
+</sqlMap>

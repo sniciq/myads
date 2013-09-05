@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sysconfig.User">
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.sysconfig.User">
+		SELECT * FROM t_user where id=#value#
+	</select >
+	
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.sysconfig.User" resultClass="com.ku6ads.dao.entity.sysconfig.User">
+		select * from t_user where 1=1
+		<isNotEmpty property="username" prepend=" AND ">username like '%$username$%'</isNotEmpty>
+		<isNotEmpty property="name" prepend=" AND ">name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="mail" prepend=" AND ">mail=#mail#</isNotEmpty>
+		<isNotEmpty property="mobile" prepend=" AND ">mobile=#mobile#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+		<isNotEmpty property="creator" prepend=" AND ">creator=#creator#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+		<isNotEmpty property="modifier" prepend=" AND ">modifier=#modifier#</isNotEmpty>
+		<isNotEmpty property="modifyTime" prepend=" AND ">modifyTime=#modifyTime#</isNotEmpty>
+		<isNotEmpty property="password" prepend=" AND ">password=#password#</isNotEmpty>
+	</select>
+	
+	<select id="selectEntityCount" parameterClass="com.ku6ads.dao.entity.sysconfig.User" resultClass="java.lang.Integer">
+		select count(1) from t_user where 1=1
+		<isNotEmpty property="username" prepend=" AND ">username like '%$username$%'</isNotEmpty>
+		<isNotEmpty property="name" prepend=" AND ">name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="mail" prepend=" AND ">mail=#mail#</isNotEmpty>
+		<isNotEmpty property="mobile" prepend=" AND ">mobile=#mobile#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+		<isNotEmpty property="creator" prepend=" AND ">creator=#creator#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+		<isNotEmpty property="modifier" prepend=" AND ">modifier=#modifier#</isNotEmpty>
+		<isNotEmpty property="modifyTime" prepend=" AND ">modifyTime=#modifyTime#</isNotEmpty>
+		<isNotEmpty property="password" prepend=" AND ">password=#password#</isNotEmpty>
+	</select>
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.sysconfig.User" resultClass="java.lang.Integer">
+		select count(1) from t_user where 1=1
+		<isNotEmpty property="username" prepend=" AND ">username like '%$username$%'</isNotEmpty>
+		<isNotEmpty property="name" prepend=" AND ">name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="mail" prepend=" AND ">mail=#mail#</isNotEmpty>
+		<isNotEmpty property="mobile" prepend=" AND ">mobile=#mobile#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+		<isNotEmpty property="creator" prepend=" AND ">creator=#creator#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+		<isNotEmpty property="modifier" prepend=" AND ">modifier=#modifier#</isNotEmpty>
+		<isNotEmpty property="modifyTime" prepend=" AND ">modifyTime=#modifyTime#</isNotEmpty>
+		<isNotEmpty property="password" prepend=" AND ">password=#password#</isNotEmpty>
+	</select>
+	
+	<select id="selectByLimit" parameterClass="com.ku6ads.dao.entity.sysconfig.User"  resultClass="com.ku6ads.dao.entity.sysconfig.User">
+		SELECT * FROM t_user
+			 where 1=1
+			<isNotEmpty property="username" prepend=" AND ">username like '%$username$%'</isNotEmpty>
+			<isNotEmpty property="name" prepend=" AND ">name like '%$name$%'</isNotEmpty>
+			<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+			<isNotEmpty property="mail" prepend=" AND ">mail=#mail#</isNotEmpty>
+			<isNotEmpty property="mobile" prepend=" AND ">mobile=#mobile#</isNotEmpty>
+			<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+			<isNotEmpty property="creator" prepend=" AND ">creator=#creator#</isNotEmpty>
+			<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+			<isNotEmpty property="modifier" prepend=" AND ">modifier=#modifier#</isNotEmpty>
+			<isNotEmpty property="modifyTime" prepend=" AND ">modifyTime=#modifyTime#</isNotEmpty>
+			<isNotEmpty property="password" prepend=" AND ">password=#password#</isNotEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isEmpty property="extLimit.sort">order by id </isEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.sysconfig.User">
+		insert into t_user(
+			<isNotEmpty property="username">username,</isNotEmpty>
+			<isNotEmpty property="name">name,</isNotEmpty>
+			<isNotEmpty property="mail">mail,</isNotEmpty>
+			<isNotEmpty property="mobile">mobile,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime,</isNotEmpty>
+			<isNotEmpty property="password">password,</isNotEmpty>
+			id
+		) values (
+			<isNotEmpty property="username">#username#,</isNotEmpty>
+			<isNotEmpty property="name">#name#,</isNotEmpty>
+			<isNotEmpty property="mail">#mail#,</isNotEmpty>
+			<isNotEmpty property="mobile">#mobile#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="createTime">#createTime#,</isNotEmpty>
+			<isNotEmpty property="modifier">#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">#modifyTime#,</isNotEmpty>
+			<isNotEmpty property="password">#password#,</isNotEmpty>
+			#id#
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		update t_user set status=1 where id=#id#
+	</delete>
+	
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.sysconfig.User">
+		UPDATE t_user SET 
+		<isNotNull property="username">username=#username#, </isNotNull>
+		<isNotNull property="name">name=#name#, </isNotNull>
+		<isNotNull property="mail">mail=#mail#, </isNotNull>
+		<isNotNull property="mobile">mobile=#mobile#, </isNotNull>
+		<isNotNull property="status">status=#status#, </isNotNull>
+		<isNotNull property="creator">creator=#creator#, </isNotNull>
+		<isNotNull property="createTime">createTime=#createTime#, </isNotNull>
+		<isNotNull property="modifier">modifier=#modifier#, </isNotNull>
+		<isNotNull property="modifyTime">modifyTime=#modifyTime#, </isNotNull>
+		<isNotNull property="password">password=#password#, </isNotNull>
+		 id=#id#
+		WHERE
+		 id=#id#
+	</update>
+	
+	<select id="userLogin" parameterClass="com.ku6ads.dao.entity.sysconfig.User" resultClass="com.ku6ads.dao.entity.sysconfig.User">
+		SELECT * FROM t_user WHERE status = 0 and username = #username# and password = #password# 
+	</select>
+	
+	<select id="getUserGroupByName" parameterClass="java.lang.String" resultClass="com.ku6ads.dao.entity.sysconfig.UserGroup">
+		SELECT ifnull(g.name,"") as groupName,u.username as userName FROM t_user_group ug
+			LEFT JOIN t_user u ON ug.userId = u.id 
+			LEFT JOIN t_group g ON ug.groupId = g.id
+		WHERE ug.status = 0
+			AND u.userName = #name#
+		GROUP BY groupName
+	</select>
+	
+	<delete id="deleteByUserId" parameterClass="java.lang.Integer">
+		update t_user_role set status=1 where userId=#id#
+	</delete>
+	
+	<update id="updateByUserId" parameterClass="com.ku6ads.dao.entity.sysconfig.UserRole">
+		update t_user_role set username=#username# where userId=#userId#
+	</update>
+</sqlMap>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.StatisticsProductViewsMonth">
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsProductViewsMonth" resultClass="java.lang.Integer">
+ 		SELECT count(1) 		FROM t_statistics_product_views_month
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="productId" prepend=" AND ">productId=#productId#</isNotEmpty>
+		<isNotEmpty property="onceMore" prepend=" AND ">onceMore=#onceMore#</isNotEmpty>
+		<isNotEmpty property="twiceMore" prepend=" AND ">twiceMore=#twiceMore#</isNotEmpty>
+		<isNotEmpty property="threeMore" prepend=" AND ">threeMore=#threeMore#</isNotEmpty>
+		<isNotEmpty property="fourthMore" prepend=" AND ">fourthMore=#fourthMore#</isNotEmpty>
+		<isNotEmpty property="fiveMore" prepend=" AND ">fiveMore=#fiveMore#</isNotEmpty>
+		<isNotEmpty property="sixMore" prepend=" AND ">sixMore=#sixMore#</isNotEmpty>
+		<isNotEmpty property="sevenMore" prepend=" AND ">sevenMore=#sevenMore#</isNotEmpty>
+		<isNotEmpty property="eightMore" prepend=" AND ">eightMore=#eightMore#</isNotEmpty>
+		<isNotEmpty property="nineMore" prepend=" AND ">nineMore=#nineMore#</isNotEmpty>
+		<isNotEmpty property="teenMore" prepend=" AND ">teenMore=#teenMore#</isNotEmpty>
+		<isNotEmpty property="stateDayTime" prepend=" AND ">DATE_FORMAT(updateTime, '%Y-%m-%d')=DATE_FORMAT(#stateDayTime#, '%Y-%m-%d')</isNotEmpty>
+		<isNotEmpty property="stateMonthTimeStart" prepend=" AND ">DATE_FORMAT(updateTime, '%Y-%m') >= DATE_FORMAT(#stateMonthTimeStart#, '%Y-%m')</isNotEmpty>
+		<isNotEmpty property="stateMonthTimeEnd" prepend=" AND "> DATE_FORMAT(updateTime, '%Y-%m') <![CDATA[ <= ]]> DATE_FORMAT(#stateMonthTimeEnd#, '%Y-%m')</isNotEmpty>
+	</select>
+
+	<select id="selectByLimit" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsProductViewsMonth" resultClass="com.ku6ads.dao.entity.statistics.StatisticsProductViewsMonth">
+ 		SELECT id,productId,updateTime,onceMore,twiceMore,threeMore,fourthMore,fiveMore,sixMore,sevenMore,eightMore,nineMore,teenMore 
+		FROM t_statistics_product_views_month
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="productId" prepend=" AND ">productId=#productId#</isNotEmpty>
+		<isNotEmpty property="onceMore" prepend=" AND ">onceMore=#onceMore#</isNotEmpty>
+		<isNotEmpty property="twiceMore" prepend=" AND ">twiceMore=#twiceMore#</isNotEmpty>
+		<isNotEmpty property="threeMore" prepend=" AND ">threeMore=#threeMore#</isNotEmpty>
+		<isNotEmpty property="fourthMore" prepend=" AND ">fourthMore=#fourthMore#</isNotEmpty>
+		<isNotEmpty property="fiveMore" prepend=" AND ">fiveMore=#fiveMore#</isNotEmpty>
+		<isNotEmpty property="sixMore" prepend=" AND ">sixMore=#sixMore#</isNotEmpty>
+		<isNotEmpty property="sevenMore" prepend=" AND ">sevenMore=#sevenMore#</isNotEmpty>
+		<isNotEmpty property="eightMore" prepend=" AND ">eightMore=#eightMore#</isNotEmpty>
+		<isNotEmpty property="nineMore" prepend=" AND ">nineMore=#nineMore#</isNotEmpty>
+		<isNotEmpty property="teenMore" prepend=" AND ">teenMore=#teenMore#</isNotEmpty>
+		<isNotEmpty property="stateDayTime" prepend=" AND ">DATE_FORMAT(updateTime, '%Y-%m-%d')=DATE_FORMAT(#stateDayTime#, '%Y-%m-%d')</isNotEmpty>
+		<isNotEmpty property="stateMonthTimeStart" prepend=" AND ">DATE_FORMAT(updateTime, '%Y-%m') >= DATE_FORMAT(#stateMonthTimeStart#, '%Y-%m')</isNotEmpty>
+		<isNotEmpty property="stateMonthTimeEnd" prepend=" AND "> DATE_FORMAT(updateTime, '%Y-%m') <![CDATA[ <= ]]> DATE_FORMAT(#stateMonthTimeEnd#, '%Y-%m')</isNotEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+</sqlMap>

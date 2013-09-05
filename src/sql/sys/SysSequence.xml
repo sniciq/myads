@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="default.SysSequence">
+	<insert id="insertSysSequenceEty" parameterClass="com.ku6ads.dao.entity.sys.SysSequenceEty">
+ 		insert into SysSequence(
+			<isNotEmpty property="tableName">tableName,</isNotEmpty>
+			<isNotEmpty property="nextSequenceValue">nextSequenceValue,</isNotEmpty>
+			id
+		) values (
+			<isNotEmpty property="tableName">#tableName#,</isNotEmpty>
+			<isNotEmpty property="nextSequenceValue">#nextSequenceValue#,</isNotEmpty>
+			#id#
+		)
+	</insert>
+	
+	<select id="selectSysSequenceEty" parameterClass="com.ku6ads.dao.entity.sys.SysSequenceEty" resultClass="com.ku6ads.dao.entity.sys.SysSequenceEty">
+ 		SELECT id,tableName,nextSequenceValue 
+		FROM SYSSEQUENCE
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="tableName" prepend=" AND ">tableName=#tableName#</isNotEmpty>
+	</select>
+	
+	<update id="updateSysSequenceEty" parameterClass="com.ku6ads.dao.entity.sys.SysSequenceEty">
+ 		UPDATE SYSSEQUENCE SET 
+		<isNotNull property="tableName">tableName=#tableName#, </isNotNull>
+		<isNotNull property="nextSequenceValue">nextSequenceValue=#nextSequenceValue#, </isNotNull>
+		 id=#id#
+		WHERE 
+		 id=#id#
+	</update>
+	
+	<update id="updateSysSequenceByTableName" parameterClass="com.ku6ads.dao.entity.sys.SysSequenceEty">
+ 		UPDATE SYSSEQUENCE SET nextSequenceValue= nextSequenceValue + #step# WHERE tableName=#tableName#
+	</update>
+	
+	<delete id="deleteSysSequenceEty" parameterClass="com.ku6ads.dao.entity.sys.SysSequenceEty">
+ 		DELETE FROM SYSSEQUENCE
+		WHERE 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="tableName" prepend=" AND ">tableName=#tableName#</isNotEmpty>
+		<isNotEmpty property="nextSequenceValue" prepend=" AND ">nextSequenceValue=#nextSequenceValue#</isNotEmpty>
+	</delete>
+</sqlMap>

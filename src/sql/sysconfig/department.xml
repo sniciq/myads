@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sysconfig.Department">
+	
+	<select id="selectByEntity" resultClass="com.ku6ads.dao.entity.sysconfig.Department">
+		SELECT departmentId,departmentName FROM department where parentDepartId = 0
+	</select>
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.sysconfig.Department">
+		select e.departmentId,e.departmentName,ifnull(m.departmentName,"") as parentName
+			from department e left join department m on e.parentDepartId=m.departmentId where e.departmentId = #value#
+	</select >
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.sysconfig.Department" resultClass="java.lang.Integer">
+		select count(1) from department
+		where 1=1
+		<isNotEmpty property="departmentId" prepend=" and ">departmentId=#departmentId#</isNotEmpty>
+		<isNotEmpty property="departmentName" prepend=" AND ">departmentName like '%$departmentName$%'</isNotEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<select id="selectByLimit" resultClass="com.ku6ads.dao.entity.sysconfig.Department" parameterClass="com.ku6ads.dao.entity.sysconfig.Department">
+		select e.departmentId,e.departmentName,ifnull(m.departmentName,"") as parentName
+			from department e left join department m on e.parentDepartId=m.departmentId where 1=1
+ 			<isNotEmpty property="departmentId" prepend=" and ">departmentId=#departmentId#</isNotEmpty>
+ 			<isNotEmpty property="departmentName" prepend=" and ">e.departmentName like '%$departmentName$%'</isNotEmpty>
+			<isNotEmpty property="createDate" prepend=" and ">createDate=#createDate#</isNotEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isEmpty property="extLimit.sort">order by e.departmentId </isEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.sysconfig.Department">
+		insert into department(
+			<isNotEmpty property="parentDepartId">parentDepartId,</isNotEmpty>
+			<isNotEmpty property="departmentName">departmentName,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="creatorId">creatorId,</isNotEmpty>
+			<isNotEmpty property="createDate">createDate</isNotEmpty>
+		)values(
+			<isNotEmpty property="parentDepartId">#parentDepartId#,</isNotEmpty>
+			<isNotEmpty property="departmentName">#departmentName#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="creatorId">#creatorId#,</isNotEmpty>
+			<isNotEmpty property="createDate">#createDate#</isNotEmpty>
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		delete from department where departmentId=#value#
+	</delete>
+	
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.sysconfig.Department">
+		update department set
+			<isNotEmpty property="departmentName">departmentName=#departmentName#,</isNotEmpty>
+			<isNotEmpty property="parentDepartId">parentDepartId=#parentDepartId#,</isNotEmpty>
+			departmentId=#departmentId#
+		where departmentId=#departmentId#
+	</update>
+</sqlMap>

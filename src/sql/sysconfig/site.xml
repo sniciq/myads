@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sysconfig.Site">
+	
+	<select id="selectAll" resultClass="com.ku6ads.dao.entity.sysconfig.Site">
+		select * from t_site where status !=1
+	</select >
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.sysconfig.Site">
+		select * from t_site e where e.siteId = #value#
+	</select >
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.sysconfig.Site" resultClass="java.lang.Integer">
+		select count(1) from t_site
+		where 1=1  and status !=1
+		<isNotEmpty property="siteName" prepend=" AND ">siteName like '%$siteName$%'</isNotEmpty>
+	</select>
+	
+	<select id="selectByLimit" resultClass="com.ku6ads.dao.entity.sysconfig.Site" parameterClass="com.ku6ads.dao.entity.sysconfig.Site">
+		select e.siteId,e.siteName,e.nameEn,e.modulus
+			from t_site e where 1=1 and status !=1
+ 			<isNotEmpty property="siteId" prepend=" and ">siteId=#siteId#</isNotEmpty>
+ 			<isNotEmpty property="siteName" prepend=" and ">e.siteName like '%$siteName$%'</isNotEmpty>
+			<isNotEmpty property="createTime" prepend=" and ">createTime=#createTime#</isNotEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isEmpty property="extLimit.sort">order by e.siteId </isEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.sysconfig.Site">
+		insert into t_site(
+			<isNotEmpty property="siteName">siteName,</isNotEmpty>
+			<isNotEmpty property="nameEn">nameEn,</isNotEmpty>
+			<isNotEmpty property="modulus">modulus,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			createTime
+		)values(
+			<isNotEmpty property="siteName">#siteName#,</isNotEmpty>
+			<isNotEmpty property="nameEn">#nameEn#,</isNotEmpty>
+			<isNotEmpty property="modulus">#modulus#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			#createTime#
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		update t_site set status =1 where siteId=#value#
+	</delete>
+	
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.sysconfig.Site">
+		update t_site set
+			<isNotEmpty property="siteName">siteName=#siteName#,</isNotEmpty>
+			<isNotEmpty property="modulus">modulus=#modulus#,</isNotEmpty>
+			<isNotEmpty property="status">status=#status#,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier=#modifier#,</isNotEmpty>
+			<isNotEmpty property="nameEn">nameEn=#nameEn#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime=#modifyTime#</isNotEmpty>
+		where siteId=#siteId#
+	</update>
+	
+	<select id="selectByAdvbarId" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.sysconfig.Site">
+		select * from t_site s where siteId =
+		(
+		  select siteId from t_advbar t where t.id = #value#
+		)
+	</select>
+	
+	
+</sqlMap>

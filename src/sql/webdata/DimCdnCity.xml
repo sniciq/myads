@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.webdata.DimCdnCity">
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.webdata.DimCdnCity">
+ 		insert into dim_cdn_city(
+			<isNotEmpty property="dcode">dcode,</isNotEmpty>
+			<isNotEmpty property="pcode">pcode,</isNotEmpty>
+			<isNotEmpty property="city">city,</isNotEmpty>
+			id
+		) values (
+			<isNotEmpty property="dcode">#dcode#,</isNotEmpty>
+			<isNotEmpty property="pcode">#pcode#,</isNotEmpty>
+			<isNotEmpty property="city">#city#,</isNotEmpty>
+			#id#
+		)
+	</insert>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.webdata.DimCdnCity" resultClass="com.ku6ads.dao.entity.webdata.DimCdnCity">
+ 		SELECT dcode,pcode,city,id 
+		FROM DIM_CDN_CITY
+		WHERE 1=1 
+		<isNotEmpty property="dcode" prepend=" AND ">dcode=#dcode#</isNotEmpty>
+		<isNotEmpty property="pcode" prepend=" AND ">pcode=#pcode#</isNotEmpty>
+		<isNotEmpty property="city" prepend=" AND ">city=#city#</isNotEmpty>
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+	</select>
+
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.webdata.DimCdnCity">
+ 		UPDATE DIM_CDN_CITY SET 
+		<isNotNull property="dcode">dcode=#dcode#, </isNotNull>
+		<isNotNull property="pcode">pcode=#pcode#, </isNotNull>
+		<isNotNull property="city">city=#city#, </isNotNull>
+		 id=#id#
+		WHERE
+		 id=#id#
+	</update>
+
+	<delete id="deleteById" parameterClass="com.ku6ads.dao.entity.webdata.DimCdnCity">
+ 		DELETE FROM DIM_CDN_CITY WHERE  id=#id#
+	</delete>
+
+</sqlMap>

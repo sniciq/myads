@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.webdata.WebdataMovies.Sellstate">
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.webdata.WebdataMoviesSellstate">
+ 		insert into t_webdata_movies_sellstate(
+			<isNotEmpty property="startTime">startTime,</isNotEmpty>
+			<isNotEmpty property="endTime">endTime,</isNotEmpty>
+			<isNotEmpty property="sellType">sellType,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			id,
+			movieId
+		) values (
+			<isNotEmpty property="startTime">#startTime#,</isNotEmpty>
+			<isNotEmpty property="endTime">#endTime#,</isNotEmpty>
+			<isNotEmpty property="sellType">#sellType#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			#id#,
+			#movieId#
+		)
+	</insert>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.webdata.WebdataMoviesSellstate" resultClass="com.ku6ads.dao.entity.webdata.WebdataMoviesSellstate">
+ 		SELECT id,movieId,startTime,endTime,sellType,status 
+		FROM t_webdata_movies_sellstate
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="movieId" prepend=" AND ">movieId=#movieId#</isNotEmpty>
+		<isNotEmpty property="startTime" prepend=" AND ">startTime=#startTime#</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND ">endTime=#endTime#</isNotEmpty>
+		<isNotEmpty property="sellType" prepend=" AND ">sellType=#sellType#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+	</select>
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.webdata.WebdataMoviesSellstate" resultClass="java.lang.Integer">
+		select count(1) from t_webdata_movies_sellstate WHERE 1=1
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="movieId" prepend=" AND ">movieId=#movieId#</isNotEmpty>
+		<isNotEmpty property="startTime" prepend=" AND ">startTime=#startTime#</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND ">endTime=#endTime#</isNotEmpty>
+		<isNotEmpty property="sellType" prepend=" AND ">sellType=#sellType#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+	</select>
+	
+	<select id="selectByLimit" parameterClass="com.ku6ads.dao.entity.webdata.WebdataMoviesSellstate" resultClass="com.ku6ads.dao.entity.webdata.WebdataMoviesSellstate">
+		SELECT * FROM t_webdata_movies_sellstate WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="movieId" prepend=" AND ">movieId=#movieId#</isNotEmpty>
+		<isNotEmpty property="startTime" prepend=" AND ">startTime=#startTime#</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND ">endTime=#endTime#</isNotEmpty>
+		<isNotEmpty property="sellType" prepend=" AND ">sellType=#sellType#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+		<isEmpty property="extLimit.sort">order by id</isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.limit$ offset $extLimit.start$</isNotEmpty>
+	</select>
+
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.webdata.WebdataMoviesSellstate">
+ 		UPDATE t_webdata_movies_sellstate SET 
+		<isNotNull property="startTime">startTime=#startTime#, </isNotNull>
+		<isNotNull property="endTime">endTime=#endTime#, </isNotNull>
+		<isNotNull property="sellType">sellType=#sellType#, </isNotNull>
+		<isNotNull property="status">status=#status#, </isNotNull>
+		<isNotNull property="movieId">movieId=#movieId#, </isNotNull>
+		 id=#id#
+		WHERE
+		 id=#id#
+	</update>
+
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+ 		update t_webdata_movies_sellstate set status=1 WHERE  id=#value#
+	</delete>
+
+</sqlMap>

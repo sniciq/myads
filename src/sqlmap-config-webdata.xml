@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<settings useStatementNamespaces="true"/>
+	<sqlMap resource="sql/webdata/DimArea.xml" />
+	<sqlMap resource="sql/webdata/MetaProdName.xml" />
+	<sqlMap resource="sql/webdata/flowdata.xml" />
+	<sqlMap resource="sql/webdata/HotProgram.xml" />
+	<sqlMap resource="sql/webdata/hotfilm.xml" />
+	<sqlMap resource="sql/webdata/HotfilmVideo.xml" />
+	<sqlMap resource="sql/webdata/HotData.xml" />
+	<sqlMap resource="sql/webdata/DimCdnArea.xml" />
+	<sqlMap resource="sql/webdata/DimCdnCity.xml" />
+	<sqlMap resource="sql/webdata/DimProductVV.xml" />
+	
+</sqlMapConfig>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sysconfig.Role">	
+	<select id="selectByLimit" parameterClass="com.ku6ads.dao.entity.sysconfig.Role" resultClass="com.ku6ads.dao.entity.sysconfig.Role">
+ 		SELECT * FROM t_role WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="name" prepend=" AND ">name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="note" prepend=" AND ">note=#note#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+		<isNotEmpty property="creator" prepend=" AND ">creator=#creator#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+		<isNotEmpty property="modifier" prepend=" AND ">modifier=#modifier#</isNotEmpty>
+		<isNotEmpty property="modifyTime" prepend=" AND ">modifyTime=#modifyTime#</isNotEmpty>
+		<isEmpty property="extLimit.sort">order by id DESC </isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>		
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.sysconfig.Role" resultClass="java.lang.Integer">
+		select count(1) FROM t_role
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="name" prepend=" AND ">name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="note" prepend=" AND ">note=#note#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+		<isNotEmpty property="creator" prepend=" AND ">creator=#creator#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+		<isNotEmpty property="modifier" prepend=" AND ">modifier=#modifier#</isNotEmpty>
+		<isNotEmpty property="modifyTime" prepend=" AND ">modifyTime=#modifyTime#</isNotEmpty>
+	</select>
+	
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.sysconfig.Role" resultClass="com.ku6ads.dao.entity.sysconfig.Role">
+ 		SELECT * FROM t_role WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="name" prepend=" AND ">name=#name#</isNotEmpty>
+		<isNotEmpty property="note" prepend=" AND ">note=#note#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+		<isNotEmpty property="creator" prepend=" AND ">creator=#creator#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+		<isNotEmpty property="modifier" prepend=" AND ">modifier=#modifier#</isNotEmpty>
+		<isNotEmpty property="modifyTime" prepend=" AND ">modifyTime=#modifyTime#</isNotEmpty>
+	</select>
+	
+	<select id="selectEntityCount" parameterClass="com.ku6ads.dao.entity.sysconfig.Role" resultClass="java.lang.Integer">
+		select count(1) FROM t_role
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="name" prepend=" AND ">name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="note" prepend=" AND ">note=#note#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+		<isNotEmpty property="creator" prepend=" AND ">creator=#creator#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+		<isNotEmpty property="modifier" prepend=" AND ">modifier=#modifier#</isNotEmpty>
+		<isNotEmpty property="modifyTime" prepend=" AND ">modifyTime=#modifyTime#</isNotEmpty>
+	</select>
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.sysconfig.Role">
+		select * from t_role where id=#value#
+	</select >
+	
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.sysconfig.Role">
+ 		insert into t_role(
+			<isNotEmpty property="name">name,</isNotEmpty>
+			<isNotEmpty property="note">note,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime,</isNotEmpty>
+			createTime
+		) values (
+			<isNotEmpty property="name">#name#,</isNotEmpty>
+			<isNotEmpty property="note">#note#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="modifier">#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">#modifyTime#,</isNotEmpty>
+			#createTime#
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		update t_role set status=1 where id=#value#
+	</delete>
+	
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.sysconfig.Role">
+		update t_role set
+		<isNotEmpty property="name">name=#name#,</isNotEmpty>
+		<isNotEmpty property="note">note=#note#,</isNotEmpty>
+		<isNotEmpty property="status">status=#status#,</isNotEmpty>
+		<isNotEmpty property="creator">creator=#creator#,</isNotEmpty>
+		<isNotEmpty property="createTime">createTime=#createTime#,</isNotEmpty>
+		<isNotEmpty property="modifier">modifier=#modifier#,</isNotEmpty>
+		<isNotEmpty property="modifyTime">modifyTime=#modifyTime#,</isNotEmpty>
+		id=#id#
+		where id=#id#
+	</update>
+	
+	<select id="selectUserByRoleId" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.sysconfig.UserRole">
+		SELECT * FROM t_user_role
+		WHERE roleId = #value# and status = 0
+	</select>
+	
+	<select id="selectUserCountByRoleId" parameterClass="java.lang.Integer" resultClass="java.lang.Integer">
+		SELECT count(1) FROM t_user_role
+		WHERE roleId = #value# and status = 0
+	</select>
+	
+	<select id="selectUserAdd" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.sysconfig.User">
+		SELECT * FROM t_user WHERE status = 0 and id not in(select userId from t_user_role where  roleId = #value# and status = 0)
+	</select>
+	
+	<select id="selectUserAddCount" parameterClass="java.lang.Integer" resultClass="java.lang.Integer">
+		SELECT count(1) FROM t_user WHERE status = 0 and id not in(select userId from t_user_role where  roleId = #value# and status = 0)
+	</select>
+	
+	<select id="selectUserByRole" parameterClass="com.ku6ads.dao.entity.sysconfig.UserRole" resultClass="com.ku6ads.dao.entity.sysconfig.UserRole">
+		SELECT * FROM t_user_role
+		WHERE 1=1
+		<isNotEmpty property="roleId" prepend=" AND ">roleId=#roleId#</isNotEmpty>
+		<isNotEmpty property="userId" prepend=" AND ">userId=#userId#</isNotEmpty>
+		<isNotEmpty property="username" prepend=" AND ">username=#username#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+	</select>
+	
+	<insert id="insertUserByRole" parameterClass="com.ku6ads.dao.entity.sysconfig.UserRole">
+		insert into t_user_role(
+		<isNotEmpty property="roleId">roleId,</isNotEmpty>
+		<isNotEmpty property="username">username,</isNotEmpty>
+		<isNotEmpty property="status">status,</isNotEmpty>
+		userId
+		)values(
+		<isNotEmpty property="roleId">#roleId#,</isNotEmpty>
+		<isNotEmpty property="username">#username#,</isNotEmpty>
+		<isNotEmpty property="status">#status#,</isNotEmpty>
+		#userId#
+		)
+	</insert>
+	
+	<delete id="deleteUserByRole" parameterClass="com.ku6ads.dao.entity.sysconfig.UserRole">
+		update t_user_role set status=1 where id=#id#
+	</delete>
+	
+	<select id="selectByRoleName" parameterClass="java.lang.String" resultClass="com.ku6ads.dao.entity.sysconfig.UserRole">
+ 		select * from t_user_role ur left join t_role r on ur.roleId = r.id where ur.status !=1 and r.name = #value#
+	</select>
+	
+	<select id="selectEmailList" parameterClass="java.lang.String" resultClass="java.lang.String">
+ 		select t_user.mail from t_user,t_user_role,t_role  where t_user.id=t_user_role.userId and t_user_role.roleId=t_role.id and t_role.name=#value#
+	</select>
+	
+	<select id="selectUserRoleByName" parameterClass="com.ku6ads.dao.entity.sysconfig.UserRole" resultClass="com.ku6ads.dao.entity.sysconfig.UserRole">
+		SELECT * FROM t_user_role
+		WHERE status = 0 and username = #username#  and roleId=#roleId#
+	</select>
+</sqlMap>

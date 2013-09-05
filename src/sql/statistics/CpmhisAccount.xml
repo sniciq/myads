@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.CpmhisAccount">
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.statistics.CpmhisAccount" resultClass="java.lang.Integer">
+		select count(2) from 
+		(
+			SELECT count(1)
+			FROM t_book as a 
+			inner join  t_advbar as b on  a.advbarId = b.id
+			inner join t_adv_book as c on a.id = c.bookId
+			where a.status != 1 and b.status!=1 and c.status!=1 and a.saletype=2
+			<isNotEmpty property="startTime" prepend=" AND ">startTime >= #startTime#</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" AND "><![CDATA[endTime <= #endTime#]]></isNotEmpty>
+			group by c.advId) a
+	</select>
+	
+	<select id="selectByLimit" parameterClass="com.ku6ads.dao.entity.statistics.CpmhisAccount" resultClass="com.ku6ads.dao.entity.statistics.CpmhisAccount">
+		SELECT b.id as advbarId,b.name as advbarName,b.channelName as channelName,a.format as format,a.disprice as price,c.advId as advertiseId
+		FROM t_book as a 
+		inner join  t_advbar as b on  a.advbarId = b.id
+		inner join t_adv_book as c on a.id = c.bookId
+		where a.status != 1 and b.status!=1 and c.status!=1 and a.saletype=2
+		<isNotEmpty property="startTime" prepend=" AND ">startTime >= #startTime#</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND "><![CDATA[endTime <= #endTime#]]></isNotEmpty>
+		group by c.advId
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<select id="getAdvBarPV" parameterClass="com.ku6ads.dao.entity.statistics.CpmhisAccount" resultClass="java.lang.Long">
+		select sum(pv) from t_statistics_advbar_month where advbarId=#advbarId#
+		<isNotEmpty property="startTime" prepend=" and ">statTime BETWEEN #startTime# and #endTime#</isNotEmpty>
+	</select>
+	
+	<select id="getAdvPV" parameterClass="com.ku6ads.dao.entity.statistics.CpmhisAccount" resultClass="java.lang.Long">
+		select sum(pv) from t_statistics_advertisement_month where advertiseId=#advertiseId#
+		<isNotEmpty property="startTime" prepend=" and ">statTime BETWEEN #startTime# and #endTime#</isNotEmpty>
+	</select>
+	
+	<select id="getFlightNumByAdv" parameterClass="com.ku6ads.dao.entity.statistics.CpmhisAccount" resultClass="java.lang.Integer">
+		select sum(flightnum) from t_advflight as a
+			inner join t_adv_book as b on a.bookId=b.bookId
+			where b.advId=#advertiseId# and a.status!=1 and b.status!=1 and a.saletype=2
+			<isNotEmpty property="startTime" prepend=" AND ">a.startTime >= #startTime#</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" AND "><![CDATA[a.endTime <= #endTime#]]></isNotEmpty>
+	</select>
+	
+	<select id="getFlightNumByBook" parameterClass="com.ku6ads.dao.entity.statistics.CpmhisAccount" resultClass="java.lang.Integer">
+		select sum(flightNum) from t_book as a
+			 inner join t_adv_book as b on a.id = b.bookId
+			 where b.advId=#advertiseId# and a.status!=1 and b.status!=1 and a.saletype=2
+			 <isNotEmpty property="startTime" prepend=" AND ">a.startTime >= #startTime#</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" AND "><![CDATA[a.endTime <= #endTime#]]></isNotEmpty>
+	</select>
+</sqlMap>

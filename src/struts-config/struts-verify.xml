@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC  
+	 "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
+	 "http://struts.apache.org/dtds/struts-2.0.dtd"> 
+
+<struts>
+	<package name="HTML/verify" extends="basePackage">	
+		<!-- 审核状态变为待客户确认2 -->
+		<action name="ProjectVerifyAction_verifyCustomer" class="ProjectVerifyAction" method="verifyCustomer"></action>
+		<!-- 审核状态变为退回待修改4 -->
+		<action name="ProjectVerifyAction_back" class="ProjectVerifyAction" method="back"></action>
+		<!-- 审核状态变为未通过5 -->
+		<action name="ProjectVerifyAction_verifyNotPass" class="ProjectVerifyAction" method="verifyNotPass"></action>
+		<!-- 审核状态变为通过6 -->
+		<action name="ProjectVerifyAction_verifyPass" class="ProjectVerifyAction" method="verifyPass"></action>	
+		<!-- 提交审核 -->
+		<action name="ProjectVerifyAction_submit" class="ProjectVerifyAction" method="submit"></action>	
+	</package>
+</struts>

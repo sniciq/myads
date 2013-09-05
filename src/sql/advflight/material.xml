@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="advflight.Material">
+
+	
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.advflight.Material">
+		INSERT INTO t_material(
+			<isNotEmpty property="materialName">materialName,</isNotEmpty>
+			<isNotEmpty property="physicalName">physicalName,</isNotEmpty>
+			<isNotEmpty property="isSuccess">isSuccess,</isNotEmpty>
+			<isNotEmpty property="path">path,</isNotEmpty>
+			<isNotEmpty property="name">name,</isNotEmpty>
+			<isNotEmpty property="advertiserId">advertiserId,</isNotEmpty>
+			<isNotEmpty property="meterialType">meterialType,</isNotEmpty>
+			<isNotEmpty property="note">note,</isNotEmpty>
+			<isNotEmpty property="playTime">playTime,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="textContent">textContent,</isNotEmpty>
+			<isNotEmpty property="pureCode">pureCode,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime</isNotEmpty>
+		)VALUES(
+			<isNotEmpty property="materialName">#materialName#,</isNotEmpty>
+			<isNotEmpty property="physicalName">#physicalName#,</isNotEmpty>
+			<isNotEmpty property="isSuccess">#isSuccess#,</isNotEmpty>
+			<isNotEmpty property="path">#path#,</isNotEmpty>
+			<isNotEmpty property="name">#name#,</isNotEmpty>
+			<isNotEmpty property="advertiserId">#advertiserId#,</isNotEmpty>
+			<isNotEmpty property="meterialType">#meterialType#,</isNotEmpty>
+			<isNotEmpty property="note">#note#,</isNotEmpty>
+			<isNotEmpty property="playTime">#playTime#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="textContent">#textContent#,</isNotEmpty>
+			<isNotEmpty property="pureCode">#pureCode#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="createTime">#createTime#</isNotEmpty>
+		)
+	 <selectKey resultClass="int" keyProperty="materialId" >  
+          SELECT @@IDENTITY AS materialId  
+     </selectKey>   
+	</insert>
+	
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.advflight.Material" resultClass="java.lang.Integer">
+		SELECT COUNT(*) FROM t_material WHERE  status != 1 and
+		meterialType in ($meterialType$)
+		<isNotEmpty property="name" prepend=" AND ">name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="advertiserId" prepend=" AND ">advertiserId = #advertiserId#</isNotEmpty>
+		<isNotEmpty property="isSuccess" prepend=" AND ">isSuccess = #isSuccess#</isNotEmpty>
+	
+	</select>
+	
+	<select id="selectByLimit" resultClass="com.ku6ads.dao.entity.advflight.Material" parameterClass="com.ku6ads.dao.entity.advflight.Material">
+		SELECT a.*,b.name as advertiserName FROM t_material a left join t_advertiser b
+		on a.advertiserId = b.id
+		WHERE a.status != 1 and 
+		a.meterialType in ($meterialType$)
+		<isNotEmpty property="name" prepend=" AND ">a.name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="advertiserId" prepend=" AND ">a.advertiserId = #advertiserId#</isNotEmpty>
+		<isNotEmpty property="isSuccess" prepend=" AND ">a.isSuccess = #isSuccess#</isNotEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isEmpty property="extLimit.sort">order by a.materialId desc</isEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		UPDATE t_material SET status = 1 WHERE materialId=#value#
+	</delete>
+	
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.advflight.Material">
+		UPDATE t_material SET 
+			<isNotEmpty property="materialName">materialName=#materialName#,</isNotEmpty>
+			<isNotEmpty property="name">name=#name#,</isNotEmpty>
+			<isNotEmpty property="advertiserId">advertiserId=#advertiserId#,</isNotEmpty>
+			<isNotEmpty property="path">path=#path#,</isNotEmpty>
+			<isNotEmpty property="meterialType">meterialType=#meterialType#,</isNotEmpty>
+			<isNotEmpty property="note">note=#note#,</isNotEmpty>
+			<isNotEmpty property="physicalName">physicalName=#physicalName#,</isNotEmpty>
+			<isNotEmpty property="isSuccess">isSuccess=#isSuccess#,</isNotEmpty>
+			<isNotEmpty property="playTime">playTime=#playTime#,</isNotEmpty>
+			<isNotEmpty property="status">status=#status#,</isNotEmpty>
+			<isNotEmpty property="textContent">textContent=#textContent#,</isNotEmpty>
+			<isNotEmpty property="pureCode">pureCode=#pureCode#,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier=#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime=#modifyTime#,</isNotEmpty>
+			materialId=#materialId#
+		WHERE materialId=#materialId#
+	</update>
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.advflight.Material">
+		SELECT a.*,b.name as advertiserName FROM t_material a left join t_advertiser b
+		on a.advertiserId = b.id
+		WHERE a.materialId=#value#
+	</select >
+
+</sqlMap>

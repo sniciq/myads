@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.webdata.hotdata">
+	<select id="selectProgramLimit" parameterClass="com.ku6ads.struts.webdata.ProgramData" resultClass="com.ku6ads.struts.webdata.ProgramData">
+		select custom_code,day_time,hour_id,ct_pv as pv,ct_uv as uv  from t_stat_pv_hour_custom where 1=1 
+		<isNotEmpty property="programName" prepend=" AND ">custom_code like '%$programName$%'</isNotEmpty>
+		<isNotEmpty property="startTime" prepend=" AND ">day_time > '$startTime$ 00:00:00'</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND "><![CDATA[ day_time <= '$endTime$ 23:59:59' ]]></isNotEmpty>
+		<isEmpty property="extLimit.sort">order by day_time desc</isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.limit$ offset $extLimit.start$</isNotEmpty>
+	</select>
+	
+	<select id="selectProgramLimitCount" parameterClass="com.ku6ads.struts.webdata.ProgramData" resultClass="java.lang.Integer">
+		select count(1) from t_stat_pv_hour_custom where 1=1 
+		<isNotEmpty property="programName" prepend=" AND ">custom_code like '%$programName$%'</isNotEmpty>
+		<isNotEmpty property="startTime" prepend=" AND ">day_time > '$startTime$ 00:00:00'</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND "><![CDATA[ day_time <= '$endTime$ 23:59:59' ]]></isNotEmpty>
+	</select>
+	
+	<select id="searchEveryDayDataCount" parameterClass="com.ku6ads.struts.webdata.HotFilmData" resultClass="java.lang.Integer">
+		select count(1) from (
+			select distinct p.vid,p.day_time,p.pcode,p.dcode,p.pv,p.uv, d.province, c.city, v.videoname, f.film_Name as filmName 
+			from t_stat_vid_area_pv p
+				left join dim_cdn_area d on p.pcode = d.pcode
+				left join dim_cdn_city c on c.dcode = p.dcode and c.pcode=d.pcode
+				inner join hotfilm_video v on v.vid = p.vid
+				left join hotfilm f on f.id = v.hotfilmId
+			where 1=1 
+			<isNotEmpty property="startTime" prepend=" AND ">day_time >= '$startTime$'</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" AND "><![CDATA[day_time <= '$endTime$ 23:59:59' ]]></isNotEmpty>
+			<isNotEmpty property="filmName" prepend=" AND ">f.film_Name like '%$filmName$%'</isNotEmpty>
+			<isNotEmpty property="cityDcodeList" prepend=" AND ">c.id in ($cityDcodeList$)</isNotEmpty>
+		) m
+	</select>
+	
+	<select id="searchEveryDayData" parameterClass="com.ku6ads.struts.webdata.HotFilmData" resultClass="com.ku6ads.struts.webdata.HotFilmData">
+		select distinct p.vid,p.day_time,p.pcode,p.dcode,p.pv,p.uv, d.province, c.city, v.videoname, f.film_Name as filmName 
+		from t_stat_vid_area_pv p
+			left join dim_cdn_area d on p.pcode = d.pcode
+			left join dim_cdn_city c on c.dcode = p.dcode and c.pcode=d.pcode
+			inner join hotfilm_video v on v.vid = p.vid
+			left join hotFilm f on f.id = v.hotfilmId
+		where 1=1 
+		<isNotEmpty property="startTime" prepend=" AND ">day_time >= '$startTime$'</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND "><![CDATA[day_time <= '$endTime$ 23:59:59' ]]></isNotEmpty>
+		<isNotEmpty property="filmName" prepend=" AND ">f.film_Name like '%$filmName$%'</isNotEmpty>
+		<isNotEmpty property="cityDcodeList" prepend=" AND ">c.id in ($cityDcodeList$)</isNotEmpty>
+		<isEmpty property="extLimit.sort">order by province,city,filmName,videoname</isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.limit$ offset $extLimit.start$</isNotEmpty>
+	</select>
+	
+	<select id="searchAvgDataCount" parameterClass="com.ku6ads.struts.webdata.HotFilmData" resultClass="java.lang.Integer">
+		select count(1) from (
+			select distinct pp.vid,pp.pcode,pp.dcode,pp.pv,pp.uv, d.province, c.city, v.videoname, f.film_Name as filmName from (
+				select  p.vid,p.pcode,p.dcode, avg(p.pv)::int pv , avg(p.uv)::int uv   
+				from t_stat_vid_area_pv p,hotfilm_video v      
+				where v.vid = p.vid     
+				<isNotEmpty property="startTime" prepend=" AND ">day_time >= '$startTime$'</isNotEmpty>
+				<isNotEmpty property="endTime" prepend=" AND "><![CDATA[day_time <= '$endTime$ 23:59:59' ]]></isNotEmpty>
+				group by p.vid,p.pcode,p.dcode   
+			 ) pp
+			left join dim_cdn_area d on pp.pcode = d.pcode    
+			left join dim_cdn_city c on c.dcode = pp.dcode and c.pcode=d.pcode
+			inner join hotfilm_video v on v.vid = pp.vid    
+			left join hotFilm f on f.id = v.hotfilmId 
+			where 1=1 
+			<isNotEmpty property="filmName" prepend=" AND ">f.film_Name like '%$filmName$%'</isNotEmpty> 
+			<isNotEmpty property="cityDcodeList" prepend=" AND ">c.id in ($cityDcodeList$)</isNotEmpty>
+		) bb
+	</select>
+	
+	<select id="searchAvgData" parameterClass="com.ku6ads.struts.webdata.HotFilmData" resultClass="com.ku6ads.struts.webdata.HotFilmData">
+		select distinct pp.vid,pp.pcode,pp.dcode,pp.pv,pp.uv, d.province, c.city, v.videoname, f.film_Name as filmName from (
+			select  p.vid,p.pcode,p.dcode, avg(p.pv)::int pv , avg(p.uv)::int uv   
+			from t_stat_vid_area_pv p,hotfilm_video v      
+			where v.vid = p.vid     
+			<isNotEmpty property="startTime" prepend=" AND ">day_time >= '$startTime$'</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" AND "><![CDATA[day_time <= '$endTime$ 23:59:59' ]]></isNotEmpty>
+			group by p.vid,p.pcode,p.dcode   
+		 ) pp
+		left join dim_cdn_area d on pp.pcode = d.pcode    
+		left join dim_cdn_city c on c.dcode = pp.dcode  and c.pcode=d.pcode
+		inner join hotfilm_video v on v.vid = pp.vid    
+		left join hotFilm f on f.id = v.hotfilmId 
+		where 1=1 
+		<isNotEmpty property="filmName" prepend=" AND ">f.film_Name like '%$filmName$%'</isNotEmpty> 
+		<isNotEmpty property="cityDcodeList" prepend=" AND ">c.id in ($cityDcodeList$)</isNotEmpty>
+		<isEmpty property="extLimit.sort">order by province,city,filmName,videoname</isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.limit$ offset $extLimit.start$</isNotEmpty>
+	</select>
+	
+	<select id="searchEveryDayVVDataCount" parameterClass="com.ku6ads.struts.webdata.HotFilmData" resultClass="java.lang.Integer">
+		select count(1) from (
+			select r.vid,r.day_time,r.pcode,r.dcode,r.province, r.city, r.videoname, r.filmName,r.prod_name, sum(vv) as vv
+			from (
+				select vv.vid,vv.day_time,vv.pcode,vv.dcode,vv.vv,d.province, c.city, v.videoname, f.film_Name as filmName,pd.prod_name    
+				from t_stat_vid_vv vv , hotfilm_video v ,hotFilm f,dim_cdn_area d,dim_cdn_city c, dim_product_vv pd   
+				where v.vid = vv.vid and f.id = v.hotfilmId and vv.pcode = d.pcode and c.dcode = vv.dcode and c.pcode=d.pcode  
+					and vv.channel_id = pd.vv_prod_id     
+					<isNotEmpty property="startTime" prepend=" AND ">day_time >= '$startTime$'</isNotEmpty>
+					<isNotEmpty property="endTime" prepend=" AND "><![CDATA[day_time <= '$endTime$ 23:59:59' ]]></isNotEmpty>
+					<isNotEmpty property="cityDcodeList" prepend=" AND ">c.id in ($cityDcodeList$)</isNotEmpty>
+					<isNotEmpty property="prodIdList" prepend=" AND ">pd.vv_prod_id in ($prodIdList$)</isNotEmpty>
+					<isNotEmpty property="filmName" prepend=" AND ">f.film_Name like '%$filmName$%'</isNotEmpty>
+			) r
+			group by r.vid,r.day_time,r.pcode,r.dcode,r.province, r.city, r.videoname, r.filmName,r.prod_name
+		) vv
+	</select>
+	
+	<select id="searchEveryDayVVData" parameterClass="com.ku6ads.struts.webdata.HotFilmData" resultClass="com.ku6ads.struts.webdata.HotFilmData">
+		select r.vid,r.day_time,r.pcode,r.dcode,r.province, r.city, r.videoname, r.filmName,r.prod_name, sum(vv) as vv
+		from (
+			select vv.vid,vv.day_time,vv.pcode,vv.dcode,vv.vv,d.province, c.city, v.videoname, f.film_Name as filmName,pd.prod_name    
+			from t_stat_vid_vv vv , hotfilm_video v ,hotFilm f,dim_cdn_area d,dim_cdn_city c, dim_product_vv pd   
+			where v.vid = vv.vid and f.id = v.hotfilmId and vv.pcode = d.pcode and c.dcode = vv.dcode and c.pcode=d.pcode  
+				and vv.channel_id = pd.vv_prod_id     
+				<isNotEmpty property="startTime" prepend=" AND ">day_time >= '$startTime$'</isNotEmpty>
+				<isNotEmpty property="endTime" prepend=" AND "><![CDATA[day_time <= '$endTime$ 23:59:59' ]]></isNotEmpty>
+				<isNotEmpty property="cityDcodeList" prepend=" AND ">c.id in ($cityDcodeList$)</isNotEmpty>
+				<isNotEmpty property="prodIdList" prepend=" AND ">pd.vv_prod_id in ($prodIdList$)</isNotEmpty>
+				<isNotEmpty property="filmName" prepend=" AND ">f.film_Name like '%$filmName$%'</isNotEmpty>
+		) r
+		group by r.vid,r.day_time,r.pcode,r.dcode,r.province, r.city, r.videoname, r.filmName,r.prod_name
+		<isEmpty property="extLimit.sort">order by filmName,videoname,prod_name,province,city</isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.limit$ offset $extLimit.start$</isNotEmpty>
+	</select>
+	
+	<select id="searchAvgVVDataCount" parameterClass="com.ku6ads.struts.webdata.HotFilmData" resultClass="java.lang.Integer">
+		select count(1) from (
+			select filmName,videoname, prod_name, province, city, channel_id, vid,pcode,dcode,avg(vv)::int as vv from (
+				select r.filmName,r.videoname, r.prod_name, r.province, r.city, r.channel_id, sum(vv) as vv,r.vid,r.day_time,r.pcode,r.dcode    
+					from (     
+						select vv.vid,vv.day_time,vv.pcode,vv.dcode,vv.channel_id,vv.vv,d.province, c.city, v.videoname, f.film_Name as filmName,pd.prod_name        
+						 from t_stat_vid_vv vv , hotfilm_video v ,hotFilm f,dim_cdn_area d,dim_cdn_city c, dim_product_vv pd       
+						 where v.vid = vv.vid and f.id = v.hotfilmId and vv.pcode = d.pcode and c.dcode = vv.dcode and c.pcode=d.pcode        
+						and vv.channel_id = pd.vv_prod_id    
+						<isNotEmpty property="startTime" prepend=" AND ">day_time >= '$startTime$'</isNotEmpty>
+						<isNotEmpty property="endTime" prepend=" AND "><![CDATA[day_time <= '$endTime$ 23:59:59' ]]></isNotEmpty>
+						<isNotEmpty property="cityDcodeList" prepend=" AND ">c.id in ($cityDcodeList$)</isNotEmpty>
+						<isNotEmpty property="prodIdList" prepend=" AND ">pd.vv_prod_id in ($prodIdList$)</isNotEmpty>
+						<isNotEmpty property="filmName" prepend=" AND ">f.film_Name like '%$filmName$%'</isNotEmpty>        
+					) r    
+				group by r.vid,r.day_time,r.pcode,r.dcode,r.province, r.city, r.channel_id,r.videoname, r.filmName,r.prod_name 
+			) avt
+			group by filmName,videoname, prod_name, province, city, channel_id,vid,pcode,dcode
+		) rrr
+	</select>
+	
+	<select id="searchAvgVVData" parameterClass="com.ku6ads.struts.webdata.HotFilmData" resultClass="com.ku6ads.struts.webdata.HotFilmData">
+		select filmName,videoname, prod_name, province, city, channel_id, vid,pcode,dcode,avg(vv)::int as vv from (
+			select r.filmName,r.videoname, r.prod_name, r.province, r.city, r.channel_id, sum(vv) as vv,r.vid,r.day_time,r.pcode,r.dcode    
+				from (     
+					select vv.vid,vv.day_time,vv.pcode,vv.dcode,vv.channel_id,vv.vv,d.province, c.city, v.videoname, f.film_Name as filmName,pd.prod_name        
+					 from t_stat_vid_vv vv , hotfilm_video v ,hotFilm f,dim_cdn_area d,dim_cdn_city c, dim_product_vv pd       
+					 where v.vid = vv.vid and f.id = v.hotfilmId and vv.pcode = d.pcode and c.dcode = vv.dcode and c.pcode=d.pcode        
+					and vv.channel_id = pd.vv_prod_id    
+					<isNotEmpty property="startTime" prepend=" AND ">day_time >= '$startTime$'</isNotEmpty>
+					<isNotEmpty property="endTime" prepend=" AND "><![CDATA[day_time <= '$endTime$ 23:59:59' ]]></isNotEmpty>
+					<isNotEmpty property="cityDcodeList" prepend=" AND ">c.id in ($cityDcodeList$)</isNotEmpty>
+					<isNotEmpty property="prodIdList" prepend=" AND ">pd.vv_prod_id in ($prodIdList$)</isNotEmpty>
+					<isNotEmpty property="filmName" prepend=" AND ">f.film_Name like '%$filmName$%'</isNotEmpty>        
+				) r    
+			group by r.vid,r.day_time,r.pcode,r.dcode,r.province, r.city, r.channel_id,r.videoname, r.filmName,r.prod_name 
+		) avt
+		group by filmName,videoname, prod_name, province, city, channel_id,vid,pcode,dcode
+		<isEmpty property="extLimit.sort">order by filmName,videoname,prod_name,province,city</isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.limit$ offset $extLimit.start$</isNotEmpty>
+	</select>
+</sqlMap>

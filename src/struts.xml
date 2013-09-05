@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>  
+<!DOCTYPE struts PUBLIC  
+     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
+     "http://struts.apache.org/dtds/struts-2.0.dtd">  
+ <struts>
+ 	 <constant name="struts.i18n.encoding" value="UTF-8"></constant>
+ 	 <constant name="struts.action.extension" value="action,ajax"></constant>
+ 	   
+ 	 <!-- 开发调试模式 -->
+	<constant name="struts.devMode" value="false" />
+	<!-- 浏览器缓存静态内容，开发阶段为flase -->
+	<constant name="struts.serve.static.browserCache" value="false" />
+	
+	<!-- 设置上传文件时不要Tomcat的临时路径,使用设置的值 -->
+	<constant name="struts.multipart.saveDir" value="/temp" />
+	<!-- 设置上传文件大小-->
+	<constant name="struts.multipart.maxSize" value="209715200000000"/> 
+	
+	
+	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.ui.templateDir" value="template" />
+	<constant name="struts.ui.templateSuffix" value="ftl" />
+	 
+	<package name="basePackage" extends="struts-default" abstract="true">
+		<global-results>
+			<result name="Exception">/HTML/Exception.jsp</result>
+		</global-results>
+		
+		<global-exception-mappings>
+			<exception-mapping exception="java.sql.SQLException"
+				result="SQLException" />
+			<exception-mapping exception="java.lang.Exception"
+				result="Exception" />
+		</global-exception-mappings>
+	</package>
+ 	  
+     <include file="struts-config/struts-config.xml"></include>
+     <include file="struts-config/struts-basic.xml"></include>
+     <include file="struts-config/struts-webdata.xml"></include>
+     <include file="struts-config/struts-webdata-others.xml"></include>
+     <include file="struts-config/struts-sysconfig.xml"></include>
+     <include file="struts-config/struts-advert.xml"></include>
+     <include file="struts-config/struts-verify.xml"></include>
+     <include file="struts-config/struts-advflight.xml"></include>
+	 <include file="struts-config/struts-controller.xml"></include>
+	 <include file="struts-config/struts-statistics.xml"></include>
+	 <include file="struts-config/struts-advproduct.xml"></include>
+ </struts>

@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="advflight.book">
+
+	<sql id="where-allSelectCondition" >
+		where 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="projectId" prepend=" AND ">projectId=#projectId#</isNotEmpty>
+		<isNotEmpty property="bookPackageId" prepend=" AND ">bookPackageId=#bookPackageId#</isNotEmpty>
+		<isNotEmpty property="advbarId" prepend=" AND ">advbarId=#advbarId#</isNotEmpty>
+		<isNotEmpty property="channelId" prepend=" AND ">channelId=#channelId#</isNotEmpty>
+		<isNotEmpty property="startTime" prepend=" AND ">startTime=#startTime#</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND ">endTime=#endTime#</isNotEmpty>
+		<isNotEmpty property="saleType" prepend=" AND ">saleType=#saleType#</isNotEmpty>
+		<isNotEmpty property="price" prepend=" AND ">price=#price#</isNotEmpty>
+		<isNotEmpty property="discount" prepend=" AND ">discount=#discount#</isNotEmpty>
+		<isNotEmpty property="disprice" prepend=" AND ">disprice=#disprice#</isNotEmpty>
+		<isNotEmpty property="useType" prepend=" AND ">useType=#useType#</isNotEmpty>
+		<isNotEmpty property="flightNum" prepend=" AND ">flightNum=#flightNum#</isNotEmpty>
+		<isNotEmpty property="priority" prepend=" AND ">priority=#priority#</isNotEmpty>
+		<isNotEmpty property="proportion" prepend=" AND ">proportion=#proportion#</isNotEmpty>
+		<isNotEmpty property="priceId" prepend=" AND ">priceId=#priceId#</isNotEmpty>
+		<isNotEmpty property="allflux" prepend=" AND ">allflux=#allflux#</isNotEmpty>
+		<isNotEmpty property="dayClick" prepend=" AND ">dayClick=#dayClick#</isNotEmpty>
+		<isNotEmpty property="allClick" prepend=" AND ">allClick=#allClick#</isNotEmpty>
+		<isNotEmpty property="period" prepend=" AND ">period=#period#</isNotEmpty>
+		<isNotEmpty property="periodSum" prepend=" AND ">periodSum=#periodSum#</isNotEmpty>
+		<isNotEmpty property="hourDirect" prepend=" AND ">hourDirect=#hourDirect#</isNotEmpty>
+		<isNotEmpty property="areaDirect" prepend=" AND ">areaDirect=#areaDirect#</isNotEmpty>
+		<isNotEmpty property="isFrequency" prepend=" AND ">isFrequency=#isFrequency#</isNotEmpty>
+		<isNotEmpty property="scrBPackageId" prepend=" AND ">scrBPackageId=#scrBPackageId#</isNotEmpty>
+		<isNotEmpty property="frequencyType" prepend=" AND ">frequencyType=#frequencyType#</isNotEmpty>
+		<isNotEmpty property="frequencyNum" prepend=" AND ">frequencyNum=#frequencyNum#</isNotEmpty>
+		<isNotEmpty property="isContentDirect" prepend=" AND ">isContentDirect=#isContentDirect#</isNotEmpty>
+		<isNotEmpty property="keyword" prepend=" AND ">keyword=#keyword#</isNotEmpty>
+		<isNotEmpty property="user" prepend=" AND ">user=#user#</isNotEmpty>
+		<isNotEmpty property="video" prepend=" AND ">video=#video#</isNotEmpty>
+		<isNotEmpty property="program" prepend=" AND ">program=#program#</isNotEmpty>
+		<isNotEmpty property="activity" prepend=" AND ">activity=#activity#</isNotEmpty>
+		<isNotEmpty property="subject" prepend=" AND ">subject=#subject#</isNotEmpty>
+		<isNotEmpty property="isnull" prepend=" AND ">isnull=#isnull#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">t_book.status=#status#</isNotEmpty>
+		<isNotEmpty property="creator" prepend=" AND ">t_book.creator=#creator#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">t_book.createTime=#createTime#</isNotEmpty>
+		<isNotEmpty property="modifier" prepend=" AND ">t_book.modifier=#modifier#</isNotEmpty>
+		<isNotEmpty property="modifyTime" prepend=" AND ">t_book.modifyTime=#modifyTime#</isNotEmpty>
+		<isNotEmpty property="bussinessStatus" prepend=" AND ">t_book.bussinessStatus=#bussinessStatus#</isNotEmpty>
+	</sql>
+	
+	<sql id="default-order-limit">
+		<isEmpty property="extLimit.sort">order by t_book.createtime DESC </isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>		
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</sql>
+	
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.advflight.Book">
+ 		insert into t_book(
+			<isNotEmpty property="startTime">startTime,</isNotEmpty>
+			<isNotEmpty property="endTime">endTime,</isNotEmpty>
+			<isNotEmpty property="discount">discount,</isNotEmpty>
+			<isNotEmpty property="disprice">disprice,</isNotEmpty>
+			<isNotEmpty property="dispriceSum">dispriceSum,</isNotEmpty>
+			<isNotEmpty property="flightNum">flightNum,</isNotEmpty>
+			<isNotEmpty property="futureFlight">futureFlight,</isNotEmpty>
+			<isNotEmpty property="allflux">allflux,</isNotEmpty>
+			<isNotEmpty property="dayClick">dayClick,</isNotEmpty>
+			<isNotEmpty property="allClick">allClick,</isNotEmpty>
+			<isNotEmpty property="period">period,</isNotEmpty>
+			<isNotEmpty property="periodSum">periodSum,</isNotEmpty>
+			<isNotEmpty property="hourDirect">hourDirect,</isNotEmpty>
+			<isNotEmpty property="areaDirect">areaDirect,</isNotEmpty>
+			<isNotEmpty property="areaDirectCode">areaDirectCode,</isNotEmpty>
+			<isNotEmpty property="frequencyType">frequencyType,</isNotEmpty>
+			<isNotEmpty property="frequencyNum">frequencyNum,</isNotEmpty>
+			<isNotEmpty property="isContentDirect">isContentDirect,</isNotEmpty>
+			<isNotEmpty property="keyword">keyword,</isNotEmpty>
+			<isNotEmpty property="user">user,</isNotEmpty>
+			<isNotEmpty property="video">video,</isNotEmpty>
+			<isNotEmpty property="program">program,</isNotEmpty>
+			<isNotEmpty property="activity">activity,</isNotEmpty>
+			<isNotEmpty property="subject">subject,</isNotEmpty>
+			<isNotEmpty property="isnull">isnull,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime,</isNotEmpty>
+			<isNotEmpty property="bussinessStatus">bussinessStatus,</isNotEmpty>
+			<isNotEmpty property="projectId">projectId,</isNotEmpty>
+			<isNotEmpty property="bookPackageId">bookPackageId,</isNotEmpty>
+			<isNotEmpty property="advbarId">advbarId,</isNotEmpty>
+			<isNotEmpty property="channelId">channelId,</isNotEmpty>
+			<isNotEmpty property="saleType">saleType,</isNotEmpty>
+			<isNotEmpty property="format">format,</isNotEmpty>
+			<isNotEmpty property="price">price,</isNotEmpty>
+			<isNotEmpty property="priceSum">priceSum,</isNotEmpty>
+			<isNotEmpty property="useType">useType,</isNotEmpty>
+			<isNotEmpty property="priority">priority,</isNotEmpty>
+			<isNotEmpty property="proportion">proportion,</isNotEmpty>
+			<isNotEmpty property="priceId">priceId,</isNotEmpty>
+			<isNotEmpty property="isFrequency">isFrequency,</isNotEmpty>
+			<isNotEmpty property="scrBPackageId">scrBPackageId,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			createTime
+		) values (
+			<isNotEmpty property="startTime">#startTime#,</isNotEmpty>
+			<isNotEmpty property="endTime">#endTime#,</isNotEmpty>
+			<isNotEmpty property="discount">#discount#,</isNotEmpty>
+			<isNotEmpty property="disprice">#disprice#,</isNotEmpty>
+			<isNotEmpty property="dispriceSum">#dispriceSum#,</isNotEmpty>
+			<isNotEmpty property="flightNum">#flightNum#,</isNotEmpty>
+			<isNotEmpty property="futureFlight">#futureFlight#,</isNotEmpty>
+			<isNotEmpty property="allflux">#allflux#,</isNotEmpty>
+			<isNotEmpty property="dayClick">#dayClick#,</isNotEmpty>
+			<isNotEmpty property="allClick">#allClick#,</isNotEmpty>
+			<isNotEmpty property="period">#period#,</isNotEmpty>
+			<isNotEmpty property="periodSum">#periodSum#,</isNotEmpty>
+			<isNotEmpty property="hourDirect">#hourDirect#,</isNotEmpty>
+			<isNotEmpty property="areaDirect">#areaDirect#,</isNotEmpty>
+			<isNotEmpty property="areaDirectCode">#areaDirectCode#,</isNotEmpty>
+			<isNotEmpty property="frequencyType">#frequencyType#,</isNotEmpty>
+			<isNotEmpty property="frequencyNum">#frequencyNum#,</isNotEmpty>
+			<isNotEmpty property="isContentDirect">#isContentDirect#,</isNotEmpty>
+			<isNotEmpty property="keyword">#keyword#,</isNotEmpty>
+			<isNotEmpty property="user">#user#,</isNotEmpty>
+			<isNotEmpty property="video">#video#,</isNotEmpty>
+			<isNotEmpty property="program">#program#,</isNotEmpty>
+			<isNotEmpty property="activity">#activity#,</isNotEmpty>
+			<isNotEmpty property="subject">#subject#,</isNotEmpty>
+			<isNotEmpty property="isnull">#isnull#,</isNotEmpty>
+			<isNotEmpty property="modifier">#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">#modifyTime#,</isNotEmpty>
+			<isNotEmpty property="bussinessStatus">#bussinessStatus#,</isNotEmpty>
+			<isNotEmpty property="projectId">#projectId#,</isNotEmpty>
+			<isNotEmpty property="bookPackageId">#bookPackageId#,</isNotEmpty>
+			<isNotEmpty property="advbarId">#advbarId#,</isNotEmpty>
+			<isNotEmpty property="channelId">#channelId#,</isNotEmpty>
+			<isNotEmpty property="saleType">#saleType#,</isNotEmpty>
+			<isNotEmpty property="format">#format#,</isNotEmpty>
+			<isNotEmpty property="price">#price#,</isNotEmpty>
+			<isNotEmpty property="priceSum">#priceSum#,</isNotEmpty>
+			<isNotEmpty property="useType">#useType#,</isNotEmpty>
+			<isNotEmpty property="priority">#priority#,</isNotEmpty>
+			<isNotEmpty property="proportion">#proportion#,</isNotEmpty>
+			<isNotEmpty property="priceId">#priceId#,</isNotEmpty>
+			<isNotEmpty property="isFrequency">#isFrequency#,</isNotEmpty>
+			<isNotEmpty property="scrBPackageId">#scrBPackageId#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			#createTime#
+		)
+		<selectKey resultClass="java.lang.Integer" keyProperty="id">
+			SELECT @@IDENTITY AS id
+		</selectKey>
+	</insert>
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.advflight.Book">
+		SELECT * FROM t_book where id = #value#
+	</select>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.advflight.Book" resultClass="com.ku6ads.dao.entity.advflight.Book">
+ 		SELECT * FROM t_book
+		<include refid="where-allSelectCondition"/>
+	</select>
+
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.advflight.Book">
+ 		UPDATE t_book SET 
+		<isNotNull property="startTime">startTime=#startTime#, </isNotNull>
+		<isNotNull property="endTime">endTime=#endTime#, </isNotNull>
+		<isNotNull property="discount">discount=#discount#, </isNotNull>
+		<isNotNull property="disprice">disprice=#disprice#, </isNotNull>
+		<isNotNull property="dispriceSum">dispriceSum=#dispriceSum#, </isNotNull>
+		<isNotNull property="flightNum">flightNum=#flightNum#, </isNotNull>
+		<isNotNull property="futureFlight">futureFlight=#futureFlight#, </isNotNull>
+		<isNotNull property="allflux">allflux=#allflux#, </isNotNull>
+		<isNotNull property="dayClick">dayClick=#dayClick#, </isNotNull>
+		<isNotNull property="allClick">allClick=#allClick#, </isNotNull>
+		<isNotNull property="period">period=#period#, </isNotNull>
+		<isNotNull property="periodSum">periodSum=#periodSum#, </isNotNull>
+		<isNotNull property="hourDirect">hourDirect=#hourDirect#, </isNotNull>
+		<isNotNull property="areaDirect">areaDirect=#areaDirect#, </isNotNull>
+		<isNotNull property="areaDirectCode">areaDirectCode=#areaDirectCode#, </isNotNull>
+		<isNotNull property="frequencyType">frequencyType=#frequencyType#, </isNotNull>
+		<isNotNull property="frequencyNum">frequencyNum=#frequencyNum#, </isNotNull>
+		<isNotNull property="isContentDirect">isContentDirect=#isContentDirect#, </isNotNull>
+		<isNotNull property="keyword">keyword=#keyword#, </isNotNull>
+		<isNotNull property="user">user=#user#, </isNotNull>
+		<isNotNull property="video">video=#video#, </isNotNull>
+		<isNotNull property="program">program=#program#, </isNotNull>
+		<isNotNull property="activity">activity=#activity#, </isNotNull>
+		<isNotNull property="subject">subject=#subject#, </isNotNull>
+		<isNotNull property="isnull">isnull=#isnull#, </isNotNull>
+		<isNotNull property="modifier">modifier=#modifier#, </isNotNull>
+		<isNotNull property="modifyTime">modifyTime=#modifyTime#, </isNotNull>
+		<isNotNull property="projectId">projectId=#projectId#, </isNotNull>
+		<isNotNull property="bookPackageId">bookPackageId=#bookPackageId#, </isNotNull>
+		<isNotNull property="advbarId">advbarId=#advbarId#, </isNotNull>
+		<isNotNull property="channelId">channelId=#channelId#, </isNotNull>
+		<isNotNull property="saleType">saleType=#saleType#, </isNotNull>
+		<isNotNull property="price">price=#price#, </isNotNull>
+		<isNotNull property="priceSum">priceSum=#priceSum#, </isNotNull>
+		<isNotNull property="useType">useType=#useType#, </isNotNull>
+		<isNotNull property="priority">priority=#priority#, </isNotNull>
+		<isNotNull property="proportion">proportion=#proportion#, </isNotNull>
+		<isNotNull property="priceId">priceId=#priceId#, </isNotNull>
+		<isNotNull property="isFrequency">isFrequency=#isFrequency#, </isNotNull>
+		<isNotNull property="status">status=#status#, </isNotNull>
+		<isNotNull property="creator">creator=#creator#, </isNotNull>
+		<isNotNull property="createTime">createTime=#createTime#, </isNotNull>
+		<isNotNull property="bussinessStatus">bussinessStatus=#bussinessStatus#, </isNotNull>
+		 id=#id# 
+		WHERE
+		 id=#id#
+	</update>
+
+	<update id="updateByProjectId" parameterClass="com.ku6ads.dao.entity.advflight.Book">
+ 		UPDATE t_book SET 
+		<isNotNull property="startTime">startTime=#startTime#, </isNotNull>
+		<isNotNull property="endTime">endTime=#endTime#, </isNotNull>
+		<isNotNull property="discount">discount=#discount#, </isNotNull>
+		<isNotNull property="disprice">disprice=#disprice#, </isNotNull>
+		<isNotNull property="dispriceSum">dispriceSum=#dispriceSum#, </isNotNull>
+		<isNotNull property="flightNum">flightNum=#flightNum#, </isNotNull>
+		<isNotNull property="futureFlight">futureFlight=#futureFlight#, </isNotNull>
+		<isNotNull property="allflux">allflux=#allflux#, </isNotNull>
+		<isNotNull property="dayClick">dayClick=#dayClick#, </isNotNull>
+		<isNotNull property="allClick">allClick=#allClick#, </isNotNull>
+		<isNotNull property="period">period=#period#, </isNotNull>
+		<isNotNull property="periodSum">periodSum=#periodSum#, </isNotNull>
+		<isNotNull property="hourDirect">hourDirect=#hourDirect#, </isNotNull>
+		<isNotNull property="areaDirect">areaDirect=#areaDirect#, </isNotNull>
+		<isNotNull property="areaDirectCode">areaDirectCode=#areaDirectCode#, </isNotNull>
+		<isNotNull property="frequencyType">frequencyType=#frequencyType#, </isNotNull>
+		<isNotNull property="frequencyNum">frequencyNum=#frequencyNum#, </isNotNull>
+		<isNotNull property="isContentDirect">isContentDirect=#isContentDirect#, </isNotNull>
+		<isNotNull property="keyword">keyword=#keyword#, </isNotNull>
+		<isNotNull property="user">user=#user#, </isNotNull>
+		<isNotNull property="video">video=#video#, </isNotNull>
+		<isNotNull property="program">program=#program#, </isNotNull>
+		<isNotNull property="activity">activity=#activity#, </isNotNull>
+		<isNotNull property="subject">subject=#subject#, </isNotNull>
+		<isNotNull property="isnull">isnull=#isnull#, </isNotNull>
+		<isNotNull property="modifier">modifier=#modifier#, </isNotNull>
+		<isNotNull property="modifyTime">modifyTime=#modifyTime#, </isNotNull>
+		<isNotNull property="projectId">projectId=#projectId#, </isNotNull>
+		<isNotNull property="bookPackageId">bookPackageId=#bookPackageId#, </isNotNull>
+		<isNotNull property="advbarId">advbarId=#advbarId#, </isNotNull>
+		<isNotNull property="channelId">channelId=#channelId#, </isNotNull>
+		<isNotNull property="saleType">saleType=#saleType#, </isNotNull>
+		<isNotNull property="price">price=#price#, </isNotNull>
+		<isNotNull property="priceSum">priceSum=#priceSum#, </isNotNull>
+		<isNotNull property="useType">useType=#useType#, </isNotNull>
+		<isNotNull property="priority">priority=#priority#, </isNotNull>
+		<isNotNull property="proportion">proportion=#proportion#, </isNotNull>
+		<isNotNull property="priceId">priceId=#priceId#, </isNotNull>
+		<isNotNull property="isFrequency">isFrequency=#isFrequency#, </isNotNull>
+		<isNotNull property="status">status=#status#, </isNotNull>
+		<isNotNull property="creator">creator=#creator#, </isNotNull>
+		<isNotNull property="createTime">createTime=#createTime#, </isNotNull>
+		<isNotNull property="bussinessStatus">bussinessStatus=#bussinessStatus#, </isNotNull>
+		 id=#id# 
+		WHERE
+		 id=#id#
+	</update>
+	
+	<delete id="deleteById" parameterClass="com.ku6ads.dao.entity.advflight.Book">
+ 		DELETE FROM t_book WHERE id=#id#
+	</delete>
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.advflight.Book" resultClass="java.lang.Integer">
+		SELECT COUNT(1) FROM t_book 
+		<include refid="where-allSelectCondition"/>
+	</select>
+	
+	<select id="selectByLimit" resultClass="com.ku6ads.dao.entity.advflight.Book" parameterClass="com.ku6ads.dao.entity.advflight.Book">
+		select t_book.*,c.format,c.materiel,d.name as channelName,b.name as advbarName,
+			if(DATE_FORMAT(startTime, '%Y-%m-%d') >= DATE_FORMAT(now(), '%Y-%m-%d'), true, false) as canEdit,
+			bd.dataName as saleTypeName
+		from t_book
+		left join t_advbar b on t_book.advbarId = b.id
+		left join t_channel d    on t_book.channelId = d.channelId
+		left join t_advbar_price c  on c.barId = b.id 
+		left join t_basedata bd on t_book.saleType=bd.dataValue and bd.dataType='saletype' 
+		<include refid="where-allSelectCondition"/>
+		<include refid="default-order-limit"/>
+	</select>
+	
+	<delete id="deleteBooksNotInIds" parameterClass="java.util.HashMap">
+		update t_book set status = 1 where bookPackageId=#bookPackageId# and id not in($notDelPointIds$)
+	</delete>
+	
+	<delete id="deleteByBookPackageId" parameterClass="java.lang.Integer">
+		update t_book set status = 1 where bookPackageId=#bookPackageId# and <![CDATA[ startTime > now() ]]>;
+	</delete>
+	
+	<select id="selectByBookPackageId" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.advflight.Book">
+		select t_book.*, bd.dataName as saleTypeName 
+		from t_book 
+		left join t_basedata bd on t_book.saleType=bd.dataValue and bd.dataType='saletype'
+		where t_book.BookPackageId=#value# and t_book.status=0
+	</select>
+	
+	<select id="selectExecutedBookCount" parameterClass="java.lang.Integer" resultClass="java.lang.Integer">
+		select count(1) from t_book where bookPackageId=#value# and <![CDATA[ startTime < now() ]]>
+	</select>
+
+	<select id="selectPreviewBookLimitCount" parameterClass="java.lang.Integer" resultClass="java.lang.Integer">
+		select count(1) from (
+			select distinct projectId,bookPackageId,advbarId,
+			  t_book.channelId,t_book.saleType,t_book.price,priceSum,discount,disprice,dispriceSum,useType,
+			  priority,t_book.proportion,priceId,allflux,dayClick,allClick,
+			  period,periodSum,ifnull(hourDirect, '') as hourDirect,ifnull(areaDirect, '') as areaDirect,isFrequency,frequencyType,
+			  frequencyNum,isContentDirect,ifnull(keyword, '') as keyword,ifnull(user, '') as user, ifnull(video, '') as video, ifnull(program, '') as program,
+			  ifnull(activity, '') as ifnull,ifnull(subject, '') as subject,isnull
+			from t_book 
+			where t_book.projectId =#value#
+			and t_book.status = 0 
+		) t
+	</select>
+	
+	<select id="selectPreviewBookLimit" parameterClass="com.ku6ads.dao.entity.advflight.Book" resultClass="com.ku6ads.struts.advflight.BookForm">
+		select distinct t_book.projectId,t_book.bookPackageId,t_book.advbarId,
+		  t_book.channelId,t_book.saleType,t_book.price,priceSum,t_book.discount,t_book.disprice,t_book.dispriceSum,t_book.useType,
+		  t_book.priority,t_book.proportion,t_book.priceId,t_book.allflux,t_book.dayClick,t_book.allClick,
+		  t_book.period,t_book.periodSum,
+		  ifnull(t_book.hourDirect, '') as hourDirect,
+		  ifnull(t_book.areaDirect, '') as areaDirect,
+		  t_book.isFrequency,t_book.frequencyType,
+		  t_book.frequencyNum,t_book.isContentDirect,ifnull(t_book.keyword, '') as keyword,
+		  ifnull(t_book.user, '') as user,
+		  ifnull(t_book.video, '') as video,
+		  ifnull(t_book.program, '') as program,
+		  ifnull(t_book.activity, '') as activity,
+		  ifnull(t_book.subject, '') as subject,t_book.isnull,
+		  d.name as channelName,b.name as advbarName,
+		  ba.dataName as saleTypeName,ba2.dataName as useTypeName,
+		  concat(ba3.dataName , ':', t_book.frequencyNum) as frequencyText,
+		  t_bookpackage.remark,
+		  bp.dataName as format,c.materiel
+		from t_book
+		left join t_advbar b on t_book.advbarId = b.id
+		left join t_channel d    on t_book.channelId = d.channelId
+	    left join t_basedata ba on ba.dataType='saletype' and ba.dataValue=t_book.saleType
+	    left join t_basedata ba2 on ba2.dataType='usetype' and ba2.dataValue=t_book.useType
+	    left join t_basedata ba3 on ba3.dataType='frequencytype' and ba3.dataValue=t_book.frequencyType
+	    left join t_price c  on c.id = t_book.priceId
+ 		left join t_basedata bp on bp.dataType=ba.dataName and bp.dataValue=c.format
+	    left join t_bookpackage on t_book.bookpackageId =t_bookpackage.id
+		where t_book.projectId=#projectId# 
+			and t_bookpackage.status=0
+			and t_book.status = 0
+		
+		<isEmpty property="extLimit.sort">order by useType </isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>		
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<select id="selectPreviewBookPoint" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.advflight.Book">
+		SELECT t.id, t.advbarId, t.projectId, t.bookPackageId, t.startTime, t.flightNum
+		FROM t_book t
+		where t.bookpackageId in (SELECT id FROM t_bookpackage t where projectId =#value# and status = 0)
+		order by t.startTime;
+	</select>
+	
+	<select id="selectAdvbarMonthBookedList" parameterClass="com.ku6ads.dao.entity.advflight.Book" resultClass="com.ku6ads.dao.entity.advflight.Book">
+		SELECT startTime,flightNum, advbarId, saleType, priority  FROM t_book t
+		where advbarId = #advbarId#
+		and startTime between #startTime# and DATE_ADD(#startTime#,INTERVAL 1 MONTH)
+		and  status = 0
+	</select>
+	
+	<!-- 
+	select
+		  sum(kl.fn * kl.ap) as allPrice,
+		  sum(gm.fn * gm.dis * gm.ap / 100) as buyPrice
+		from t_book t,
+		  (select sum(flightNum) as fn , saleType, price as ap
+		    from t_book where projectId=#value#  and status = 0
+		    group by saleType,price
+		 ) kl,
+		(
+		  select sum(flightNum) as fn , saleType, discount as dis, price as ap
+		    from t_book where projectId=#value# and status = 0
+		    group by saleType,price,discount
+		 ) gm
+		where t.projectId=#value# and t.status = 0 
+	-->
+	
+	<select id="getProjectAllPrice" parameterClass="java.lang.Integer" resultClass="java.util.HashMap">
+		select sum(priceSum) as allPrice, sum(dispriceSum) as buyPrice from (
+		  select priceSum, dispriceSum from t_book t where t.projectId=#value# and t.status = 0 group by bookPackageId
+		) m;
+	</select>
+	
+	<!-- 
+		select sum(t.fn * t.ap) from (
+		  select sum(flightNum) as fn , saleType, price as ap
+		    from t_book where useType = 2 and projectId=#value# and status = 0
+		    group by saleType,price
+		) t;
+	 -->
+	 	
+	<select id="getPSPrice" parameterClass="java.lang.Integer" resultClass="java.lang.Double">
+		select sum(priceSum) as sumPSPrice from t_book t where t.projectId=#value# and useType = 2 and t.status = 0;
+	</select>
+	
+	<select id="getProjectPeriodsInfo" parameterClass="java.lang.Integer" resultClass="java.util.HashMap">
+		SELECT min(t.startTime) as minTime,max(t.startTime) as maxTime FROM t_book t where t.projectId = #value# and t.status=0;
+	</select>
+	
+	<select id="selectProjectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.advflight.Project">
+		SELECT * FROM t_project t where id = #value#;
+	</select>
+	
+	<select id="getRelationBookPackages" parameterClass="java.util.HashMap" resultClass="com.ku6ads.struts.advflight.AdvRelationBookForm">
+		select a.*,c.format,c.materiel,d.name as channelName,b.name as advbarName,ba.dataName as saleTypeName,ba2.dataName as useTypeName,m.unRelationBookCount
+		 from (
+			select id,projectId,channelId,advbarId, saleType,priceId,useType from t_bookpackage t
+			where status = 0 and bookpackageType = 1 
+			and projectId = (
+				select projectId from t_advactive where id =(select advActiveId from  t_advertisement where id = #advertisementId#)
+			)
+			and exists (
+				  select 1 from t_advbar ta where bartemId = #bartemplateId# and ta.id = t.advbarId
+			)
+		)a 
+		left join t_advbar b on a.advbarId = b.id
+		left join t_channel d    on a.channelId = d.channelId
+		left join t_advbar_price c  on c.barId = b.id and c.id = a.priceId
+		left join t_basedata ba on ba.dataType='saletype' and ba.dataValue=a.saleType
+		left join t_basedata ba2 on ba2.dataType='usetype' and ba2.dataValue=a.useType
+		left join (
+		  select bookPackageId, count(1) as unRelationBookCount from t_book b where
+		    b.status=0
+		   and  not exists(select 1 from t_advrelationbook ar where ar.bookId = b.id)
+		    group by bookPackageId
+		) m on a.id=m.bookPackageId
+	</select>
+	
+	<select id="getRelationBooks" parameterClass="java.util.HashMap" resultClass="com.ku6ads.struts.advflight.BookForm">
+		select a.*,c.format,c.materiel,d.name as channelName,b.name as advbarName,ba.dataName as saleTypeName,ba2.dataName as useTypeName, r.id as relationId,
+			ifnull(ra.relationAdsIds, '') as relationAdsIds
+		 from (
+			select id,projectId,bookPackageId,channelId,advbarId, saleType,priceId,useType,startTime,flightNum from t_book t where
+			projectId = (
+			  select projectId from t_advactive where id =
+			    (select advActiveId from  t_advertisement where id = #advertisementId#)
+			)
+			and exists (
+			  select 1 from t_advbar ta where bartemId = #bartemplateId# and ta.id = t.advbarId
+			)
+			and bookPackageId = #bookPackageId#
+			and status = 0
+		) a
+		left join t_advrelationbook r on a.id = r.bookId and advertisementId=#advertisementId#
+		left join t_advbar b on a.advbarId = b.id
+		left join t_channel d    on a.channelId = d.channelId
+		left join t_advbar_price c  on c.barId = b.id and c.id = a.priceId
+		left join t_basedata ba on ba.dataType='saletype' and ba.dataValue=a.saleType
+		left join t_basedata ba2 on ba2.dataType='usetype' and ba2.dataValue=a.useType
+		left join (select bookId,group_concat(advertisementId) as relationAdsIds from t_advrelationbook group by bookId) ra
+			on ra.bookId = a.id
+		order by startTime
+	</select>
+	
+	<select id="selectBookPointCount" resultClass="java.lang.Integer" parameterClass="com.ku6ads.dao.entity.advflight.Book">
+		select count(1) from (
+			select startTime, sum(flightNum) as flightNum
+			from t_book
+			where bookPackageId=#bookPackageId# AND status=0
+			group by startTime
+		)t
+	</select>
+	
+	<select id="selectBookPointList" resultClass="com.ku6ads.dao.entity.advflight.Book" parameterClass="com.ku6ads.dao.entity.advflight.Book">
+		select t_book.startTime, t_book.flightNum, bd.dataName as saleTypeName
+		from t_book
+		left join t_basedata bd on t_book.saleType=bd.dataValue and bd.dataType='saletype'
+		where t_book.bookPackageId=#bookPackageId# AND t_book.status=0
+		order by t_book.createtime DESC;
+	</select>
+	
+	<select id="selectBookPointListSum" resultClass="com.ku6ads.dao.entity.advflight.Book" parameterClass="com.ku6ads.dao.entity.advflight.Book">
+		select t_book.startTime, sum(t_book.flightNum) as flightNum, bd.dataName as saleTypeName
+		from t_book
+		left join t_basedata bd on t_book.saleType=bd.dataValue and bd.dataType='saletype'
+		where t_book.bookPackageId=#bookPackageId# AND t_book.status=0
+		group by t_book.startTime
+		order by t_book.createtime DESC;
+	</select>
+	
+	<select id="selectBookPointListAvg" resultClass="com.ku6ads.dao.entity.advflight.Book" parameterClass="com.ku6ads.dao.entity.advflight.Book">
+		select t_book.startTime, avg(t_book.flightNum) as flightNum, bd.dataName as saleTypeName
+		from t_book
+		left join t_basedata bd on t_book.saleType=bd.dataValue and bd.dataType='saletype'
+		where t_book.bookPackageId=#bookPackageId# AND t_book.status=0
+		group by t_book.startTime
+		order by t_book.createtime DESC;
+	</select>
+</sqlMap>

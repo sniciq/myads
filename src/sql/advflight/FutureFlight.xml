@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="advflight.futureflight">
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.advflight.FutureFlight">
+ 		insert into t_futureflight(
+			<isNotEmpty property="advbarId">advbarId,</isNotEmpty>
+			<isNotEmpty property="num1">num1,</isNotEmpty>
+			<isNotEmpty property="num2">num2,</isNotEmpty>
+			<isNotEmpty property="num3">num3,</isNotEmpty>
+			<isNotEmpty property="num4">num4,</isNotEmpty>
+			<isNotEmpty property="num5">num5,</isNotEmpty>
+			<isNotEmpty property="num6">num6,</isNotEmpty>
+			<isNotEmpty property="num7">num7,</isNotEmpty>
+			createTime
+		) values (
+			<isNotEmpty property="advbarId">#advbarId#,</isNotEmpty>
+			<isNotEmpty property="num1">#num1#,</isNotEmpty>
+			<isNotEmpty property="num2">#num2#,</isNotEmpty>
+			<isNotEmpty property="num3">#num3#,</isNotEmpty>
+			<isNotEmpty property="num4">#num4#,</isNotEmpty>
+			<isNotEmpty property="num5">#num5#,</isNotEmpty>
+			<isNotEmpty property="num6">#num6#,</isNotEmpty>
+			<isNotEmpty property="num7">#num7#,</isNotEmpty>
+			#createTime#
+		)
+	</insert>
+	
+	<select id="selectAdvbarFutureFlight" parameterClass="com.ku6ads.dao.entity.advflight.FutureFlight" resultClass="com.ku6ads.dao.entity.advflight.FutureFlight">
+		SELECT advbarId,num1,num2,num3,num4,num5,num6,num7,createTime 
+		FROM t_futureflight
+		WHERE 1=1 
+		<isNotEmpty property="advbarId" prepend=" AND ">advbarId=#advbarId#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">DATE_FORMAT(createTime, '%Y-%m-%d')=DATE_FORMAT(#createTime#, '%Y-%m-%d')</isNotEmpty>
+	</select>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.advflight.FutureFlight" resultClass="com.ku6ads.dao.entity.advflight.FutureFlight">
+ 		SELECT advbarId,num1,num2,num3,num4,num5,num6,num7,createTime 
+		FROM t_futureflight
+		WHERE 1=1 
+		<isNotEmpty property="advbarId" prepend=" AND ">advbarId=#advbarId#</isNotEmpty>
+		<isNotEmpty property="num1" prepend=" AND ">num1=#num1#</isNotEmpty>
+		<isNotEmpty property="num2" prepend=" AND ">num2=#num2#</isNotEmpty>
+		<isNotEmpty property="num3" prepend=" AND ">num3=#num3#</isNotEmpty>
+		<isNotEmpty property="num4" prepend=" AND ">num4=#num4#</isNotEmpty>
+		<isNotEmpty property="num5" prepend=" AND ">num5=#num5#</isNotEmpty>
+		<isNotEmpty property="num6" prepend=" AND ">num6=#num6#</isNotEmpty>
+		<isNotEmpty property="num7" prepend=" AND ">num7=#num7#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+	</select>
+
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.advflight.FutureFlight">
+ 		UPDATE t_futureflight SET 
+		<isNotNull property="advbarId">advbarId=#advbarId#, </isNotNull>
+		<isNotNull property="num1">num1=#num1#, </isNotNull>
+		<isNotNull property="num2">num2=#num2#, </isNotNull>
+		<isNotNull property="num3">num3=#num3#, </isNotNull>
+		<isNotNull property="num4">num4=#num4#, </isNotNull>
+		<isNotNull property="num5">num5=#num5#, </isNotNull>
+		<isNotNull property="num6">num6=#num6#, </isNotNull>
+		<isNotNull property="num7">num7=#num7#, </isNotNull>
+		<isNotNull property="createTime">createTime=#createTime#, </isNotNull>
+		WHERE id=#id#
+	</update>
+	
+	<update id="updateByAdvbarId" parameterClass="com.ku6ads.dao.entity.advflight.FutureFlight">
+ 		UPDATE t_futureflight SET 
+		<isNotNull property="num1">num1=#num1#, </isNotNull>
+		<isNotNull property="num2">num2=#num2#, </isNotNull>
+		<isNotNull property="num3">num3=#num3#, </isNotNull>
+		<isNotNull property="num4">num4=#num4#, </isNotNull>
+		<isNotNull property="num5">num5=#num5#, </isNotNull>
+		<isNotNull property="num6">num6=#num6#, </isNotNull>
+		<isNotNull property="num7">num7=#num7#, </isNotNull>
+		<isNotNull property="advbarId">advbarId=#advbarId#</isNotNull>
+		WHERE advbarId=#advbarId#
+	</update>
+
+	<delete id="deleteById" parameterClass="com.ku6ads.dao.entity.advflight.FutureFlight">
+ 		DELETE FROM t_futureflight WHERE id=#id#
+	</delete>
+	
+	<delete id="deleteToday">
+		DELETE FROM t_futureflight WHERE DATE_FORMAT(createTime, '%Y-%m-%d')=DATE_FORMAT(now(), '%Y-%m-%d')
+	</delete>
+
+</sqlMap>

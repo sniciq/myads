@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="basic.BaseData">
+	<cacheModel type="LRU" id="baseDataTypeCache">
+		<flushOnExecute statement="basic.BaseData.insert"/>
+		<flushOnExecute statement="basic.BaseData.deleteById"/>
+		<flushOnExecute statement="basic.BaseData.updateById"/>
+		<flushInterval hours="4"/>
+		<property name="size" value="10"/>
+	</cacheModel>
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.basic.BaseData">
+		select * from t_basedata where id=#value#
+	</select >
+	
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.basic.BaseData">
+		insert into t_basedata(
+			<isNotEmpty property="dataValue">dataValue,</isNotEmpty>
+			<isNotEmpty property="remark">remark,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime,</isNotEmpty>
+			dataType,dataName,status
+		)values(
+			<isNotEmpty property="dataValue">#dataValue#,</isNotEmpty>
+			<isNotEmpty property="remark">#remark#,</isNotEmpty>
+			<isNotEmpty property="createTime">#createTime#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="modifier">#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">#modifyTime#,</isNotEmpty>
+			#dataType#,#dataName#,0
+		)
+	</insert>
+	
+	<select id="selectByEntity" resultClass="com.ku6ads.dao.entity.basic.BaseData" parameterClass="com.ku6ads.dao.entity.basic.BaseData" cacheModel="baseDataTypeCache">
+		select * from t_basedata where 1=1 
+		<isNotEmpty property="dataType" prepend=" AND ">dataType=#dataType#</isNotEmpty>
+		<isNotEmpty property="dataName" prepend=" AND ">dataName=#dataName#</isNotEmpty>
+		<isNotEmpty property="modifier" prepend=" AND ">modifier=#modifier#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+		<isNotEmpty property="creator" prepend=" AND ">creator=#creator#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+	</select>
+	
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.basic.BaseData" resultClass="java.lang.Integer">
+		SELECT count(1) FROM t_basedata 
+		where status != 1 
+		<isNotEmpty property="dataType" prepend=" AND ">dataType=#dataType#</isNotEmpty>
+		<isNotEmpty property="dataName" prepend=" AND ">dataName=#dataName#</isNotEmpty>
+		<isNotEmpty property="modifier" prepend=" AND ">modifier=#modifier#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+		<isNotEmpty property="creator" prepend=" AND ">creator=#creator#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+		<isNotEmpty property="dataValue" prepend=" AND ">dataValue like '%$dataValue$%'</isNotEmpty>
+		<isNotEmpty property="remark" prepend=" AND ">remark like '%$remark$%'</isNotEmpty>
+	</select>
+	
+	<select id="selectByLimit" parameterClass="com.ku6ads.dao.entity.basic.BaseData" resultClass="com.ku6ads.dao.entity.basic.BaseData">
+		SELECT * FROM t_basedata 
+		where status != 1 
+		<isNotEmpty property="dataType" prepend=" AND ">dataType=#dataType#</isNotEmpty>
+		<isNotEmpty property="dataName" prepend=" AND ">dataName=#dataName#</isNotEmpty>
+		<isNotEmpty property="modifier" prepend=" AND ">modifier=#modifier#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+		<isNotEmpty property="creator" prepend=" AND ">creator=#creator#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+		<isNotEmpty property="dataValue" prepend=" AND ">dataValue like '%$dataValue$%'</isNotEmpty>
+		<isNotEmpty property="remark" prepend=" AND ">remark like '%$remark$%'</isNotEmpty>
+		
+		<isEmpty property="extLimit.sort">order by createTime DESC </isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.basic.BaseData">
+		update t_basedata set 
+			<isNotEmpty property="dataType">dataType=#dataType#,</isNotEmpty>
+			<isNotEmpty property="dataName">dataName=#dataName#,</isNotEmpty>
+			<isNotEmpty property="dataValue">dataValue=#dataValue#,</isNotEmpty>
+			<isNotEmpty property="remark">remark=#remark#,</isNotEmpty>
+			id=#id#
+		where id=#id#
+	</update>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		update t_basedata set status = 1 where id=#value#
+	</delete>
+	
+	<select id="selectBaseDataTypes" resultClass="com.ku6ads.dao.entity.basic.BaseData" cacheModel="baseDataTypeCache">
+		SELECT distinct dataType FROM t_basedata where status = 0
+	</select>
+	
+</sqlMap>

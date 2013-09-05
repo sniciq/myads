@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.webdata.WebdataMovies">
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.webdata.WebdataMovies">
+ 		insert into t_webdata_movies(
+			<isNotEmpty property="name">name,</isNotEmpty>
+			<isNotEmpty property="type">type,</isNotEmpty>
+			<isNotEmpty property="fitScene">fitScene,</isNotEmpty>
+			<isNotEmpty property="classType">classType,</isNotEmpty>
+			<isNotEmpty property="productionPlace">productionPlace,</isNotEmpty>
+			<isNotEmpty property="level">level,</isNotEmpty>
+			<isNotEmpty property="playPlan">playPlan,</isNotEmpty>
+			<isNotEmpty property="sellLength">sellLength,</isNotEmpty>
+			<isNotEmpty property="director">director,</isNotEmpty>
+			<isNotEmpty property="mainActor">mainActor,</isNotEmpty>
+			<isNotEmpty property="exclusive">exclusive,</isNotEmpty>
+			<isNotEmpty property="expectedFlow">expectedFlow,</isNotEmpty>
+			<isNotEmpty property="sellState">sellState,</isNotEmpty>
+			<isNotEmpty property="introduction">introduction,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="sourceId">sourceId,</isNotEmpty>
+			id
+		) values (
+			<isNotEmpty property="name">#name#,</isNotEmpty>
+			<isNotEmpty property="type">#type#,</isNotEmpty>
+			<isNotEmpty property="fitScene">#fitScene#,</isNotEmpty>
+			<isNotEmpty property="classType">#classType#,</isNotEmpty>
+			<isNotEmpty property="productionPlace">#productionPlace#,</isNotEmpty>
+			<isNotEmpty property="level">#level#,</isNotEmpty>
+			<isNotEmpty property="playPlan">#playPlan#,</isNotEmpty>
+			<isNotEmpty property="sellLength">#sellLength#,</isNotEmpty>
+			<isNotEmpty property="director">#director#,</isNotEmpty>
+			<isNotEmpty property="mainActor">#mainActor#,</isNotEmpty>
+			<isNotEmpty property="exclusive">#exclusive#,</isNotEmpty>
+			<isNotEmpty property="expectedFlow">#expectedFlow#,</isNotEmpty>
+			<isNotEmpty property="sellState">#sellState#,</isNotEmpty>
+			<isNotEmpty property="introduction">#introduction#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="sourceId">#sourceId#,</isNotEmpty>
+			#id#
+		)
+	</insert>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.webdata.WebdataMovies" resultClass="com.ku6ads.dao.entity.webdata.WebdataMovies">
+ 		SELECT * FROM t_webdata_movies WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="name" prepend=" AND ">name=#name#</isNotEmpty>
+		<isNotEmpty property="type" prepend=" AND ">type=#type#</isNotEmpty>
+		<isNotEmpty property="fitScene" prepend=" AND ">fitScene=#fitScene#</isNotEmpty>
+		<isNotEmpty property="classType" prepend=" AND ">classType=#classType#</isNotEmpty>
+		<isNotEmpty property="productionPlace" prepend=" AND ">productionPlace=#productionPlace#</isNotEmpty>
+		<isNotEmpty property="level" prepend=" AND ">level=#level#</isNotEmpty>
+		<isNotEmpty property="playPlan" prepend=" AND ">playPlan=#playPlan#</isNotEmpty>
+		<isNotEmpty property="sellLength" prepend=" AND ">sellLength=#sellLength#</isNotEmpty>
+		<isNotEmpty property="director" prepend=" AND ">director=#director#</isNotEmpty>
+		<isNotEmpty property="mainActor" prepend=" AND ">mainActor=#mainActor#</isNotEmpty>
+		<isNotEmpty property="exclusive" prepend=" AND ">exclusive=#exclusive#</isNotEmpty>
+		<isNotEmpty property="expectedFlow" prepend=" AND ">expectedFlow=#expectedFlow#</isNotEmpty>
+		<isNotEmpty property="sellState" prepend=" AND ">sellState=#sellState#</isNotEmpty>
+		<isNotEmpty property="introduction" prepend=" AND ">introduction=#introduction#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+	</select>
+
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.webdata.WebdataMovies">
+ 		UPDATE t_webdata_movies SET 
+		<isNotNull property="name">name=#name#, </isNotNull>
+		<isNotNull property="type">type=#type#, </isNotNull>
+		<isNotNull property="fitScene">fitScene=#fitScene#, </isNotNull>
+		<isNotNull property="classType">classType=#classType#, </isNotNull>
+		<isNotNull property="productionPlace">productionPlace=#productionPlace#, </isNotNull>
+		<isNotNull property="level">level=#level#, </isNotNull>
+		<isNotNull property="playPlan">playPlan=#playPlan#, </isNotNull>
+		<isNotNull property="sellLength">sellLength=#sellLength#, </isNotNull>
+		<isNotNull property="director">director=#director#, </isNotNull>
+		<isNotNull property="mainActor">mainActor=#mainActor#, </isNotNull>
+		<isNotNull property="exclusive">exclusive=#exclusive#, </isNotNull>
+		<isNotNull property="expectedFlow">expectedFlow=#expectedFlow#, </isNotNull>
+		<isNotNull property="sellState">sellState=#sellState#, </isNotNull>
+		<isNotNull property="introduction">introduction=#introduction#, </isNotNull>
+		<isNotEmpty property="status">status=#status#</isNotEmpty>
+		 id=#id#
+		WHERE
+		 id=#id#
+	</update>
+	
+	<update id="updateBySourceId" parameterClass="com.ku6ads.dao.entity.webdata.WebdataMovies">
+ 		UPDATE t_webdata_movies SET 
+		<isNotNull property="name">name=#name#, </isNotNull>
+		<isNotNull property="type">type=#type#, </isNotNull>
+		<isNotNull property="fitScene">fitScene=#fitScene#, </isNotNull>
+		<isNotNull property="classType">classType=#classType#, </isNotNull>
+		<isNotNull property="productionPlace">productionPlace=#productionPlace#, </isNotNull>
+		<isNotNull property="level">level=#level#, </isNotNull>
+		<isNotNull property="playPlan">playPlan=#playPlan#, </isNotNull>
+		<isNotNull property="sellLength">sellLength=#sellLength#, </isNotNull>
+		<isNotNull property="director">director=#director#, </isNotNull>
+		<isNotNull property="mainActor">mainActor=#mainActor#, </isNotNull>
+		<isNotNull property="exclusive">exclusive=#exclusive#, </isNotNull>
+		<isNotNull property="expectedFlow">expectedFlow=#expectedFlow#, </isNotNull>
+		<isNotNull property="sellState">sellState=#sellState#, </isNotNull>
+		<isNotNull property="introduction">introduction=#introduction#, </isNotNull>
+		<isNotEmpty property="status">status=#status#,</isNotEmpty>
+		sourceId=#sourceId#
+		WHERE
+		 sourceId=#sourceId#
+	</update>
+
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+ 		update t_webdata_movies set status=1 WHERE id=#id#
+	</delete>
+	
+	<delete id="deleteBySourceId" parameterClass="java.lang.Integer">
+ 		update t_webdata_movies set status=1 WHERE sourceId=#sourceId#
+	</delete>
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.struts.webdata.WebdataMoviesForm" resultClass="java.lang.Integer">
+		SELECT count(1) FROM t_webdata_movies m left join t_webdata_movies_maintain t on m.id = t.movieId AND t.status=0  WHERE 1=1
+			<isNotEmpty property="id" prepend=" AND ">m.id=#id#</isNotEmpty>
+			<isNotEmpty property="name" prepend=" AND ">m.name like '%$name$%'</isNotEmpty>
+			
+			<isNotEmpty property="buyType" prepend=" AND ">t.buyType=#buyType#</isNotEmpty>
+			<isNotEmpty property="startTime" prepend=" and ">t.startTime >= '$startTime$'</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" and "><![CDATA[ t.endTime <= '$endTime$ 23:59:59' ]]></isNotEmpty>
+				
+			<isNotEmpty property="type" prepend=" AND ">m.type=#type#</isNotEmpty>
+			<isNotEmpty property="fitScene" prepend=" AND ">m.fitScene=#fitScene#</isNotEmpty>
+			<isNotEmpty property="classType" prepend=" AND ">m.classType=#classType#</isNotEmpty>
+			<isNotEmpty property="productionPlace" prepend=" AND ">m.productionPlace=#productionPlace#</isNotEmpty>
+			<isNotEmpty property="level" prepend=" AND ">m.level=#level#</isNotEmpty>
+			<isNotEmpty property="playPlan" prepend=" AND ">m.playPlan=#playPlan#</isNotEmpty>
+			<isNotEmpty property="sellLength" prepend=" AND ">m.sellLength=#sellLength#</isNotEmpty>
+			<isNotEmpty property="director" prepend=" AND ">m.director=#director#</isNotEmpty>
+			<isNotEmpty property="mainActor" prepend=" AND ">m.mainActor=#mainActor#</isNotEmpty>
+			<isNotEmpty property="exclusive" prepend=" AND ">m.exclusive=#exclusive#</isNotEmpty>
+			<isNotEmpty property="expectedFlow" prepend=" AND ">m.expectedFlow=#expectedFlow#</isNotEmpty>
+			<isNotEmpty property="sellState" prepend=" AND ">m.sellState=#sellState#</isNotEmpty>
+			<isNotEmpty property="introduction" prepend=" AND ">m.introduction=#introduction#</isNotEmpty>
+			<isNotEmpty property="status" prepend=" AND ">m.status=#status#</isNotEmpty>
+	</select>
+	
+	<select id="selectByLimit" parameterClass="com.ku6ads.struts.webdata.WebdataMoviesForm" resultClass="com.ku6ads.struts.webdata.WebdataMoviesForm">
+		SELECT  m.*, t.*, CONCAT(m.id , '|' , t.id) as displayId FROM t_webdata_movies m left join t_webdata_movies_maintain t on m.id = t.movieId AND t.status=0  WHERE 1=1
+		<isNotEmpty property="id" prepend=" AND ">m.id=#id#</isNotEmpty>
+		<isNotEmpty property="name" prepend=" AND ">m.name like '%$name$%'</isNotEmpty>
+		
+		<isNotEmpty property="buyType" prepend=" AND ">t.buyType=#buyType#</isNotEmpty>
+		<isNotEmpty property="startTime" prepend=" and ">t.startTime >= '$startTime$'</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" and "><![CDATA[ t.endTime <= '$endTime$ 23:59:59' ]]></isNotEmpty>
+			
+		<isNotEmpty property="type" prepend=" AND ">m.type=#type#</isNotEmpty>
+		<isNotEmpty property="fitScene" prepend=" AND ">m.fitScene=#fitScene#</isNotEmpty>
+		<isNotEmpty property="classType" prepend=" AND ">m.classType=#classType#</isNotEmpty>
+		<isNotEmpty property="productionPlace" prepend=" AND ">m.productionPlace=#productionPlace#</isNotEmpty>
+		<isNotEmpty property="level" prepend=" AND ">m.level=#level#</isNotEmpty>
+		<isNotEmpty property="playPlan" prepend=" AND ">m.playPlan=#playPlan#</isNotEmpty>
+		<isNotEmpty property="sellLength" prepend=" AND ">m.sellLength=#sellLength#</isNotEmpty>
+		<isNotEmpty property="director" prepend=" AND ">m.director=#director#</isNotEmpty>
+		<isNotEmpty property="mainActor" prepend=" AND ">m.mainActor=#mainActor#</isNotEmpty>
+		<isNotEmpty property="exclusive" prepend=" AND ">m.exclusive=#exclusive#</isNotEmpty>
+		<isNotEmpty property="expectedFlow" prepend=" AND ">m.expectedFlow=#expectedFlow#</isNotEmpty>
+		<isNotEmpty property="sellState" prepend=" AND ">m.sellState=#sellState#</isNotEmpty>
+		<isNotEmpty property="introduction" prepend=" AND ">m.introduction=#introduction#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">m.status=#status#</isNotEmpty>
+		<isEmpty property="extLimit.sort">order by name</isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.limit$ offset $extLimit.start$</isNotEmpty>
+		
+	</select>
+	
+	<!-- 
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.webdata.WebdataMovies" resultClass="java.lang.Integer">
+		SELECT count(1) FROM t_webdata_movies WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="name" prepend=" AND ">name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="type" prepend=" AND ">type=#type#</isNotEmpty>
+		<isNotEmpty property="fitScene" prepend=" AND ">fitScene=#fitScene#</isNotEmpty>
+		<isNotEmpty property="classType" prepend=" AND ">classType=#classType#</isNotEmpty>
+		<isNotEmpty property="productionPlace" prepend=" AND ">productionPlace=#productionPlace#</isNotEmpty>
+		<isNotEmpty property="level" prepend=" AND ">level=#level#</isNotEmpty>
+		<isNotEmpty property="playPlan" prepend=" AND ">playPlan=#playPlan#</isNotEmpty>
+		<isNotEmpty property="sellLength" prepend=" AND ">sellLength=#sellLength#</isNotEmpty>
+		<isNotEmpty property="director" prepend=" AND ">director=#director#</isNotEmpty>
+		<isNotEmpty property="mainActor" prepend=" AND ">mainActor=#mainActor#</isNotEmpty>
+		<isNotEmpty property="exclusive" prepend=" AND ">exclusive=#exclusive#</isNotEmpty>
+		<isNotEmpty property="expectedFlow" prepend=" AND ">expectedFlow=#expectedFlow#</isNotEmpty>
+		<isNotEmpty property="sellState" prepend=" AND ">sellState=#sellState#</isNotEmpty>
+		<isNotEmpty property="introduction" prepend=" AND ">introduction=#introduction#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+	</select>
+
+	<select id="selectByLimit" parameterClass="com.ku6ads.dao.entity.webdata.WebdataMovies" resultClass="com.ku6ads.dao.entity.webdata.WebdataMovies">
+		SELECT
+		   case m.id
+		   when exists
+		    (select 1 from t_webdata_movies_sellstate s
+		      where s.movieId = m.id and status = 0 and sellType ='包段' and now() between s.startTime and endtime
+		    ) then '不可售'
+		  ELSE '可售'
+		  END as canSell,
+		  m.*
+		FROM t_webdata_movies m WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="name" prepend=" AND ">name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="type" prepend=" AND ">type=#type#</isNotEmpty>
+		<isNotEmpty property="fitScene" prepend=" AND ">fitScene=#fitScene#</isNotEmpty>
+		<isNotEmpty property="classType" prepend=" AND ">classType=#classType#</isNotEmpty>
+		<isNotEmpty property="productionPlace" prepend=" AND ">productionPlace=#productionPlace#</isNotEmpty>
+		<isNotEmpty property="level" prepend=" AND ">level=#level#</isNotEmpty>
+		<isNotEmpty property="playPlan" prepend=" AND ">playPlan=#playPlan#</isNotEmpty>
+		<isNotEmpty property="sellLength" prepend=" AND ">sellLength=#sellLength#</isNotEmpty>
+		<isNotEmpty property="director" prepend=" AND ">director=#director#</isNotEmpty>
+		<isNotEmpty property="mainActor" prepend=" AND ">mainActor=#mainActor#</isNotEmpty>
+		<isNotEmpty property="exclusive" prepend=" AND ">exclusive=#exclusive#</isNotEmpty>
+		<isNotEmpty property="expectedFlow" prepend=" AND ">expectedFlow=#expectedFlow#</isNotEmpty>
+		<isNotEmpty property="sellState" prepend=" AND ">sellState=#sellState#</isNotEmpty>
+		<isNotEmpty property="introduction" prepend=" AND ">introduction=#introduction#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+		<isEmpty property="extLimit.sort">order by name</isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.limit$ offset $extLimit.start$</isNotEmpty>
+	</select>
+ 	-->
+</sqlMap>

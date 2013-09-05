@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC  
+	 "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
+	 "http://struts.apache.org/dtds/struts-2.0.dtd"> 
+
+<struts>
+	<package name="HTML/advert" extends="basePackage">
+		
+		<!-- 添加广告位 -->
+		<action name="AdvpositionAction_save" class="AdvpositionAction" method="save"></action>
+		<!-- 显示所有广告位 -->
+		<action name="AdvpositionAction_showAll" class="AdvpositionAction" method="showAll"></action>
+		<!-- 删除广告位 -->
+		<action name="AdvpositionAction_delete" class="AdvpositionAction" method="delete"></action>
+		<!-- 显示广告位详细信息 -->
+		<action name="AdvpositionAction_getAdvpostionDetail" class="AdvpositionAction" method="getAdvpostionDetail"></action>
+		<!-- 显示广告位列表 -->
+		<action name="AdvpositionAction_getAdvpositionList" class="AdvpositionAction" method="getAdvpositionList"></action>
+		<!-- 显示广告位规格列表 -->
+		<action name="AdvpositionAction_getPositionsizeList" class="AdvpositionAction" method="getPositionsizeList"></action>
+		<!-- 显示广告位模板列表 -->
+		<action name="AdvpositionAction_getPostemplateList" class="AdvpositionAction" method="getPostemplateList"></action>
+		<!-- 验证广告位名称是否唯一(非删除状态下) -->
+		<action name="AdvpositionAction_checkAdvpositionName" class="AdvpositionAction" method="checkAdvpositionName"></action>
+		<!-- 显示频道列表列表 -->
+		<action name="AdvpositionAction_getChannelList" class="AdvpositionAction" method="getChannelList"></action>
+		<!-- 显示网站列表 -->
+		<action name="AdvpositionAction_getSiteList" class="AdvpositionAction" method="getSiteList"></action>
+		<!-- 更改广告位状态 -->
+		<action name="AdvpositionAction_updateStatus" class="AdvpositionAction" method="updateStatus"></action>
+		<!-- 广告条模块中针对广告位的定制查询 -->
+		<action name="AdvpositionAction_getAdvpositionDetailInAdvbar" class="AdvpositionAction" method="getAdvpositionDetailInAdvbar"></action>
+		<!-- 按照页面类型关联查询模板类型 -->
+		<action name="AdvpositionAction_getPostemTypeByPageType" class="AdvpositionAction" method="getPostemTypeByPageType"></action>
+		<!-- 按照模板类型三级联动查询对应的模板 -->
+		<action name="AdvpositionAction_getAdvpositionPostemplateType" class="AdvpositionAction" method="getAdvpositionPostemplateType"></action>
+		<!-- 查询频道下的广告位名称是否重复 -->
+		<action name="AdvpositionAction_vldAdvNameRepeated" class="AdvpositionAction" method="vldAdvNameRepeated"></action>
+		
+		<!-- 添加广告位模板 -->
+		<action name="PostemplateAction_save" class="PostemplateAction" method="save"></action>
+		<!-- 显示所有广告位模板 -->
+		<action name="PostemplateAction_showAll" class="PostemplateAction" method="showAll"></action>
+		<!-- 删除广告位模板 -->
+		<action name="PostemplateAction_delete" class="PostemplateAction" method="delete"></action>
+		<!-- 显示广告位详细信息模板 -->
+		<action name="PostemplateAction_detail" class="PostemplateAction" method="getPostemplateDetail"></action>
+		<!-- 显示广告位详细信息模板 -->
+		<action name="PostemplateAction_showBartemplate" class="PostemplateAction" method="showBartemplate"></action>
+		<!-- 保存广告位模板下的广告条模板 -->
+		<action name="PostemplateAction_saveBartem" class="PostemplateAction" method="savePostemBartem"></action>
+		<!-- 删除广告位模板下的广告条模板 -->
+		<action name="PostemplateAction_deleteBartem" class="PostemplateAction" method="deleteBartem"></action>
+		
+		
+		<!-- 添加广告条 -->
+		<action name="AdvbarAction_save" class="AdvbarAction" method="save"></action>
+		<!-- 显示所有广告条 -->
+		<action name="AdvbarAction_showAll" class="AdvbarAction" method="showAll"></action>
+		<!-- 删除广告条 -->
+		<action name="AdvbarAction_delete" class="AdvbarAction" method="delete"></action>
+		<!-- 显示广告条详细信息 -->
+		<action name="AdvbarAction_getAdvbarDetail" class="AdvbarAction" method="getAdvbarDetail"></action>
+		<!-- 显示广告条列表 -->
+		<action name="AdvbarAction_getAdvbarList" class="AdvbarAction" method="getAdvbarList"></action>
+		<!-- 显示广告位模板列表 -->
+		<action name="AdvbarAction_getBartemplateList" class="AdvbarAction" method="getBartemplateList"></action>
+		<!-- 显示广告条规格列表 -->
+		<action name="AdvbarAction_getPositionsizeList" class="AdvbarAction" method="getPositionsizeList"></action>
+		<!-- 更改广告条状态 -->
+		<action name="AdvbarAction_updateStatus" class="AdvbarAction" method="updateStatus"></action>
+		<!-- 关联广告条id-->
+		<action name="AdvbarAction_relationAdvbarId" class="AdvbarAction" method="relationAdvbarId"></action>
+		<!-- 得到广告条的页面类型-->
+		<action name="AdvbarAction_getAdvbarPageType" class="AdvbarAction" method="getAdvbarPageType"></action>
+		<!-- 得到广告条对应的排期-->
+		<action name="AdvbarAction_getAdvbarAllAdvflight" class="AdvbarAction" method="getAdvbarAllAdvflight"></action>
+		<!-- 验证广告位下的广告条名称 -->
+		<action name="AdvbarAction_vldAdvbarNameRepeated" class="AdvbarAction" method="vldAdvbarNameRepeated"></action>
+		
+		<!-- 添加广告条刊例 -->
+		<action name="AdvbarPriceAction_save" class="AdvbarPriceAction" method="save"></action>
+		<!-- 显示所有广告条 刊例-->
+		<action name="AdvbarPriceAction_showAll" class="AdvbarPriceAction" method="showAll"></action>
+		<!-- 删除广告条刊例-->
+		<action name="AdvbarPriceAction_delete" class="AdvbarPriceAction" method="delete"></action>
+		<!-- 查看刊例详细-->
+		<action name="AdvbarPriceAction_getAdvbarPriceDetail" class="AdvbarPriceAction" method="getAdvbarPriceDetail"></action>
+		<!-- 增加价格-->
+		<action name="AdvbarPriceAction_savePrice" class="AdvbarPriceAction" method="savePrice"></action>
+		<!-- 增加价格-->
+		<action name="AdvbarPriceAction_showAdvbarPriceById" class="AdvbarPriceAction" method="showAdvbarPriceById"></action>
+		
+		<!-- 根据广告条id查询对应的售卖方式-->
+		<action name="AdvbarPriceAction_getAdvbarSaleTypes" class="AdvbarPriceAction" method="getAdvbarSaleTypes"></action>
+		
+		<!-- 根据广告条价格id查询对应的形式-->
+		<action name="AdvbarPriceAction_getAdvbarFormatByPriceId" class="AdvbarPriceAction" method="getAdvbarFormatByPriceId"></action>
+		<!-- 根据广告形式查询对应价格-->
+		<action name="AdvbarPriceAction_getAdvbarPriceById" class="AdvbarPriceAction" method="getAdvbarPriceById"></action>
+		<!-- 根据广告条id获取对应价格-->
+		<action name="AdvbarPriceAction_AdvbarPriceByBarId" class="AdvbarPriceAction" method="AdvbarPriceByBarId"></action>
+		
+		<!-- 添加广告条模板 -->
+		<action name="BartemplateAction_save" class="BartemplateAction" method="save"></action>
+		<!-- 显示所有广告条模板 -->
+		<action name="BartemplateAction_showAll" class="BartemplateAction" method="showAll"></action>
+		<!-- 删除广告条模板 -->
+		<action name="BartemplateAction_delete" class="BartemplateAction" method="delete"></action>
+		<!-- 显示广告条详细信息模板 -->
+		<action name="BartemplateAction_detail" class="BartemplateAction" method="getBartemplateDetail"></action>
+		<!-- 获得可用的广告条模板 -->
+		<action name="BartemplateAction_getList" class="BartemplateAction" method="getBartemplateList"></action>
+		
+		<!-- 添加广告位规格 -->
+		<action name="PositionsizeAction_save" class="PositionsizeAction" method="save"></action>
+		<!-- 显示所有广告位规格 -->
+		<action name="PositionsizeAction_showAll" class="PositionsizeAction" method="showAll"></action>
+		<!-- 删除广告位规格 -->
+		<action name="PositionsizeAction_delete" class="PositionsizeAction" method="delete"></action>
+		<!-- 显示广告位详细信息规格 -->
+		<action name="PositionsizeAction_detail" class="PositionsizeAction" method="getPositionsizeDetail"></action>
+		
+		
+		<!-- 添加系数 -->
+		<action name="BarProportionAction_save" class="BarProportionAction" method="save"></action>
+		<!-- 显示所有系数 -->
+		<action name="BarProportionAction_showAll" class="BarProportionAction" method="showAll"></action>
+		<!-- 删除系数 -->
+		<action name="BarProportionAction_delete" class="BarProportionAction" method="delete"></action>
+		<!-- 显示系数详细信息 -->
+		<action name="BarProportionAction_getBarProportionDetail" class="BarProportionAction" method="getBarProportionDetail"></action>
+		
+	</package>
+</struts>

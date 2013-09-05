@@ -1,0 +1,27 @@
+.add {
+    background-image: url(../images/add.gif ) !important;
+}
+
+.edit {
+    background-image: url(../images/edit.gif ) !important;
+}
+
+.del {
+    background-image: url(../images/del.gif ) !important;
+}
+
+.find {
+    background-image: url(../images/find.gif ) !important;
+}
+
+.ok {
+	 background-image: url(../images/edit.gif ) !important;
+}
+
+.status {
+	background-image: url(../images/status.gif ) !important;
+}
+
+.detail {
+	background-image: url(../images/detail.gif ) !important;
+}

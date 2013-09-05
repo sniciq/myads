@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC  
+	 "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
+	 "http://struts.apache.org/dtds/struts-2.0.dtd"> 
+
+<struts>
+	<package name="HTML/advflight" extends="basePackage">
+	
+		<action name="BookAction_*" class="BookAction" method="{1}"></action>
+		
+		<action name="AdvRelationBookAction_*" class="AdvRelationBookAction" method="{1}"></action>
+		<action name="AdvRelationProductBookAction_*" class="AdvRelationProductBookAction" method="{1}"></action>
+		
+		<action name="BookCalendarAction_*" class="BookCalendarAction" method="{1}"></action>
+		<action name="PointGridGroupPreviewAction_*" class="PointGridGroupPreviewAction" method="{1}"></action>
+		
+		<!-- 添加执行单 -->
+		<action name="ProjectAction_save" class="ProjectAction" method="save"></action>
+		<!-- 显示所有执行单 -->
+		<action name="ProjectAction_showAll" class="ProjectAction" method="showAll"></action>
+		<!-- 删除执行单 -->
+		<action name="ProjectAction_delete" class="ProjectAction" method="delete"></action>
+		<!-- 显示执行单详细信息 -->
+		<action name="ProjectAction_getProjectDetail" class="ProjectAction" method="getProjectDetail"></action>
+		<!-- 显示客户列表 -->
+		<action name="ProjectAction_getConsumerList" class="ProjectAction" method="getConsumerList"></action>
+		<!-- 显示广告主列表 -->
+		<action name="ProjectAction_getAdvertiserList" class="ProjectAction" method="getAdvertiserList"></action>
+		<!-- 显示产品列表 -->
+		<action name="ProjectAction_getProductList" class="ProjectAction" method="getProductList"></action>
+		<!-- 显示产品线列表 -->
+		<action name="ProjectAction_getProductLineList" class="ProjectAction" method="getProductLineList"></action>
+		<!-- 显示执行单列表 -->
+		<action name="ProjectAction_getProjectList" class="ProjectAction" method="getProjectList"></action>
+		<!-- 审核状态变为待一审1 -->
+		<action name="ProjectAction_verifyFirst" class="ProjectAction" method="verifyFirst"></action>
+		<!-- 审核状态变为待客户确认2 -->
+		<action name="ProjectAction_verifyCustomer" class="ProjectAction" method="verifyCustomer"></action>
+		<!-- 审核状态变为待二审3 -->
+		<action name="ProjectAction_verifySecond" class="ProjectAction" method="verifySecond"></action>
+		<!-- 审核状态变为退回待修改4 -->
+		<action name="ProjectAction_back" class="ProjectAction" method="back"></action>
+		<!-- 审核状态变为未通过5 -->
+		<action name="ProjectAction_verifyNotPass" class="ProjectAction" method="verifyNotPass"></action>
+		<!-- 审核状态变为通过6 -->
+		<action name="ProjectAction_verifyPass" class="ProjectAction" method="verifyPass"></action>
+		
+		<!-- save执行单审核原因 -->
+		<action name="ProjectAction_saveProjectVerifyReason" class="ProjectAction" method="saveProjectVerifyReason"></action>
+		<!-- 获得执行单审核原因 -->
+		<action name="ProjectAction_getProjectVerifyReasonDetail" class="ProjectAction" method="getProjectVerifyReasonDetail"></action>
+		
+		<!-- 添加广告活动 -->
+		<action name="AdvActiveAction_save" class="AdvActiveAction" method="save"></action>
+		<!-- 显示所有广告活动 -->
+		<action name="AdvActiveAction_showAll" class="AdvActiveAction" method="showAll"></action>
+		<!-- 删除广告活动 -->
+		<action name="AdvActiveAction_delete" class="AdvActiveAction" method="delete"></action>
+		<!-- 显示广告活动详细信息 -->
+		<action name="AdvActiveAction_getProjectDetail" class="AdvActiveAction" method="getProjectDetail"></action>
+		
+		<action name="AdvActiveAction_getAdvactiveList" class="AdvActiveAction" method="getAdvactiveList"></action>
+		
+		<!-- 添加广告 -->
+		<action name="AdvertisementAction_save" class="AdvertisementAction" method="save"></action>
+		<!-- 显示所有广告-->
+		<action name="AdvertisementAction_showAll" class="AdvertisementAction" method="showAll"></action>
+		<!-- 删除广告-->
+		<action name="AdvertisementAction_delete" class="AdvertisementAction" method="delete"></action>
+		<!-- 显示广告详细信息 -->
+		<action name="AdvertisementAction_getDetail" class="AdvertisementAction" method="getDetail"></action>
+		<!-- 显示广告相关物料地址 -->
+		<action name="AdvertisementAction_getTemplateList" class="AdvertisementAction" method="getTemplateList"></action>
+		<!-- 获得广告列表 -->
+		<action name="AdvertisementAction_getAdvertisementList" class="AdvertisementAction" method="getAdvertisementList"></action>
+		
+		<!-- 添加物料 -->
+		<action name="FileUploadAction_save" class="FileUploadAction" method="save">
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+		</action>
+		<!-- 显示所有物料 -->
+		<action name="FileUploadAction_showAll" class="FileUploadAction" method="showAll"></action>
+		<!-- 添加文字链物料 -->
+		<action name="FileUploadAction_saveText" class="FileUploadAction" method="saveText"></action>
+		<!-- 删除物料 -->
+		<action name="FileUploadAction_delete" class="FileUploadAction" method="delete"></action>
+		<!-- 显示物料详细信息-->
+		<action name="FileUploadAction_getDetail" class="FileUploadAction" method="getDetail"></action>
+		<!-- 显示物料详细信息 -->
+		<action name="FileUploadAction_getProjectDetail" class="FileUploadAction" method="getProjectDetail"></action>
+		
+		<!-- 物料转码完成接口 -->
+		<action name="IsTransCodeAction" class="IsTransCodeAction" method="isTransCode"></action>
+		
+		<!-- 生成路径文件 -->
+		<action name="MakeMPathAtion" class="MakeMPathAtion" method="makeMpath"></action>
+		
+		
+		<!-- 添加广告物料关系 -->
+		<action name="AdvMaterialAction_save" class="AdvMaterialAction" method="save"></action>
+		<!-- 显示所有广告物料关系-->
+		<action name="AdvMaterialAction_showAll" class="AdvMaterialAction" method="showAll"></action>
+		<!-- 删除广告物料关系-->
+		<action name="AdvMaterialAction_delete" class="AdvMaterialAction" method="delete"></action>
+		
+		<!-- 预投放 -->
+		<action name="AdvFlightAction_save" class="AdvFlightAction" method="save"></action>
+		<!-- 投放 -->
+		<action name="AdvFlightAction_filghtingStatus" class="AdvFlightAction" method="filghtingStatus"></action>
+		<!-- 停止投放 -->
+		<action name="AdvFlightAction_changeStatus" class="AdvFlightAction" method="changeStatus"></action>
+		<!-- 取得投放相信信息 -->
+		<action name="AdvFlightAction_getAdvFlightDetail" class="AdvFlightAction" method="getAdvFlightDetail">
+			<result name="success">/HTML/advflight/flight_view.jsp</result>
+		</action>
+		<!-- 取得投放相信信息 -->
+		<action name="AdvFlightAction_clickAdress" class="AdvFlightAction" method="clickAdress"></action>
+		<action name="AdvFlightAction_getFlightList" class="AdvflightLogAction" method="getFlightList"></action>
+	</package>
+</struts>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<select id="webdata.DimArea.selectDimArea" parameterClass="com.ku6ads.dao.entity.webdata.DimArea" resultClass="com.ku6ads.dao.entity.webdata.DimArea">
+		select * from Dim_Area order by area_id ASC
+	</select>
+	
+	<select id="webdata.DimArea.selectCountrys" resultClass="com.ku6ads.dao.entity.webdata.DimArea">
+		select distinct country from Dim_Area
+	</select>
+	
+	<select id="webdata.DimArea.selectProvinceDimArea" parameterClass="com.ku6ads.dao.entity.webdata.DimArea" resultClass="com.ku6ads.dao.entity.webdata.DimArea">
+		select distinct Province from Dim_Area where 1=1 
+		<isNotEmpty property="country" prepend=" AND ">
+			country = #country#
+		</isNotEmpty>
+	</select>
+	
+	<select id="webdata.DimArea.selectCityOfProvince" parameterClass="java.lang.String" resultClass="com.ku6ads.dao.entity.webdata.DimArea">
+		select city,area_id from Dim_Area where province=#value# order by area_id ASC
+	</select>
+
+</sqlMap>

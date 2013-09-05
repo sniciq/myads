@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.BookCount">
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.statistics.BookCount" resultClass="java.lang.Integer">
+		select count(2)  from 
+		(
+			select count(1)
+			from  t_book as a
+			inner join t_advbar as b on a.advbarId = b.id
+			where a.status != 1 and a.status!=1
+			<isNotEmpty property="startTime" prepend=" AND ">a.startTime >= #startTime#</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" AND "><![CDATA[a.endTime <= #endTime#]]></isNotEmpty>
+			group by b.id
+		) a
+	</select>
+	
+	<select id="selectByLimit" parameterClass="com.ku6ads.dao.entity.statistics.BookCount" resultClass="com.ku6ads.dao.entity.statistics.BookCount">
+		select b.id as advbarId,b.name as advbarName,b.channelName as channelName,b.siteName as siteName
+		from  t_book as a
+		inner join t_advbar as b on a.advbarId = b.id
+		where a.status != 1 and a.status!=1
+		<isNotEmpty property="startTime" prepend=" AND ">a.startTime >= #startTime#</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND "><![CDATA[a.endTime <= #endTime#]]></isNotEmpty>
+		group by b.id
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<select id="selectAvgPv" parameterClass="com.ku6ads.dao.entity.statistics.BookCount" resultClass="java.lang.Long">
+		select avg(pv) from t_statistics_advbar_month where advbarId=#advbarId#
+			<isNotEmpty property="startTime" prepend=" and ">statTime BETWEEN #startTime# and #endTime#</isNotEmpty>
+	</select>
+	
+	<select id="selectSumPv" parameterClass="com.ku6ads.dao.entity.statistics.BookCount" resultClass="java.lang.Long">
+		select sum(pv) from t_statistics_advbar_month where advbarId=#advbarId#
+			<isNotEmpty property="startTime" prepend=" and ">statTime BETWEEN #startTime# and #endTime#</isNotEmpty>
+	</select>
+	
+	<select id="selectFlightNum" parameterClass="com.ku6ads.dao.entity.statistics.BookCount" resultClass="java.lang.Long">
+		select sum(flightNum)
+		from t_book 
+		where advbarId=#advbarId# and status!=1
+		<isNotEmpty property="startTime" prepend=" AND ">startTime >= #startTime#</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND "><![CDATA[endTime <= #endTime#]]></isNotEmpty>
+		<isNotEmpty property="useType" prepend=" AND ">useType = #useType#</isNotEmpty>
+	</select>
+	
+	<select id="selectClick" parameterClass="com.ku6ads.dao.entity.statistics.BookCount" resultClass="java.lang.Long">
+		select sum(allClick)
+		from t_book 
+		where advbarId=#advbarId# and status!=1
+		<isNotEmpty property="startTime" prepend=" AND ">startTime >= #startTime#</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND "><![CDATA[endTime <= #endTime#]]></isNotEmpty>
+	</select>
+</sqlMap>

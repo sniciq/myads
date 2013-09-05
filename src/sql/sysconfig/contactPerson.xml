@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sysconfig.ContactPerson">
+	<insert id="insertContactPerson" parameterClass="com.ku6ads.dao.entity.sysconfig.ContactPerson">
+		insert into t_contact_person(	
+			<isNotEmpty property="contactPersonTel">contactPersonTel,</isNotEmpty>
+			<isNotEmpty property="contactPersonOnline">contactPersonOnline,</isNotEmpty>
+			<isNotEmpty property="contactPersonTitle">contactPersonTitle,</isNotEmpty>
+			<isNotEmpty property="consumerId">consumerId,</isNotEmpty>
+			<isNotEmpty property="type">type,</isNotEmpty>
+			contactPersonName
+		)values(	
+			<isNotEmpty property="contactPersonTel">#contactPersonTel#,</isNotEmpty>
+			<isNotEmpty property="contactPersonOnline">#contactPersonOnline#,</isNotEmpty>
+			<isNotEmpty property="contactPersonTitle">#contactPersonTitle#,</isNotEmpty>
+			<isNotEmpty property="consumerId">#consumerId#,</isNotEmpty>
+			<isNotEmpty property="type">#type#,</isNotEmpty>
+			#contactPersonName#
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		delete from t_contact_person where contactPersonId=#contactPersonId#
+	</delete>
+	
+	<select id="selectContactPerson" parameterClass="com.ku6ads.dao.entity.sysconfig.ContactPerson" resultClass="com.ku6ads.dao.entity.sysconfig.ContactPerson">
+		select * from t_contact_person where consumerId=#consumerId# and type=#type#
+	</select>
+	
+	<update id="updateContactPerson" parameterClass="com.ku6ads.dao.entity.sysconfig.ContactPerson">
+		update t_contact_person set
+			<isNotEmpty property="contactPersonName">contactPersonName=#contactPersonName#,</isNotEmpty>
+			<isNotEmpty property="contactPersonTel">contactPersonTel=#contactPersonTel#,</isNotEmpty>
+			<isNotEmpty property="contactPersonOnline">contactPersonOnline=#contactPersonOnline#,</isNotEmpty>
+			<isNotEmpty property="contactPersonTitle">contactPersonTitle=#contactPersonTitle#,</isNotEmpty>
+		contactPersonId=#contactPersonId#
+			
+		where contactPersonId=#contactPersonId#
+	</update>
+</sqlMap>

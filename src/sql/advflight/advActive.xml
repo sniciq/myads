@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="advflight.AdvActive">
+
+	<cacheModel type="LRU" id="AdvActiveCache">
+		<flushOnExecute statement="advflight.AdvActive.insert"/>
+		<flushOnExecute statement="advflight.AdvActive.deleteById"/>
+		<flushOnExecute statement="advflight.AdvActive.updateById"/>
+		<flushInterval hours="4"/>
+		<property name="size" value="2"/>
+	</cacheModel>
+ 
+ 	<select id="selectAll" resultClass="com.ku6ads.dao.entity.advflight.AdvActive">
+		select * from t_advactive where status !=1
+	</select>
+	
+	<select id="selectByEntity" resultClass="com.ku6ads.dao.entity.advflight.AdvActive" cacheModel="AdvActiveCache">
+		SELECT id,name FROM t_advactive
+	</select>
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.advflight.AdvActive">
+		SELECT * FROM t_advactive WHERE id=#value#
+	</select >
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.advflight.AdvActive" resultClass="java.lang.Integer">
+		SELECT COUNT(1) FROM t_advactive WHERE 1=1 and status != 1
+		<isNotEmpty property="name" prepend=" AND ">name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="projectId" prepend=" and ">projectId = #projectId#</isNotEmpty>
+		<isNotEmpty property="projectName" prepend=" and ">projectName like '%$projectName$%'</isNotEmpty>
+	</select>
+	
+	<select id="selectByLimit" resultClass="com.ku6ads.dao.entity.advflight.AdvActive" parameterClass="com.ku6ads.dao.entity.advflight.AdvActive">
+		SELECT * FROM t_advactive
+		WHERE 1=1 and status != 1
+		<isNotEmpty property="name" prepend=" and ">name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="projectId" prepend=" and ">projectId = #projectId#</isNotEmpty>
+		<isNotEmpty property="projectName" prepend=" and ">projectName like '%$projectName$%'</isNotEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isEmpty property="extLimit.sort">order by id desc</isEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.advflight.AdvActive">
+		INSERT INTO t_advactive(
+			<isNotEmpty property="name">name,</isNotEmpty>
+			<isNotEmpty property="projectId">projectId,</isNotEmpty>
+			<isNotEmpty property="projectName">projectName,</isNotEmpty>
+			<isNotEmpty property="consumerId">consumerId,</isNotEmpty>
+			<isNotEmpty property="consumerName">consumerName,</isNotEmpty>
+			<isNotEmpty property="advertiserName">advertiserName,</isNotEmpty>
+			<isNotEmpty property="advertiserId">advertiserId,</isNotEmpty>
+			<isNotEmpty property="ditchName">ditchName,</isNotEmpty>
+			<isNotEmpty property="ditchId">ditchId,</isNotEmpty>
+			<isNotEmpty property="saleName">saleName,</isNotEmpty>
+			<isNotEmpty property="saleId">saleId,</isNotEmpty>
+			
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			
+			<isNotEmpty property="modifier">modifier,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime</isNotEmpty>
+		)VALUES(
+			<isNotEmpty property="name">#name#,</isNotEmpty>
+			<isNotEmpty property="projectId">#projectId#,</isNotEmpty>
+			<isNotEmpty property="projectName">#projectName#,</isNotEmpty>
+			<isNotEmpty property="consumerId">#consumerId#,</isNotEmpty>
+			<isNotEmpty property="consumerName">#consumerName#,</isNotEmpty>
+			<isNotEmpty property="advertiserName">#advertiserName#,</isNotEmpty>
+			<isNotEmpty property="advertiserId">#advertiserId#,</isNotEmpty>
+			<isNotEmpty property="ditchName">#ditchName#,</isNotEmpty>
+			<isNotEmpty property="ditchId">#ditchId#,</isNotEmpty>
+			<isNotEmpty property="saleName">#saleName#,</isNotEmpty>
+			<isNotEmpty property="saleId">#saleId#,</isNotEmpty>
+			
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="modifier">#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">#modifyTime#,</isNotEmpty>
+			<isNotEmpty property="createTime">#createTime#</isNotEmpty>
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		UPDATE t_advactive SET status = 1 WHERE id=#value#
+	</delete>
+	
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.advflight.AdvActive">
+		UPDATE t_advactive SET 
+			<isNotEmpty property="name">name=#name#,</isNotEmpty>
+			<isNotEmpty property="status">status=#status#,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier=#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime=#modifyTime#</isNotEmpty>
+			
+		WHERE id=#id#
+	</update>
+	
+	<select id="selectByName" parameterClass="com.ku6ads.dao.entity.advflight.AdvActive" resultClass="com.ku6ads.dao.entity.advflight.AdvActive">
+		SELECT * FROM t_advactive where name=#name#
+	</select>
+</sqlMap>

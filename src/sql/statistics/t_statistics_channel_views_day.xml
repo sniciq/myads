@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.t_statistics_channel_views_day">
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsChannelViewsDay">
+ 		insert into t_statistics_channel_views_day(
+			<isNotEmpty property="channelId">channelId,</isNotEmpty>
+			<isNotEmpty property="updateTime">updateTime,</isNotEmpty>
+			<isNotEmpty property="onceMore">onceMore,</isNotEmpty>
+			<isNotEmpty property="twiceMore">twiceMore,</isNotEmpty>
+			<isNotEmpty property="threeMore">threeMore,</isNotEmpty>
+			<isNotEmpty property="fourthMore">fourthMore,</isNotEmpty>
+			<isNotEmpty property="fiveMore">fiveMore,</isNotEmpty>
+			<isNotEmpty property="sixMore">sixMore,</isNotEmpty>
+			<isNotEmpty property="sevenMore">sevenMore,</isNotEmpty>
+			<isNotEmpty property="eightMore">eightMore,</isNotEmpty>
+			<isNotEmpty property="nineMore">nineMore,</isNotEmpty>
+			<isNotEmpty property="teenMore">teenMore,</isNotEmpty>
+			id
+		) values (
+			<isNotEmpty property="channelId">#channelId#,</isNotEmpty>
+			<isNotEmpty property="updateTime">#updateTime#,</isNotEmpty>
+			<isNotEmpty property="onceMore">#onceMore#,</isNotEmpty>
+			<isNotEmpty property="twiceMore">#twiceMore#,</isNotEmpty>
+			<isNotEmpty property="threeMore">#threeMore#,</isNotEmpty>
+			<isNotEmpty property="fourthMore">#fourthMore#,</isNotEmpty>
+			<isNotEmpty property="fiveMore">#fiveMore#,</isNotEmpty>
+			<isNotEmpty property="sixMore">#sixMore#,</isNotEmpty>
+			<isNotEmpty property="sevenMore">#sevenMore#,</isNotEmpty>
+			<isNotEmpty property="eightMore">#eightMore#,</isNotEmpty>
+			<isNotEmpty property="nineMore">#nineMore#,</isNotEmpty>
+			<isNotEmpty property="teenMore">#teenMore#,</isNotEmpty>
+			#id#
+		)
+	</insert>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsChannelViewsDay" resultClass="com.ku6ads.dao.entity.statistics.StatisticsChannelViewsDay">
+ 		SELECT id,channelId,updateTime,onceMore,twiceMore,threeMore,fourthMore,fiveMore,sixMore,sevenMore,eightMore,nineMore,teenMore 
+		FROM t_statistics_channel_views_day
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="channelId" prepend=" AND ">channelId=#channelId#</isNotEmpty>
+		<isNotEmpty property="updateTime" prepend=" AND ">updateTime=#updateTime#</isNotEmpty>
+		<isNotEmpty property="onceMore" prepend=" AND ">onceMore=#onceMore#</isNotEmpty>
+		<isNotEmpty property="twiceMore" prepend=" AND ">twiceMore=#twiceMore#</isNotEmpty>
+		<isNotEmpty property="threeMore" prepend=" AND ">threeMore=#threeMore#</isNotEmpty>
+		<isNotEmpty property="fourthMore" prepend=" AND ">fourthMore=#fourthMore#</isNotEmpty>
+		<isNotEmpty property="fiveMore" prepend=" AND ">fiveMore=#fiveMore#</isNotEmpty>
+		<isNotEmpty property="sixMore" prepend=" AND ">sixMore=#sixMore#</isNotEmpty>
+		<isNotEmpty property="sevenMore" prepend=" AND ">sevenMore=#sevenMore#</isNotEmpty>
+		<isNotEmpty property="eightMore" prepend=" AND ">eightMore=#eightMore#</isNotEmpty>
+		<isNotEmpty property="nineMore" prepend=" AND ">nineMore=#nineMore#</isNotEmpty>
+		<isNotEmpty property="teenMore" prepend=" AND ">teenMore=#teenMore#</isNotEmpty>
+	</select>
+
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsChannelViewsDay">
+ 		UPDATE t_statistics_channel_views_day SET 
+		<isNotNull property="channelId">channelId=#channelId#, </isNotNull>
+		<isNotNull property="updateTime">updateTime=#updateTime#, </isNotNull>
+		<isNotNull property="onceMore">onceMore=#onceMore#, </isNotNull>
+		<isNotNull property="twiceMore">twiceMore=#twiceMore#, </isNotNull>
+		<isNotNull property="threeMore">threeMore=#threeMore#, </isNotNull>
+		<isNotNull property="fourthMore">fourthMore=#fourthMore#, </isNotNull>
+		<isNotNull property="fiveMore">fiveMore=#fiveMore#, </isNotNull>
+		<isNotNull property="sixMore">sixMore=#sixMore#, </isNotNull>
+		<isNotNull property="sevenMore">sevenMore=#sevenMore#, </isNotNull>
+		<isNotNull property="eightMore">eightMore=#eightMore#, </isNotNull>
+		<isNotNull property="nineMore">nineMore=#nineMore#, </isNotNull>
+		<isNotNull property="teenMore">teenMore=#teenMore#, </isNotNull>
+		 id=#id#
+		WHERE
+		 id=#id#
+	</update>
+
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.statistics.StatisticsChannelViewsDay">
+		select * from t_statistics_channel_views_day WHERE id=#value#
+	</select>
+
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+ 		DELETE FROM t_statistics_channel_views_day WHERE 
+		 id=#id#
+	</delete>
+
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsChannelViewsDay" resultClass="java.lang.Integer">
+ 		SELECT count(1) 		FROM t_statistics_channel_views_day
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="channelId" prepend=" AND ">channelId=#channelId#</isNotEmpty>
+		<isNotEmpty property="updateTime" prepend=" AND ">updateTime=#updateTime#</isNotEmpty>
+		<isNotEmpty property="onceMore" prepend=" AND ">onceMore=#onceMore#</isNotEmpty>
+		<isNotEmpty property="twiceMore" prepend=" AND ">twiceMore=#twiceMore#</isNotEmpty>
+		<isNotEmpty property="threeMore" prepend=" AND ">threeMore=#threeMore#</isNotEmpty>
+		<isNotEmpty property="fourthMore" prepend=" AND ">fourthMore=#fourthMore#</isNotEmpty>
+		<isNotEmpty property="fiveMore" prepend=" AND ">fiveMore=#fiveMore#</isNotEmpty>
+		<isNotEmpty property="sixMore" prepend=" AND ">sixMore=#sixMore#</isNotEmpty>
+		<isNotEmpty property="sevenMore" prepend=" AND ">sevenMore=#sevenMore#</isNotEmpty>
+		<isNotEmpty property="eightMore" prepend=" AND ">eightMore=#eightMore#</isNotEmpty>
+		<isNotEmpty property="nineMore" prepend=" AND ">nineMore=#nineMore#</isNotEmpty>
+		<isNotEmpty property="teenMore" prepend=" AND ">teenMore=#teenMore#</isNotEmpty>
+	</select>
+
+	<select id="selectByLimit" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsChannelViewsDay" resultClass="com.ku6ads.dao.entity.statistics.StatisticsChannelViewsDay">
+ 		SELECT id,channelId,updateTime,onceMore,twiceMore,threeMore,fourthMore,fiveMore,sixMore,sevenMore,eightMore,nineMore,teenMore 
+		FROM t_statistics_channel_views_day
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="channelId" prepend=" AND ">channelId=#channelId#</isNotEmpty>
+		<isNotEmpty property="updateTime" prepend=" AND ">updateTime=#updateTime#</isNotEmpty>
+		<isNotEmpty property="onceMore" prepend=" AND ">onceMore=#onceMore#</isNotEmpty>
+		<isNotEmpty property="twiceMore" prepend=" AND ">twiceMore=#twiceMore#</isNotEmpty>
+		<isNotEmpty property="threeMore" prepend=" AND ">threeMore=#threeMore#</isNotEmpty>
+		<isNotEmpty property="fourthMore" prepend=" AND ">fourthMore=#fourthMore#</isNotEmpty>
+		<isNotEmpty property="fiveMore" prepend=" AND ">fiveMore=#fiveMore#</isNotEmpty>
+		<isNotEmpty property="sixMore" prepend=" AND ">sixMore=#sixMore#</isNotEmpty>
+		<isNotEmpty property="sevenMore" prepend=" AND ">sevenMore=#sevenMore#</isNotEmpty>
+		<isNotEmpty property="eightMore" prepend=" AND ">eightMore=#eightMore#</isNotEmpty>
+		<isNotEmpty property="nineMore" prepend=" AND ">nineMore=#nineMore#</isNotEmpty>
+		<isNotEmpty property="teenMore" prepend=" AND ">teenMore=#teenMore#</isNotEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+
+</sqlMap>

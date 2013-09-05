@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../ExtJS/resources/css/ext-all.css"/>
+		<script type="text/javascript" src="../ExtJS/adapter/ext/ext-base.js"></script>
+		<script type="text/javascript" src="../ExtJS/ext-all.js"></script>
+		<script type="text/javascript">
+			Ext.onReady(function() {
+				var cm = new Ext.grid.ColumnModel([
+				    {header:'���', dataIndex:'id'},
+				    {header:'���', dataIndex:'name'},
+				    {header:'����', dataIndex:'descn'}
+				]);
+
+				var data = [
+					['1', 'name1', 'des1'],
+					['2', 'name2', 'des2'],
+					['3', 'asd', 'dasdes1'],
+					['11', 'nam���e1', 'de��Ӧ֢s1'],
+					['123', 'naasd��ԭ��me1', 'd32������es1']
+				];
+
+				var ds = new Ext.data.Store({
+					proxy: new Ext.data.MemoryProxy(data),
+					reader: new Ext.data.ArrayReader({},
+							[
+								{name: 'id'},
+								{name: 'name'},
+								{name: 'descn'}               
+							]
+					)
+				});
+
+				ds.load();
+				
+				var grid = new Ext.grid.GridPanel({
+					el: 'myGrid',
+					ds: ds,
+					cm: cm,
+				    height:300
+				});
+
+				grid.render();
+
+				//Ext.MessageBox.alert('hello!', 'hello world!');
+			});
+		</script>
+	</head>
+	<body>
+		<div id="myGrid"></div>
+	</body>
+</html>

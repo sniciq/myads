@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.t_price">
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.sysconfig.PriceEty">
+ 		insert into t_price(
+			<isNotEmpty property="priceName">priceName,</isNotEmpty>
+			<isNotEmpty property="saleTypeValue">saleTypeValue,</isNotEmpty>
+			<isNotEmpty property="format">format,</isNotEmpty>
+			<isNotEmpty property="price">price,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="remark">remark,</isNotEmpty>
+			<isNotEmpty property="clickRate">clickRate,</isNotEmpty>
+			<isNotEmpty property="impression">impression,</isNotEmpty>
+			<isNotEmpty property="materiel">materiel,</isNotEmpty>
+			id
+		) values (
+			<isNotEmpty property="priceName">#priceName#,</isNotEmpty>
+			<isNotEmpty property="saleTypeValue">#saleTypeValue#,</isNotEmpty>
+			<isNotEmpty property="format">#format#,</isNotEmpty>
+			<isNotEmpty property="price">#price#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="remark">#remark#,</isNotEmpty>
+			<isNotEmpty property="clickRate">#clickRate#,</isNotEmpty>
+			<isNotEmpty property="impression">#impression#,</isNotEmpty>
+			<isNotEmpty property="materiel">#materiel#,</isNotEmpty>
+			#id#
+		)
+	</insert>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.sysconfig.PriceEty" resultClass="com.ku6ads.dao.entity.sysconfig.PriceEty">
+ 		SELECT t.*, tb.dataName as saleTypeName, tf.dataName as formatName
+		FROM t_price t
+		left join t_basedata tb on tb.dataType='saletype' and tb.dataValue = t.saleTypeValue
+		left join t_basedata tf on tf.dataType=tb.dataName and tf.dataValue = t.format
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">t.id=#id#</isNotEmpty>
+		<isNotEmpty property="priceName" prepend=" AND ">t.priceName=#priceName#</isNotEmpty>
+		<isNotEmpty property="saleTypeValue" prepend=" AND ">t.saleTypeValue=#saleTypeValue#</isNotEmpty>
+		<isNotEmpty property="format" prepend=" AND ">t.format=#format#</isNotEmpty>
+		<isNotEmpty property="price" prepend=" AND ">t.price=#price#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">t.status=#status#</isNotEmpty>
+		<isNotEmpty property="remark" prepend=" AND ">t.remark=#remark#</isNotEmpty>
+		<isNotEmpty property="clickRate" prepend=" AND ">t.clickRate=#clickRate#</isNotEmpty>
+		<isNotEmpty property="impression" prepend=" AND ">t.impression=#impression#</isNotEmpty>
+		<isNotEmpty property="materiel" prepend=" AND ">t.materiel=#materiel#</isNotEmpty>
+	</select>
+
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.sysconfig.PriceEty">
+ 		UPDATE t_price SET 
+		<isNotNull property="priceName">priceName=#priceName#, </isNotNull>
+		<isNotNull property="saleTypeValue">saleTypeValue=#saleTypeValue#, </isNotNull>
+		<isNotNull property="format">format=#format#, </isNotNull>
+		<isNotNull property="price">price=#price#, </isNotNull>
+		<isNotNull property="status">status=#status#, </isNotNull>
+		<isNotNull property="remark">remark=#remark#, </isNotNull>
+		<isNotNull property="clickRate">clickRate=#clickRate#, </isNotNull>
+		<isNotNull property="impression">impression=#impression#, </isNotNull>
+		<isNotNull property="materiel">materiel=#materiel#, </isNotNull>
+		 id=#id#
+		WHERE
+		 id=#id#
+	</update>
+
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.sysconfig.PriceEty">
+		SELECT t.*, tb.dataName as saleTypeName, tf.dataName as formatName
+		FROM t_price t
+		left join t_basedata tb on tb.dataType='saletype' and tb.dataValue = t.saleTypeValue
+		left join t_basedata tf on tf.dataType=tb.dataName and tf.dataValue = t.format
+		WHERE t.id=#value#
+	</select>
+
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+ 		DELETE FROM t_price WHERE 
+		 id=#id#
+	</delete>
+
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.sysconfig.PriceEty" resultClass="java.lang.Integer">
+ 		SELECT count(1) FROM t_price
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="priceName" prepend=" AND ">priceName like '%$priceName$%'</isNotEmpty>
+		<isNotEmpty property="saleTypeValue" prepend=" AND ">saleTypeValue=#saleTypeValue#</isNotEmpty>
+		<isNotEmpty property="format" prepend=" AND ">format=#format#</isNotEmpty>
+		<isNotEmpty property="price" prepend=" AND ">price=#price#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+		<isNotEmpty property="remark" prepend=" AND ">remark=#remark#</isNotEmpty>
+		<isNotEmpty property="clickRate" prepend=" AND ">clickRate=#clickRate#</isNotEmpty>
+		<isNotEmpty property="impression" prepend=" AND ">impression=#impression#</isNotEmpty>
+		<isNotEmpty property="materiel" prepend=" AND ">materiel=#materiel#</isNotEmpty>
+	</select>
+
+	<select id="selectByLimit" parameterClass="com.ku6ads.dao.entity.sysconfig.PriceEty" resultClass="com.ku6ads.dao.entity.sysconfig.PriceEty">
+ 		SELECT t.*, tb.dataName as saleTypeName, tf.dataName as formatName
+		FROM t_price t
+		left join t_basedata tb on tb.dataType='saletype' and tb.dataValue = t.saleTypeValue
+		left join t_basedata tf on tf.dataType=tb.dataName and tf.dataValue = t.format
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">t.id=#id#</isNotEmpty>
+		<isNotEmpty property="priceName" prepend=" AND ">t.priceName like '%$priceName$%'</isNotEmpty>
+		<isNotEmpty property="saleTypeValue" prepend=" AND ">t.saleTypeValue=#saleTypeValue#</isNotEmpty>
+		<isNotEmpty property="format" prepend=" AND ">t.format=#format#</isNotEmpty>
+		<isNotEmpty property="price" prepend=" AND ">t.price=#price#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">t.status=#status#</isNotEmpty>
+		<isNotEmpty property="remark" prepend=" AND ">t.remark=#remark#</isNotEmpty>
+		<isNotEmpty property="clickRate" prepend=" AND ">t.clickRate=#clickRate#</isNotEmpty>
+		<isNotEmpty property="impression" prepend=" AND ">t.impression=#impression#</isNotEmpty>
+		<isNotEmpty property="materiel" prepend=" AND ">t.materiel=#materiel#</isNotEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+
+</sqlMap>

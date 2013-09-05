@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="ChannelAction" class="com.ku6ads.struts.sysconfig.ChannelAction" scope="prototype">
+		<property name="channelService" ref="ChannelService"></property>
+		<property name="advbarService" ref="AdvbarService"></property>
+		<property name="siteService" ref="SiteService"></property>
+	</bean>
+	
+	<bean id="DepartmentAction" class="com.ku6ads.struts.sysconfig.DepartmentAction" scope="prototype">
+		<property name="departmentService" ref="DepartmentService"></property>
+	</bean>
+	
+	<bean id="SiteAction" class="com.ku6ads.struts.sysconfig.SiteAction" scope="prototype">
+		<property name="siteService" ref="SiteService"></property>
+	</bean>
+	
+	<bean id="RoleAction" class="com.ku6ads.struts.sysconfig.RoleAction" scope="prototype">
+		<property name="roleService" ref="RoleService"></property>
+	</bean>
+	
+	<bean id="TestFlowForecastTask" class="com.ku6ads.struts.flowforecast.FlowForecastTask" scope="prototype">
+		<property name="flowForecastDao" ref="FlowForecastDao"></property>
+		<property name="futureFlightDao" ref="FutureFlightDao"></property>
+		<property name="statisticsAdvbarMonthDao" ref="StatisticsAdvbarMonthDao"></property>
+		<property name="advbarDao" ref="AdvbarDao"></property>
+	</bean>
+	
+	<bean id="LoginLocalAction" class="com.ku6ads.struts.sysconfig.LoginLocalAction" scope="prototype">
+		<property name="flowForecastTask" ref="TestFlowForecastTask"></property>
+	</bean>
+	
+	<bean id="UserAction" class="com.ku6ads.struts.sysconfig.UserAction" scope="prototype">
+		<property name="userService" ref="UserService"></property>
+		<property name="projectSerivce" ref="ProjectService"></property>
+		<property name="menuDao" ref="MenuDao"></property>
+	</bean>
+	
+	<bean id="AdvertiserAction" class="com.ku6ads.struts.advertiser.AdvertiserAction" scope="prototype">
+		<property name="advertiserDao" ref="AdvertiserDao"></property>
+		<property name="productLineDao" ref="ProductLineDao"></property>
+		<property name="productDao" ref="ProductDao"></property>
+	</bean>
+	
+	<bean id="ConsumerAction" class="com.ku6ads.struts.sysconfig.ConsumerAction" scope="prototype">
+		<property name="departmentDao" ref="DepartmentDao"></property>
+		<property name="consumerDao" ref="ConsumerDao"></property>
+	</bean>
+	
+	<bean id="ContactPersonAction" class="com.ku6ads.struts.sysconfig.ContactPersonAction" scope="prototype">
+		<property name="contactPersonDao" ref="ContactPersonDao"></property>
+	</bean>
+	
+	
+	<bean id="ProductAction" class="com.ku6ads.struts.advertiser.ProductAction" scope="prototype">
+		<property name="productDao" ref="ProductDao"></property>
+	</bean>
+	
+	<bean id="ProductLineAction" class="com.ku6ads.struts.advertiser.ProductLineAction" scope="prototype">
+		<property name="productLineDao" ref="ProductLineDao"></property>
+		<property name="productDao" ref="ProductDao"></property>
+	</bean>
+	<!-- 权重参数Action -->
+	<bean id="ProportionAction" class="com.ku6ads.struts.sysconfig.ProportionAction" scope="prototype">
+		<property name="proportionDao" ref="ProportionDao"></property>
+	</bean>
+	
+	<bean id="AreaAction" class="com.ku6ads.struts.sysconfig.AreaAction" scope="prototype">
+		<property name="areaService" ref="AreaService"></property>
+	</bean>
+	
+	<bean id="GroupAction" class="com.ku6ads.struts.sysconfig.GroupAction" scope="prototype">
+		<property name="groupService" ref="GroupService"></property>
+	</bean>
+	
+	<bean id="PermissionValidation" class="com.ku6ads.struts.permission.PermissionValidation" init-method="init" scope="singleton">
+		<property name="groupService" ref="GroupService"></property>
+	</bean>
+
+	<bean id="systemConfig" class="com.ku6ads.struts.sysconfig.SysConfig">		
+		<property name="readList">
+		   <list>
+		        <value>211.151.188.203</value>
+		        <!-- 
+				<value>211.151.188.204</value>
+				 -->
+				<value>211.151.188.205</value> 
+				<value>211.151.188.206</value>
+				<value>211.151.188.207</value>
+				<value>211.151.188.208</value>
+				<!-- 
+				<value>211.151.188.209</value>
+				 --> 
+		   </list>
+		</property>
+	</bean>
+	
+	<bean id="pushMemory" class="com.ku6ads.util.PushMemoryUtil">		
+		<property name="config" ref="systemConfig"></property>
+	</bean>
+</beans>

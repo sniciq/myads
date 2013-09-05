@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.StatisticsChannelMonth">
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsChannelMonth">
+ 		insert into t_statistics_channel_month(
+			<isNotEmpty property="month">month,</isNotEmpty>
+			<isNotEmpty property="statTime">statTime,</isNotEmpty>
+			<isNotEmpty property="channelId">channelId,</isNotEmpty>
+			<isNotEmpty property="channelName">channelName,</isNotEmpty>
+			<isNotEmpty property="pv">pv,</isNotEmpty>
+			<isNotEmpty property="uv">uv,</isNotEmpty>
+			<isNotEmpty property="click">click,</isNotEmpty>
+			<isNotEmpty property="uc">uc,</isNotEmpty>
+			createTime
+		) values (
+			<isNotEmpty property="month">#month#,</isNotEmpty>
+			<isNotEmpty property="statTime">#statTime#,</isNotEmpty>
+			<isNotEmpty property="channelId">#channelId#,</isNotEmpty>
+			<isNotEmpty property="channelName">#channelName#,</isNotEmpty>
+			<isNotEmpty property="pv">#pv#,</isNotEmpty>
+			<isNotEmpty property="uv">#uv#,</isNotEmpty>
+			<isNotEmpty property="click">#click#,</isNotEmpty>
+			<isNotEmpty property="uc">#uc#,</isNotEmpty>
+			now()
+		)
+	</insert>
+	
+	<select id="statisticsSearch" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsChannelMonth" resultClass="com.ku6ads.dao.entity.statistics.StatisticsChannelMonth">
+		select org.*, c.name as channelName from (
+			SELECT id,statTime,DATE_FORMAT(statTime, '%Y-%m-%d') as xField, channelId,sum(pv) as pv,sum(uv) as uv,sum(click) as click,sum(uc) as uc
+			FROM t_statistics_channel_month
+			WHERE 1=1 
+			<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+			<isNotEmpty property="month" prepend=" AND ">month=#month#</isNotEmpty>
+			<isNotEmpty property="channelId" prepend=" AND ">channelId=#channelId#</isNotEmpty>
+			<isNotEmpty property="pv" prepend=" AND ">pv=#pv#</isNotEmpty>
+			<isNotEmpty property="uv" prepend=" AND ">uv=#uv#</isNotEmpty>
+			<isNotEmpty property="click" prepend=" AND ">click=#click#</isNotEmpty>
+			<isNotEmpty property="uc" prepend=" AND ">uc=#uc#</isNotEmpty>
+			<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+			<isNotEmpty property="statTime" prepend=" AND ">DATE_FORMAT(statTime, '%Y-%m-%d') >= DATE_FORMAT(#statTime#, '%Y-%m-%d')</isNotEmpty>
+			<isNotEmpty property="stateTimeMonthEnd" prepend=" AND "> DATE_FORMAT(statTime, '%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#stateTimeMonthEnd#, '%Y-%m-%d')</isNotEmpty>
+			group by statTime, month,channelId 
+		) org left join t_channel c on org.channelId = c.channelId 	
+	</select>
+	
+	<select id="statisticsSearchLimitCount" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsChannelMonth" resultClass="java.lang.Integer">
+		select count(1) from t_statistics_channel_month
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="month" prepend=" AND ">month=#month#</isNotEmpty>
+		<isNotEmpty property="channelId" prepend=" AND ">channelId=#channelId#</isNotEmpty>
+		<isNotEmpty property="pv" prepend=" AND ">pv=#pv#</isNotEmpty>
+		<isNotEmpty property="uv" prepend=" AND ">uv=#uv#</isNotEmpty>
+		<isNotEmpty property="click" prepend=" AND ">click=#click#</isNotEmpty>
+		<isNotEmpty property="uc" prepend=" AND ">uc=#uc#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+		<isNotEmpty property="statTime" prepend=" AND ">DATE_FORMAT(statTime, '%Y-%m-%d') >= DATE_FORMAT(#statTime#, '%Y-%m-%d')</isNotEmpty>
+		<isNotEmpty property="stateTimeMonthEnd" prepend=" AND "> DATE_FORMAT(statTime, '%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#stateTimeMonthEnd#, '%Y-%m-%d')</isNotEmpty>
+	</select>
+	
+	<select id="statisticsSearchByLimit" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsChannelMonth" resultClass="com.ku6ads.dao.entity.statistics.StatisticsChannelMonth">
+		select org.*, c.name as channelName from (
+			SELECT t.id,statTime,month,channelId,pv,uv,click,uc,t.pcode,t.dcode, p.province,c.city
+			FROM t_statistics_channel_month t
+			left join t_province p on p.pcode = t.pcode
+			left join t_city c on c.pcode = t.pcode and c.dcode = t.dcode
+			WHERE 1=1 
+			<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+			<isNotEmpty property="month" prepend=" AND ">month=#month#</isNotEmpty>
+			<isNotEmpty property="channelId" prepend=" AND ">channelId=#channelId#</isNotEmpty>
+			<isNotEmpty property="pv" prepend=" AND ">pv=#pv#</isNotEmpty>
+			<isNotEmpty property="uv" prepend=" AND ">uv=#uv#</isNotEmpty>
+			<isNotEmpty property="click" prepend=" AND ">click=#click#</isNotEmpty>
+			<isNotEmpty property="uc" prepend=" AND ">uc=#uc#</isNotEmpty>
+			<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+			<isNotEmpty property="statTime" prepend=" AND ">DATE_FORMAT(statTime, '%Y-%m-%d') >= DATE_FORMAT(#statTime#, '%Y-%m-%d')</isNotEmpty>
+			<isNotEmpty property="stateTimeMonthEnd" prepend=" AND "> DATE_FORMAT(statTime, '%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#stateTimeMonthEnd#, '%Y-%m-%d')</isNotEmpty>
+			<isEmpty property="extLimit.sort">order by t.statTime, t.month</isEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.limit$ offset $extLimit.start$</isNotEmpty>
+		) org left join t_channel c on org.channelId = c.channelId 	
+	</select>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsChannelMonth" resultClass="com.ku6ads.dao.entity.statistics.StatisticsChannelMonth">
+ 		SELECT id,month,statTime,channelId,channelName,pv,uv,click,uc,createTime 
+		FROM t_statistics_channel_month
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="month" prepend=" AND ">month=#month#</isNotEmpty>
+		<isNotEmpty property="statTime" prepend=" AND ">statTime=#statTime#</isNotEmpty>
+		<isNotEmpty property="channelId" prepend=" AND ">channelId=#channelId#</isNotEmpty>
+		<isNotEmpty property="channelName" prepend=" AND ">channelName=#channelName#</isNotEmpty>
+		<isNotEmpty property="pv" prepend=" AND ">pv=#pv#</isNotEmpty>
+		<isNotEmpty property="uv" prepend=" AND ">uv=#uv#</isNotEmpty>
+		<isNotEmpty property="click" prepend=" AND ">click=#click#</isNotEmpty>
+		<isNotEmpty property="uc" prepend=" AND ">uc=#uc#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+	</select>
+
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsChannelMonth">
+ 		UPDATE t_statistics_channel_month SET 
+		<isNotNull property="month">month=#month#, </isNotNull>
+		<isNotNull property="statTime">statTime=#statTime#, </isNotNull>
+		<isNotNull property="channelId">channelId=#channelId#, </isNotNull>
+		<isNotNull property="channelName">channelName=#channelName#, </isNotNull>
+		<isNotNull property="pv">pv=#pv#, </isNotNull>
+		<isNotNull property="uv">uv=#uv#, </isNotNull>
+		<isNotNull property="click">click=#click#, </isNotNull>
+		<isNotNull property="uc">uc=#uc#, </isNotNull>
+		<isNotNull property="createTime">createTime=#createTime#, </isNotNull>
+		 id=#id#
+		WHERE
+		 id=#id#
+	</update>
+
+	<delete id="deleteById" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsChannelMonth">
+ 		DELETE FROM t_statistics_channel_month
+		WHERE 
+		 id=#id#
+	</delete>
+
+</sqlMap>

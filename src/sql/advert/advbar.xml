@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="advert.Advbar">
+	
+	<select id="selectByEntity" resultClass="com.ku6ads.dao.entity.advert.Advbar" parameterClass="com.ku6ads.dao.entity.advert.Advbar">
+		select a.id,a.name,a.nameEn,a.posId,a.posName,a.channelId,a.siteId,a.barsizeId,a.bartemId,a.content,a.num,a.status,a.srcposId,a.advType,a.creator,a.modifier,a.modifyTime,a.code,a.note,a.futureFlight,a.isBackground, a.createTime,
+			c.name as channelName,s.siteName,ifnull(p.name,"") as positionName
+		from t_advbar a
+		left join t_positionsize p on a.barsizeId = p.id
+		left join t_channel c on a.channelId = c.channelId
+		left join t_site s on a.siteId = s.siteId
+		where 1=1
+		<isNotEmpty property="posId" prepend=" AND ">a.posId=#posId#</isNotEmpty>
+		<isNotEmpty property="channelId" prepend=" AND ">a.channelId=#channelId#</isNotEmpty>
+		<isNotEmpty property="siteId" prepend=" AND ">a.siteId=#siteId#</isNotEmpty>
+		<isNotEmpty property="barsizeId" prepend=" AND ">a.barsizeId=#barsizeId#</isNotEmpty>
+		<isNotEmpty property="bartemId" prepend=" AND ">a.bartemId=#bartemId#</isNotEmpty>
+		<isNotEmpty property="barsizeId" prepend=" AND ">a.barsizeId=#barsizeId#</isNotEmpty>
+		<isNotEmpty property="srcposId" prepend=" AND ">a.srcposId=#srcposId#</isNotEmpty>
+		<isNotEmpty property="name" prepend=" AND ">a.name=#name#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">a.status=#status#</isNotEmpty>
+		order by a.name
+	</select>
+	
+	<select id="selectUsebleAdvbar" parameterClass="com.ku6ads.dao.entity.advert.Advbar" resultClass="com.ku6ads.dao.entity.advert.Advbar">
+		SELECT b.* FROM t_advbar b
+		left join t_advposition p on b.posId = p.id
+		WHERE 1=1 and p.status = 2
+		<isNotEmpty property="posId" prepend=" AND ">b.posId=#posId#</isNotEmpty>
+		<isNotEmpty property="channelId" prepend=" AND ">b.channelId=#channelId#</isNotEmpty>
+		<isNotEmpty property="siteId" prepend=" AND ">b.siteId=#siteId#</isNotEmpty>
+		<isNotEmpty property="barsizeId" prepend=" AND ">b.barsizeId=#barsizeId#</isNotEmpty>
+		<isNotEmpty property="bartemId" prepend=" AND ">b.bartemId=#bartemId#</isNotEmpty>
+		<isNotEmpty property="barsizeId" prepend=" AND ">b.barsizeId=#barsizeId#</isNotEmpty>
+		<isNotEmpty property="srcposId" prepend=" AND ">b.srcposId=#srcposId#</isNotEmpty>
+		<isNotEmpty property="name" prepend=" AND ">b.name=#name#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">b.status=#status#</isNotEmpty>
+		order by b.name
+	</select>
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.advert.Advbar">
+		select a.id,a.name,a.nameEn,a.posId,a.posName,a.channelId,a.siteId,a.barsizeId,a.bartemId,a.content,a.num,a.status,a.srcposId,a.advType,a.creator,a.modifier,a.modifyTime,a.code,a.note,a.futureFlight,a.isBackground, a.createTime,
+			c.name as channelName,s.siteName,ifnull(p.name,"") as positionName
+		from t_advbar a
+		left join t_positionsize p on a.barsizeId = p.id
+		left join t_channel c on a.channelId = c.channelId
+		left join t_site s on a.siteId = s.siteId
+		where a.id=#value#
+	</select >
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.advert.Advbar" resultClass="java.lang.Integer">
+		SELECT COUNT(1) FROM t_advbar WHERE status != 1
+		<isNotEmpty property="name" prepend=" and ">name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="posId" prepend=" and ">posId = #posId#</isNotEmpty>
+		<isNotEmpty property="barsizeId" prepend=" and ">barsizeId = #barsizeId#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" and ">status = #status#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" and "><![CDATA[#createTime# <= createTime]]></isNotEmpty>
+		<isNotEmpty property="creator" prepend=" and ">creator = #creator#</isNotEmpty>
+	</select>
+	
+	<select id="selectByLimit" resultClass="com.ku6ads.dao.entity.advert.Advbar" parameterClass="com.ku6ads.dao.entity.advert.Advbar">
+		select a.id,a.name,a.nameEn,a.posId,a.posName,a.channelId,a.siteId,a.barsizeId,a.bartemId,a.content,a.num,a.status,a.srcposId,a.advType,a.creator,a.modifier,a.modifyTime,a.code,a.note,a.futureFlight,a.isBackground, a.createTime,
+			c.name as channelName,s.siteName,ifnull(p.name,"") as positionName
+		from t_advbar a
+		left join t_positionsize p on a.barsizeId = p.id
+		left join t_channel c on a.channelId = c.channelId
+		left join t_site s on a.siteId = s.siteId
+		where a.status != 1
+		<isNotEmpty property="name" prepend=" and ">a.name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="posId" prepend=" and ">a.posId = #posId#</isNotEmpty>
+		<isNotEmpty property="barsizeId" prepend=" and ">a.barsizeId = #barsizeId#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" and ">a.status = #status#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" and "><![CDATA[#createTime# <= a.createTime]]></isNotEmpty>
+		<isNotEmpty property="creator" prepend=" and ">a.creator = #creator#</isNotEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isEmpty property="extLimit.sort">order by a.id desc </isEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.advert.Advbar">
+		INSERT INTO t_advbar(
+			<isNotEmpty property="name">name,</isNotEmpty>
+			<isNotEmpty property="nameEn">nameEn,</isNotEmpty>
+			<isNotEmpty property="posId">posId,</isNotEmpty>
+			<isNotEmpty property="posName">posName,</isNotEmpty>
+			<isNotEmpty property="channelId">channelId,</isNotEmpty>
+			<isNotEmpty property="channelName">channelName,</isNotEmpty>
+			<isNotEmpty property="siteId">siteId,</isNotEmpty>
+			<isNotEmpty property="siteName">siteName,</isNotEmpty>
+			<isNotEmpty property="barsizeId">barsizeId,</isNotEmpty>
+			<isNotEmpty property="bartemId">bartemId,</isNotEmpty>
+			<isNotEmpty property="content">content,</isNotEmpty>
+			<isNotEmpty property="num">num,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="srcposId">srcposId,</isNotEmpty>
+			<isNotEmpty property="advType">advType,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime,</isNotEmpty>
+			<isNotEmpty property="code">code,</isNotEmpty>
+			<isNotEmpty property="note">note,</isNotEmpty>
+			<isNotEmpty property="futureFlight">futureFlight,</isNotEmpty>
+			<isNotEmpty property="isBackground">isBackground,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime</isNotEmpty>
+		)VALUES(
+			<isNotEmpty property="name">#name#,</isNotEmpty>
+			<isNotEmpty property="nameEn">#nameEn#,</isNotEmpty>
+			<isNotEmpty property="posId">#posId#,</isNotEmpty>
+			<isNotEmpty property="posName">#posName#,</isNotEmpty>
+			<isNotEmpty property="channelId">#channelId#,</isNotEmpty>
+			<isNotEmpty property="channelName">#channelName#,</isNotEmpty>
+			<isNotEmpty property="siteId">#siteId#,</isNotEmpty>
+			<isNotEmpty property="siteName">#siteName#,</isNotEmpty>
+			<isNotEmpty property="barsizeId">#barsizeId#,</isNotEmpty>
+			<isNotEmpty property="bartemId">#bartemId#,</isNotEmpty>
+			<isNotEmpty property="content">#content#,</isNotEmpty>
+			<isNotEmpty property="num">#num#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="srcposId">#srcposId#,</isNotEmpty>
+			<isNotEmpty property="advType">#advType#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="modifier">#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">#modifyTime#,</isNotEmpty>
+			<isNotEmpty property="code">#code#,</isNotEmpty>
+			<isNotEmpty property="note">#note#,</isNotEmpty>
+			<isNotEmpty property="futureFlight">#futureFlight#,</isNotEmpty>
+			<isNotEmpty property="isBackground">#isBackground#,</isNotEmpty>
+			<isNotEmpty property="createTime">#createTime#</isNotEmpty>
+		)
+	</insert>
+	
+	<insert id="insertAdvbarCallbackId" parameterClass="com.ku6ads.dao.entity.advert.Advbar">
+		INSERT INTO t_advbar(
+			<isNotEmpty property="name">name,</isNotEmpty>
+			<isNotEmpty property="nameEn">nameEn,</isNotEmpty>
+			<isNotEmpty property="posId">posId,</isNotEmpty>
+			<isNotEmpty property="posName">posName,</isNotEmpty>
+			<isNotEmpty property="channelId">channelId,</isNotEmpty>
+			<isNotEmpty property="channelName">channelName,</isNotEmpty>
+			<isNotEmpty property="siteId">siteId,</isNotEmpty>
+			<isNotEmpty property="siteName">siteName,</isNotEmpty>
+			<isNotEmpty property="barsizeId">barsizeId,</isNotEmpty>
+			<isNotEmpty property="bartemId">bartemId,</isNotEmpty>
+			<isNotEmpty property="content">content,</isNotEmpty>
+			<isNotEmpty property="num">num,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="srcposId">srcposId,</isNotEmpty>
+			<isNotEmpty property="advType">advType,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime,</isNotEmpty>
+			<isNotEmpty property="code">code,</isNotEmpty>
+			<isNotEmpty property="note">note,</isNotEmpty>
+			<isNotEmpty property="futureFlight">futureFlight,</isNotEmpty>
+			<isNotEmpty property="isBackground">isBackground,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime</isNotEmpty>
+		)VALUES(
+			<isNotEmpty property="name">#name#,</isNotEmpty>
+			<isNotEmpty property="nameEn">#nameEn#,</isNotEmpty>
+			<isNotEmpty property="posId">#posId#,</isNotEmpty>
+			<isNotEmpty property="posName">#posName#,</isNotEmpty>
+			<isNotEmpty property="channelId">#channelId#,</isNotEmpty>
+			<isNotEmpty property="channelName">#channelName#,</isNotEmpty>
+			<isNotEmpty property="siteId">#siteId#,</isNotEmpty>
+			<isNotEmpty property="siteName">#siteName#,</isNotEmpty>
+			<isNotEmpty property="barsizeId">#barsizeId#,</isNotEmpty>
+			<isNotEmpty property="bartemId">#bartemId#,</isNotEmpty>
+			<isNotEmpty property="content">#content#,</isNotEmpty>
+			<isNotEmpty property="num">#num#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="srcposId">#srcposId#,</isNotEmpty>
+			<isNotEmpty property="advType">#advType#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="modifier">#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">#modifyTime#,</isNotEmpty>
+			<isNotEmpty property="code">#code#,</isNotEmpty>
+			<isNotEmpty property="note">#note#,</isNotEmpty>
+			<isNotEmpty property="futureFlight">#futureFlight#,</isNotEmpty>
+			<isNotEmpty property="isBackground">#isBackground#,</isNotEmpty>
+			<isNotEmpty property="createTime">#createTime#</isNotEmpty>
+		)
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT @@IDENTITY AS id
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		UPDATE t_advbar SET status = 1 WHERE id=#value#
+	</delete>
+	
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.advert.Advbar">
+		UPDATE t_advbar SET 
+			<isNotEmpty property="name">name=#name#,</isNotEmpty>
+			<isNotEmpty property="nameEn">nameEn=#nameEn#,</isNotEmpty>
+			<isNotEmpty property="posId">posId=#posId#,</isNotEmpty>
+			<isNotEmpty property="posName">posName=#posName#,</isNotEmpty>
+			<isNotEmpty property="channelId">channelId=#channelId#,</isNotEmpty>
+			<isNotEmpty property="channelName">channelName=#channelName#,</isNotEmpty>
+			<isNotEmpty property="siteId">siteId=#siteId#,</isNotEmpty>
+			<isNotEmpty property="siteName">siteName=#siteName#,</isNotEmpty>
+			<isNotEmpty property="barsizeId">barsizeId=#barsizeId#,</isNotEmpty>
+			<isNotEmpty property="bartemId">bartemId=#bartemId#,</isNotEmpty>
+			<isNotEmpty property="content">content=#content#,</isNotEmpty>
+			<isNotEmpty property="num">num=#num#,</isNotEmpty>
+			<isNotEmpty property="status">status=#status#,</isNotEmpty>
+			<isNotEmpty property="advType">advType=#advType#,</isNotEmpty>
+			<isNotEmpty property="creator">creator=#creator#,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime=#createTime#,</isNotEmpty>
+			<isNotEmpty property="isBackground">isBackground=#isBackground#,</isNotEmpty>
+			<isNotEmpty property="futureFlight">futureFlight=#futureFlight#,</isNotEmpty>
+			code=#code#,
+			srcposId=#srcposId#,
+			modifier=#modifier#,
+			modifyTime=#modifyTime#,
+			note=#note#,
+			id=#id#
+		WHERE id=#id#
+	</update>
+	
+	<select id="selectAdvbarById" resultClass="com.ku6ads.dao.entity.advert.Advbar" parameterClass="com.ku6ads.dao.entity.advert.Advbar">
+		SELECT * FROM t_advbar 
+		WHERE 1=1 
+		<isNotEmpty property="posId" prepend=" AND ">posId=#posId#</isNotEmpty>
+		<isNotEmpty property="channelId" prepend=" AND ">channelId=#channelId#</isNotEmpty>
+		<isNotEmpty property="siteId" prepend=" AND ">siteId=#siteId#</isNotEmpty>
+		<isNotEmpty property="barsizeId" prepend=" AND ">barsizeId=#barsizeId#</isNotEmpty>
+		<isNotEmpty property="bartemId" prepend=" AND ">bartemId=#bartemId#</isNotEmpty>
+		<isNotEmpty property="barsizeId" prepend=" AND ">barsizeId=#barsizeId#</isNotEmpty>
+		<isNotEmpty property="srcposId" prepend=" AND ">srcposId=#srcposId#</isNotEmpty>
+		AND status = 0
+	</select>
+	
+	<select id="selectBarContent" resultClass="java.lang.Integer" parameterClass="java.lang.Integer">
+		select content from t_advbar where id=#value#
+	</select>
+	
+	<select id="getAdvbarPageType" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.basic.BaseData">
+		select * from t_basedata where dataType='postemtype'
+		and dataValue =
+		(SELECT pageType FROM t_advposition t
+		where id =(select posId from t_advbar where id = #value#)
+		)
+	</select>
+	
+	<select id="selectAdvbarNameIsRepeated" parameterClass="com.ku6ads.dao.entity.advert.Advbar" resultClass="com.ku6ads.dao.entity.advert.Advbar">
+		select * from t_advbar where status != 1
+		<isNotEmpty property="name" prepend=" and ">name = #name#</isNotEmpty>
+		and posId = #posId#
+	</select>
+</sqlMap>

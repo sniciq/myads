@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.HotfilmVideo">
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.webdata.HotfilmVideo">
+ 		insert into hotfilm_video(
+			<isNotEmpty property="hotfilmId">hotfilmId,</isNotEmpty>
+			<isNotEmpty property="remark">remark,</isNotEmpty>
+			videoName,
+			vid
+		) values (
+			<isNotEmpty property="hotfilmId">#hotfilmId#,</isNotEmpty>
+			<isNotEmpty property="remark">#remark#,</isNotEmpty>
+			#videoName#,
+			#vid#
+		)
+	</insert>
+	
+	<select id="selectById" resultClass="com.ku6ads.dao.entity.webdata.HotfilmVideo" parameterClass="java.lang.Integer">
+		SELECT * FROM HOTFILM_VIDEO WHERE id=#value# 
+	</select>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		update HOTFILM_VIDEO set isDelete = true where id=#value#
+	</delete>
+	
+	<delete id="deleteByFilmId" parameterClass="java.lang.Integer">
+		update HOTFILM_VIDEO set isDelete = true where hotfilmId=#value#
+	</delete>
+	
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.webdata.HotfilmVideo">
+ 		UPDATE HOTFILM_VIDEO SET 
+		<isNotNull property="videoName">videoName=#videoName#, </isNotNull>
+		<isNotNull property="vid">vid=#vid#, </isNotNull>
+		<isNotNull property="hotfilmId">hotfilmId=#hotfilmId#, </isNotNull>
+		<isNotNull property="remark">remark=#remark#, </isNotNull>
+		 id=#id#
+		WHERE
+		 id=#id#
+	</update>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.webdata.HotfilmVideo" resultClass="com.ku6ads.dao.entity.webdata.HotfilmVideo">
+ 		SELECT id,videoName,vid,hotfilmId,remark 
+		FROM HOTFILM_VIDEO
+		WHERE isDelete = false
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="videoName" prepend=" AND ">videoName=#videoName#</isNotEmpty>
+		<isNotEmpty property="vid" prepend=" AND ">vid=#vid#</isNotEmpty>
+		<isNotEmpty property="hotfilmId" prepend=" AND ">hotfilmId=#hotfilmId#</isNotEmpty>
+		<isNotEmpty property="remark" prepend=" AND ">remark=#remark#</isNotEmpty>
+	</select>
+	
+	
+	<select id="selectByLimit" parameterClass="com.ku6ads.dao.entity.webdata.HotfilmVideo" resultClass="com.ku6ads.dao.entity.webdata.HotfilmVideo">
+		SELECT id,videoName,vid,hotfilmId,remark 
+		FROM HOTFILM_VIDEO
+		WHERE isDelete = false 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="videoName" prepend=" AND ">videoName=#videoName#</isNotEmpty>
+		<isNotEmpty property="vid" prepend=" AND ">vid=#vid#</isNotEmpty>
+		<isNotEmpty property="hotfilmId" prepend=" AND ">hotfilmId=#hotfilmId#</isNotEmpty>
+		<isNotEmpty property="remark" prepend=" AND ">remark=#remark#</isNotEmpty>
+		<isEmpty property="extLimit.sort">order by videoName</isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.limit$ offset $extLimit.start$</isNotEmpty>
+	</select>
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.webdata.HotfilmVideo" resultClass="java.lang.Integer">
+		SELECT count(1) FROM HOTFILM_VIDEO WHERE isDelete = false 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="videoName" prepend=" AND ">videoName=#videoName#</isNotEmpty>
+		<isNotEmpty property="vid" prepend=" AND ">vid=#vid#</isNotEmpty>
+		<isNotEmpty property="hotfilmId" prepend=" AND ">hotfilmId=#hotfilmId#</isNotEmpty>
+		<isNotEmpty property="remark" prepend=" AND ">remark=#remark#</isNotEmpty>
+	</select>
+
+	<delete id="deleteHotfilmVideo" parameterClass="com.ku6ads.dao.entity.webdata.HotfilmVideo">
+ 		DELETE FROM HOTFILM_VIDEO
+		WHERE 
+		 id=#id#
+		<isNotEmpty property="videoName" prepend=" AND ">videoName=#videoName#</isNotEmpty>
+		<isNotEmpty property="vid" prepend=" AND ">vid=#vid#</isNotEmpty>
+		<isNotEmpty property="hotfilmId" prepend=" AND ">hotfilmId=#hotfilmId#</isNotEmpty>
+		<isNotEmpty property="remark" prepend=" AND ">remark=#remark#</isNotEmpty>
+	</delete>
+	
+	<select id="selectStateVideos" resultClass="java.lang.String">
+		select vid from HOTFILM_VIDEO v, hotfilm f where v.hotfilmId = f.id and f.isstate = true
+	</select>
+	
+	<select id="selectSysDate" resultClass="java.util.Date">
+		select now()
+	</select>
+
+</sqlMap>

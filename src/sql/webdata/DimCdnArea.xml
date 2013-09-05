@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.webdata.DimCdnArea">
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.webdata.DimCdnArea">
+ 		insert into dim_cdn_area(
+			<isNotEmpty property="pcode">pcode,</isNotEmpty>
+			<isNotEmpty property="ccode">ccode,</isNotEmpty>
+			<isNotEmpty property="province">province,</isNotEmpty>
+			id
+		) values (
+			<isNotEmpty property="pcode">#pcode#,</isNotEmpty>
+			<isNotEmpty property="ccode">#ccode#,</isNotEmpty>
+			<isNotEmpty property="province">#province#,</isNotEmpty>
+			#id#
+		)
+	</insert>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.webdata.DimCdnArea" resultClass="com.ku6ads.dao.entity.webdata.DimCdnArea">
+ 		SELECT pcode,ccode,province,id 
+		FROM DIM_CDN_AREA
+		WHERE 1=1 
+		<isNotEmpty property="pcode" prepend=" AND ">pcode=#pcode#</isNotEmpty>
+		<isNotEmpty property="ccode" prepend=" AND ">ccode=#ccode#</isNotEmpty>
+		<isNotEmpty property="province" prepend=" AND ">province=#province#</isNotEmpty>
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		order by pcode ASC
+	</select>
+
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.webdata.DimCdnArea">
+ 		UPDATE DIM_CDN_AREA SET 
+		<isNotNull property="pcode">pcode=#pcode#, </isNotNull>
+		<isNotNull property="ccode">ccode=#ccode#, </isNotNull>
+		<isNotNull property="province">province=#province#, </isNotNull>
+		 id=#id#
+		WHERE
+		 id=#id#
+	</update>
+
+	<delete id="deleteById" parameterClass="com.ku6ads.dao.entity.webdata.DimCdnArea">
+ 		DELETE FROM DIM_CDN_AREA WHERE id=#id#
+	</delete>
+
+</sqlMap>

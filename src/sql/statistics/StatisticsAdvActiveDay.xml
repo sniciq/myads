@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.StatisticsAdvActiveDay">
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsAdvActiveDay">
+ 		insert into t_statistics_advactive_day(
+			<isNotEmpty property="statTime">statTime,</isNotEmpty>
+			<isNotEmpty property="hour">hour,</isNotEmpty>
+			<isNotEmpty property="advactiveId">advactiveId,</isNotEmpty>
+			<isNotEmpty property="advactiveName">advactiveName,</isNotEmpty>
+			<isNotEmpty property="pv">pv,</isNotEmpty>
+			<isNotEmpty property="uv">uv,</isNotEmpty>
+			<isNotEmpty property="uc">uc,</isNotEmpty>
+			<isNotEmpty property="click">click,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime,</isNotEmpty>
+			id
+		) values (
+			<isNotEmpty property="statTime">#statTime#,</isNotEmpty>
+			<isNotEmpty property="hour">#hour#,</isNotEmpty>
+			<isNotEmpty property="advactiveId">#advactiveId#,</isNotEmpty>
+			<isNotEmpty property="advactiveName">#advactiveName#,</isNotEmpty>
+			<isNotEmpty property="pv">#pv#,</isNotEmpty>
+			<isNotEmpty property="uv">#uv#,</isNotEmpty>
+			<isNotEmpty property="uc">#uc#,</isNotEmpty>
+			<isNotEmpty property="click">#click#,</isNotEmpty>
+			<isNotEmpty property="createTime">#createTime#,</isNotEmpty>
+			#id#
+		)
+	</insert>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsAdvActiveDay" resultClass="com.ku6ads.dao.entity.statistics.StatisticsAdvActiveDay">
+ 		SELECT *
+		FROM t_statistics_advactive_day
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="statTime" prepend=" AND ">statTime=#statTime#</isNotEmpty>
+		<isNotEmpty property="hour" prepend=" AND ">hour=#hour#</isNotEmpty>
+		<isNotEmpty property="advactiveId" prepend=" AND ">advactiveId=#advactiveId#</isNotEmpty>
+		<isNotEmpty property="advactiveName" prepend=" AND ">advactiveName=#advactiveName#</isNotEmpty>
+		<isNotEmpty property="pv" prepend=" AND ">pv=#pv#</isNotEmpty>
+		<isNotEmpty property="uv" prepend=" AND ">uv=#uv#</isNotEmpty>
+		<isNotEmpty property="uc" prepend=" AND ">uc=#uc#</isNotEmpty>
+		<isNotEmpty property="click" prepend=" AND ">click=#click#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+	</select>
+	
+	<select id="statisticsSearch" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsAdvActiveDay" resultClass="com.ku6ads.struts.statistics.StatisticsBusinessForm">
+		select org.*, ad.name as advactiveName from (
+			SELECT id,statTime,hour as xField,advactiveId,pv,uv,click,uc
+			FROM t_statistics_advactive_day
+			WHERE 1=1 
+			<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+			<isNotEmpty property="statTime" prepend=" AND ">statTime=#statTime#</isNotEmpty>
+			<isNotEmpty property="hour" prepend=" AND ">hour=#hour#</isNotEmpty>
+			<isNotEmpty property="advactiveId" prepend=" AND ">advactiveId=#advactiveId#</isNotEmpty>
+			<isNotEmpty property="pv" prepend=" AND ">pv=#pv#</isNotEmpty>
+			<isNotEmpty property="uv" prepend=" AND ">uv=#uv#</isNotEmpty>
+			<isNotEmpty property="uc" prepend=" AND ">uc=#uc#</isNotEmpty>
+			<isNotEmpty property="click" prepend=" AND ">click=#click#</isNotEmpty>
+			<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isEmpty property="extLimit.sort">order by statTime, hour</isEmpty>
+		) org left join t_advactive ad on org.advactiveId = ad.id	
+	</select>
+
+	<select id="statisticsSearchLimitCount" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsAdvActiveDay" resultClass="java.lang.Integer">
+		select count(1) from t_statistics_advactive_day
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="statTime" prepend=" AND ">statTime=#statTime#</isNotEmpty>
+		<isNotEmpty property="hour" prepend=" AND ">hour=#hour#</isNotEmpty>
+		<isNotEmpty property="advactiveId" prepend=" AND ">advactiveId=#advactiveId#</isNotEmpty>
+		<isNotEmpty property="advactiveName" prepend=" AND ">advactiveName=#advactiveName#</isNotEmpty>
+		<isNotEmpty property="pv" prepend=" AND ">pv=#pv#</isNotEmpty>
+		<isNotEmpty property="uv" prepend=" AND ">uv=#uv#</isNotEmpty>
+		<isNotEmpty property="click" prepend=" AND ">click=#click#</isNotEmpty>
+		<isNotEmpty property="uc" prepend=" AND ">uc=#uc#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+	</select>
+	
+	<select id="statisticsSearchByLimit" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsAdvActiveDay" resultClass="com.ku6ads.dao.entity.statistics.StatisticsAdvActiveDay">
+		select org.*, ad.name as advactiveName from (
+			SELECT t.id,statTime,hour,advactiveId,pv,uv,click,uc,createTime
+			FROM t_statistics_advactive_day t
+			WHERE 1=1 
+			<isNotEmpty property="id" prepend=" AND ">t.id=#id#</isNotEmpty>
+			<isNotEmpty property="statTime" prepend=" AND ">t.statTime=#statTime#</isNotEmpty>
+			<isNotEmpty property="hour" prepend=" AND ">t.hour=#hour#</isNotEmpty>
+			<isNotEmpty property="advactiveId" prepend=" AND ">t.advactiveId=#advactiveId#</isNotEmpty>
+			<isNotEmpty property="pv" prepend=" AND ">t.pv=#pv#</isNotEmpty>
+			<isNotEmpty property="uv" prepend=" AND ">t.uv=#uv#</isNotEmpty>
+			<isNotEmpty property="click" prepend=" AND ">t.click=#click#</isNotEmpty>
+			<isNotEmpty property="uc" prepend=" AND ">t.uc=#uc#</isNotEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.limit$ offset $extLimit.start$</isNotEmpty>
+		) org left join t_advactive ad on org.advactiveId = ad.id	
+	</select>
+
+</sqlMap>

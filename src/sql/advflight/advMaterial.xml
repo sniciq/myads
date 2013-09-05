@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="advflight.AdvMaterial">
+
+	<cacheModel type="LRU" id="AdvMaterialCache">
+		<flushOnExecute statement="advflight.AdvMaterial.insert"/>
+		<flushOnExecute statement="advflight.AdvMaterial.deleteById"/>
+		<flushOnExecute statement="advflight.AdvMaterial.updateById"/>
+		<flushInterval hours="4"/>
+		<property name="size" value="2"/>
+	</cacheModel>
+	
+	<select id="selectByEntity" resultClass="com.ku6ads.dao.entity.advflight.AdvMaterial" cacheModel="AdvMaterialCache">
+		SELECT id,name FROM t_adv_material
+	</select>
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.advflight.AdvMaterial">
+		SELECT * FROM t_adv_material WHERE id=#value#
+	</select >
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.advflight.AdvMaterial" resultClass="java.lang.Integer">
+		SELECT COUNT(1) FROM t_adv_material a left join t_material b
+		on a.materialId = b.materialId
+		WHERE  a.status != 1
+		<isNotEmpty property="advId" prepend=" and ">a.advId = #advId#</isNotEmpty>
+		<isNotEmpty property="materialId" prepend=" and ">a.materialId = #materialId#</isNotEmpty>
+		<isNotEmpty property="type" prepend=" and ">a.type = #type#</isNotEmpty>
+		
+	</select>
+	
+	<select id="selectByLimit" resultClass="com.ku6ads.dao.entity.advflight.AdvMaterial" parameterClass="com.ku6ads.dao.entity.advflight.AdvMaterial">
+		SELECT a.id,a.advId,a.type,a.mexplain, a.sNumber,b.materialId,b.name as materialName,b.note,b.path,b.creator,b.createTime,b.textContent
+		FROM t_adv_material a left join t_material b
+		on a.materialId = b.materialId
+		WHERE  a.status != 1
+		<isNotEmpty property="advId" prepend=" and ">a.advId = #advId#</isNotEmpty>
+		<isNotEmpty property="materialId" prepend=" and ">a.materialId = #materialId#</isNotEmpty>
+		<isNotEmpty property="type" prepend=" and ">a.type = #type#</isNotEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isEmpty property="extLimit.sort">order by a.sNumber</isEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+		
+	</select>
+	
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.advflight.AdvMaterial">
+		INSERT INTO t_adv_material(
+			<isNotEmpty property="materialId">materialId,</isNotEmpty>
+			<isNotEmpty property="type">type,</isNotEmpty>
+			<isNotEmpty property="sNumber">sNumber,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="mexplain">mexplain,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime,</isNotEmpty>
+			<isNotEmpty property="advId">advId</isNotEmpty>
+		)VALUES(
+			
+			<isNotEmpty property="materialId">#materialId#,</isNotEmpty>
+			<isNotEmpty property="type">#type#,</isNotEmpty>
+			<isNotEmpty property="sNumber">#sNumber#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="mexplain">#mexplain#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="modifier">#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">#modifyTime#,</isNotEmpty>
+			<isNotEmpty property="createTime">#createTime#,</isNotEmpty>
+			<isNotEmpty property="advId">#advId#</isNotEmpty>
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		UPDATE t_adv_material SET status = 1 WHERE id=#value#
+	</delete>
+	
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.advflight.AdvMaterial">
+		UPDATE t_adv_material SET 
+			<isNotEmpty property="advId">advId=#advId#,</isNotEmpty>
+			<isNotEmpty property="materialId">materialId=#materialId#,</isNotEmpty>
+			<isNotEmpty property="type">type=#type#,</isNotEmpty>
+			<isNotEmpty property="status">status=#status#,</isNotEmpty>
+			<isNotEmpty property="mexplain">mexplain=#mexplain#,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier=#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime=#modifyTime#,</isNotEmpty>
+			id=#id#
+		WHERE id=#id#
+	</update>
+
+</sqlMap>

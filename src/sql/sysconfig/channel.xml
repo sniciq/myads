@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sysconfig.Channel">
+	
+	<select id="selectByEntity" resultClass="com.ku6ads.dao.entity.sysconfig.Channel" parameterClass="com.ku6ads.dao.entity.sysconfig.Channel">
+		SELECT * FROM t_channel 
+		where 1=1
+		<isNotEmpty prepend=" AND " property="name">name=#name#</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="parentChannelId">parentChannelId=#parentChannelId#</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="parentName">parentName=#parentName#</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="siteName">siteName=#siteName#</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="siteId">siteId=#siteId#</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="status">status=#status#</isNotEmpty>
+		<isNotEmpty prepend=" AND " property="sourceId">sourceId=#sourceId#</isNotEmpty>
+		order by name
+	</select>
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.sysconfig.Channel">
+		select e.channelId,e.name,e.sourceId,e.siteId,ifnull(m.name,"") as parentName
+			from t_channel e left join t_channel m on e.parentChannelId=m.channelId where e.channelId = #value#
+	</select >
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.sysconfig.Channel" resultClass="java.lang.Integer">
+		select count(1) from t_channel e left join t_channel m on e.parentChannelId=m.channelId where 1=1 and e.status !=1
+		<isNotEmpty property="name" prepend=" and ">e.name like '%$name$%'</isNotEmpty>
+ 		<isNotEmpty property="siteId" prepend=" and ">e.siteId =#siteId#</isNotEmpty>
+	</select>
+	
+	<select id="selectByLimit" resultClass="com.ku6ads.dao.entity.sysconfig.Channel" parameterClass="com.ku6ads.dao.entity.sysconfig.Channel">
+		select e.channelId,e.name,e.siteId,s.siteName as siteName,ifnull(m.name,"") as parentName
+			from t_channel e left join t_channel m on e.parentChannelId=m.channelId join t_site s on e.siteId=s.siteId where 1=1 and e.status !=1
+ 			<isNotEmpty property="name" prepend=" and ">e.name like '%$name$%'</isNotEmpty>
+ 			<isNotEmpty property="siteId" prepend=" and ">e.siteId =#siteId#</isNotEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isEmpty property="extLimit.sort">order by e.channelId </isEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.sysconfig.Channel">
+		insert into t_channel(
+			<isNotEmpty property="parentChannelId">parentChannelId,</isNotEmpty>
+			<isNotEmpty property="name">name,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="creatorId">creatorId,</isNotEmpty>
+			<isNotEmpty property="createDate">createDate,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			<isNotEmpty property="nameEn">nameEn,</isNotEmpty>
+			<isNotEmpty property="url">url,</isNotEmpty>
+			<isNotEmpty property="level">level,</isNotEmpty>
+			<isNotEmpty property="siteId">siteId,</isNotEmpty>
+			<isNotEmpty property="proportion">proportion,</isNotEmpty>
+			<isNotEmpty property="parentName">parentName,</isNotEmpty>
+			<isNotEmpty property="sourceId">sourceId,</isNotEmpty>
+			<isNotEmpty property="siteName">siteName</isNotEmpty>
+		)values(
+			<isNotEmpty property="parentChannelId">#parentChannelId#,</isNotEmpty>
+			<isNotEmpty property="name">#name#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="creatorId">#creatorId#,</isNotEmpty>
+			<isNotEmpty property="createDate">#createDate#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="nameEn">#nameEn#,</isNotEmpty>
+			<isNotEmpty property="url">#url#,</isNotEmpty>
+			<isNotEmpty property="level">#level#,</isNotEmpty>
+			<isNotEmpty property="siteId">#siteId#,</isNotEmpty>
+			<isNotEmpty property="proportion">#proportion#,</isNotEmpty>
+			<isNotEmpty property="parentName">#parentName#,</isNotEmpty>
+			<isNotEmpty property="sourceId">#sourceId#,</isNotEmpty>
+			<isNotEmpty property="siteName">#siteName#</isNotEmpty>
+		)
+	</insert>
+	
+	<insert id="insertCallBackId" parameterClass="com.ku6ads.dao.entity.sysconfig.Channel" >
+		insert into t_channel(
+			<isNotEmpty property="parentChannelId">parentChannelId,</isNotEmpty>
+			<isNotEmpty property="name">name,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="creatorId">creatorId,</isNotEmpty>
+			<isNotEmpty property="createDate">createDate,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			<isNotEmpty property="nameEn">nameEn,</isNotEmpty>
+			<isNotEmpty property="url">url,</isNotEmpty>
+			<isNotEmpty property="level">level,</isNotEmpty>
+			<isNotEmpty property="siteId">siteId,</isNotEmpty>
+			<isNotEmpty property="proportion">proportion,</isNotEmpty>
+			<isNotEmpty property="parentName">parentName,</isNotEmpty>
+			<isNotEmpty property="sourceId">sourceId,</isNotEmpty>
+			<isNotEmpty property="siteName">siteName</isNotEmpty>
+		)values(
+			<isNotEmpty property="parentChannelId">#parentChannelId#,</isNotEmpty>
+			<isNotEmpty property="name">#name#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="creatorId">#creatorId#,</isNotEmpty>
+			<isNotEmpty property="createDate">#createDate#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="nameEn">#nameEn#,</isNotEmpty>
+			<isNotEmpty property="url">#url#,</isNotEmpty>
+			<isNotEmpty property="level">#level#,</isNotEmpty>
+			<isNotEmpty property="siteId">#siteId#,</isNotEmpty>
+			<isNotEmpty property="proportion">#proportion#,</isNotEmpty>
+			<isNotEmpty property="parentName">#parentName#,</isNotEmpty>
+			<isNotEmpty property="sourceId">#sourceId#,</isNotEmpty>
+			<isNotEmpty property="siteName">#siteName#</isNotEmpty>
+		)
+		<selectKey resultClass="int" keyProperty="channelId">
+			SELECT @@IDENTITY AS channelId
+		</selectKey>
+	</insert>
+	
+	<update id="deleteById" parameterClass="java.lang.Integer">
+		update t_channel set status=1 where channelId=#channelId#
+	</update>
+	
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.sysconfig.Channel">
+		update t_channel set 
+			<isNotEmpty property="name">name=#name#,</isNotEmpty>
+			<isNotEmpty property="parentChannelId">parentChannelId=#parentChannelId#,</isNotEmpty>
+			<isNotEmpty property="parentName">parentName=#parentName#,</isNotEmpty>
+			<isNotEmpty property="siteName">siteName=#siteName#,</isNotEmpty>
+			<isNotEmpty property="sourceId">sourceId=#sourceId#,</isNotEmpty>
+			<isNotEmpty property="siteId">siteId=#siteId#</isNotEmpty>
+		where channelId=#channelId#
+	</update>
+	
+	<select id="loadBySiteId" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.sysconfig.Channel" >
+		select * from t_channel where siteId=#siteId# and status !=1
+	</select>
+	
+	<select id="selectChannelNameIsRepeated" parameterClass="com.ku6ads.dao.entity.sysconfig.Channel" resultClass="com.ku6ads.dao.entity.sysconfig.Channel">
+		select * from t_channel where status != 1
+		<isNotEmpty property="name" prepend=" and ">name = #name#</isNotEmpty>
+		and siteId = #siteId#
+	</select>
+</sqlMap>

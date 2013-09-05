@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+	<!-- 执行单 -->
+	<bean id="ProjectAction" class="com.ku6ads.struts.advflight.ProjectAction" scope="singleton">
+		<property name="projectService" ref="ProjectService"></property>
+		<property name="advActiveService" ref="AdvActiveService"></property>
+		<property name="bookPackageService" ref="BookPackageService"></property>
+	</bean>
+	
+	<!-- 执行单service -->
+	<bean id="ProjectService" class="com.ku6ads.services.impl.advflight.ProjectServiceImpl" scope="singleton">
+		<property name="baseDao" ref="ProjectDao"></property>
+		<property name="consumerDao" ref="ConsumerDao"></property>
+		<property name="advertiserDao" ref="AdvertiserDao"></property>
+		<property name="productDao" ref="ProductDao"></property>
+		<property name="productLineDao" ref="ProductLineDao"></property>
+		<property name="bookPackageDao" ref="BookPackageDao"></property>
+		<property name="bookDao" ref="BookDao"></property>
+		<property name="bookPackageService" ref="BookPackageService"></property>
+	</bean>
+	
+	<!-- 执行单 Dao -->
+	<bean id="ProjectDao" class="com.ku6ads.dao.impl.advflight.ProjectDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="advflight.project"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 执行单审核活动 -->
+	<bean id="ProjectVerifyAction" class="com.ku6ads.struts.advflight.ProjectVerifyAction" scope="prototype">
+		<property name="projectService" ref="ProjectService"></property>
+		<property name="advActiveService" ref="AdvActiveService"></property>
+		<property name="roleService" ref="RoleService"></property>
+		<property name="bookPackageService" ref="BookPackageService"></property>
+		<property name="advbarBookedService" ref="AdvbarBookedService"></property>
+		<property name="advbarPreBookService" ref="AdvbarPreBookService"></property>
+		<property name="groupService" ref="GroupService"></property>
+	</bean>
+	
+	<!-- 广告活动action -->
+	<bean id="AdvActiveAction" class="com.ku6ads.struts.advflight.AdvActiveAction" scope="singleton">
+		<property name="advActiveService" ref="AdvActiveService"></property>
+		<property name="projectService" ref="ProjectService"></property>
+	</bean>
+	
+	<!-- 广告活动service -->
+	<bean id="AdvActiveService" class="com.ku6ads.services.impl.advflight.AdvActiveServiceImpl" scope="singleton">
+		<property name="baseDao" ref="AdvActiveDao"></property>
+	</bean>
+	
+	<!-- 广告活动dao -->
+	<bean id="AdvActiveDao" class="com.ku6ads.dao.impl.advflight.AdvActiveDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="advflight.AdvActive"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 广告action -->
+	<bean id="AdvertisementAction" class="com.ku6ads.struts.advflight.AdvertisementAction" scope="singleton">
+		<property name="advertisementService" ref="AdvertisementService"></property>
+		<property name="advMaterialService" ref="AdvMaterialService"></property>
+		<property name="groupService" ref="GroupService"></property>
+	</bean>
+	
+	<bean id="AdvRelationBookDao" class="com.ku6ads.dao.impl.advflight.AdvRelationBookDaoImpl">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="advflight.AdvRelationBook"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="AdvRelationBookService" class="com.ku6ads.services.impl.advflight.AdvRelationBookServiceImpl">
+		<property name="bookDao" ref="BookDao"></property>
+		<property name="advRelationBookDao" ref="AdvRelationBookDao"></property>
+	</bean>
+	
+	<bean id="AdvRelationBookAction" class="com.ku6ads.struts.advflight.AdvRelationBookAction" scope="prototype"></bean>
+	
+	<bean id="AdvRelationProductBookAction" class="com.ku6ads.struts.advflight.AdvRelationProductBookAction" scope="prototype"></bean>
+	
+	
+	<!-- 物料action-->
+	<bean id="FileUploadAction" class="com.ku6ads.struts.advflight.FileUploadAction" scope="prototype">
+		<property name="materialService" ref="MaterialService"></property>	
+		<property name="pathToCDNService" ref="PathToCDNService"></property>		
+	</bean>
+	
+	<!-- 物料转码完成action-->
+	<bean id="IsTransCodeAction" class="com.ku6ads.struts.advflight.IsTransCodeAtion" scope="prototype">
+		<property name="materialService" ref="MaterialService"></property>
+	</bean>
+	
+	<!-- 排期action-->
+	<bean id="BookAction" class="com.ku6ads.struts.book.BookAction"></bean>
+	
+	<!-- 排期service-->
+	<bean id="BookService" class="com.ku6ads.services.impl.advflight.BookServiceImpl" scope="singleton">
+		<property name="baseDao" ref="BookDao"></property>
+	</bean>
+	<!-- 排期Dao-->
+	<bean id="BookDao" class="com.ku6ads.dao.impl.advflight.BookDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="advflight.book"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 排期包service-->
+	<bean id="BookPackageService" class="com.ku6ads.services.impl.advflight.BookPackageServiceImpl" scope="singleton">
+		<property name="baseDao" ref="BookPackageDao"></property>
+		<property name="bookDao" ref="BookDao"></property>
+		<property name="projectDao" ref="ProjectDao"></property>
+		<property name="conflictCheckService" ref="ConflictCheckService"></property>
+		<property name="advbarBookedService" ref="AdvbarBookedService"></property>
+		<property name="advbarPreBookService" ref="AdvbarPreBookService"></property>
+		<property name="advFlightService" ref="AdvFlightService"></property>
+	</bean>
+	
+	<bean id="BookAdvproductService" class="com.ku6ads.services.impl.advflight.BookAdvproductServiceImpl" scope="singleton"></bean>
+	
+	<bean id="BookAdvproductFlightDivider" class="com.ku6ads.services.impl.advflight.BookAdvproductFlightDivider" scope="singleton"></bean>
+	
+	
+	<!-- 排期包Dao-->
+	<bean id="BookPackageDao" class="com.ku6ads.dao.impl.advflight.BookPackageDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="advflight.bookpackage"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="FutureFlightDao" class="com.ku6ads.dao.impl.advflight.FutureFlightDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="advflight.futureflight"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="AdvbarBookedDao" class="com.ku6ads.dao.impl.advflight.AdvbarBookedDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.advbarbooked"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="AdvbarBookedService" class="com.ku6ads.services.impl.advflight.AdvbarBookedServiceImpl" scope="singleton">
+		<property name="baseDao" ref="AdvbarBookedDao"></property>
+	</bean>
+	
+	<bean id="AdvbarPreBookDao" class="com.ku6ads.dao.impl.advflight.AdvbarPreBookDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.advbarprebook"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="AdvbarPreBookService" class="com.ku6ads.services.impl.advflight.AdvbarPreBookServiceImpl" scope="singleton">
+		<property name="baseDao" ref="AdvbarPreBookDao"></property>
+		<property name="futureFlightDao" ref="FutureFlightDao"></property>
+		<property name="advbarDao" ref="AdvbarDao"></property>
+	</bean>
+	
+	<bean id="ConflictCheckService" class="com.ku6ads.services.impl.advflight.ConflictCheckServiceImpl" scope="singleton">
+		<property name="advbarBookedDao" ref="AdvbarBookedDao"></property>
+		<property name="advbarDao" ref="AdvbarDao"></property>
+	</bean>
+	
+	<bean id="BookCommon" class="com.ku6ads.services.impl.advflight.BookCommon" scope="singleton" init-method="init"></bean>
+	
+	<!-- 定时更新点位选择信息表，以免在保存时出现数据丢失情况  -->
+	<bean name="advbarBookRefreshTask" class="org.springframework.scheduling.quartz.JobDetailBean">   
+        <property name="jobClass" value="com.ku6ads.struts.advflight.AdvbarBookRefreshTask"></property>
+    </bean>   
+    <bean id="advbarBookRefreshTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">   
+        <property name="jobDetail" ref="advbarBookRefreshTask" />   
+        <property name="cronExpression" value="0 */10 * * * ?" />   
+    </bean>
+    
+    <bean id="FlowForecastDao" class="com.ku6ads.dao.impl.advflight.FlowForecastDaoImpl" scope="singleton">
+    	<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="advflight.FlowForecast"></property>
+			</bean>
+		</property>
+    </bean>
+    
+    <!-- 定时生成预估广告库存，每天一次  0 0 1 * * ?-->
+    <bean name="flowForecastTask" class="org.springframework.scheduling.quartz.JobDetailBean">
+    	<property name="jobClass" value="com.ku6ads.struts.flowforecast.FlowForecastTask"></property>
+    	 <property name="jobDataAsMap">
+        	<map>
+        		<entry key="flowForecastDao" value-ref="FlowForecastDao"></entry>
+        		<entry key="futureFlightDao" value-ref="FutureFlightDao"></entry>
+        		<entry key="statisticsAdvbarMonthDao" value-ref="StatisticsAdvbarMonthDao"></entry>
+        		<entry key="advbarDao" value-ref="AdvbarDao"></entry>
+        	</map>
+        </property>
+    </bean>
+    <bean id="flowForecastTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">   
+        <property name="jobDetail" ref="flowForecastTask" /> 
+        <property name="cronExpression" value=" 0 0 1 * * ?" />  
+    </bean>
+	
+	<bean id="BookCalendarComm" class="com.ku6ads.struts.calendar.BookCalendarComm" scope="singleton"></bean>
+	 
+	<bean id="DataGeneraterAdvbar" class="com.ku6ads.struts.calendar.DataGeneraterAdvbar" scope="singleton"></bean>
+	 
+	<bean id="DataGeneraterAdvproduct" class="com.ku6ads.struts.calendar.DataGeneraterAdvproduct" scope="singleton"></bean>
+	
+	<bean id="BookCalendarAction" class="com.ku6ads.struts.calendar.BookCalendarAction" scope="prototype"></bean>
+	
+	<bean id="PointGridGroupPreviewAction" class="com.ku6ads.struts.book.PointGridGroupPreviewAction" scope="prototype">
+	</bean>
+	
+	<!-- 关联物料action-->
+	<bean id="AdvMaterialAction" class="com.ku6ads.struts.advflight.AdvMaterialAction" scope="prototype">
+		<property name="advMaterialService" ref="AdvMaterialService"></property>
+		
+		<property name="advertisementService" ref="AdvertisementService"></property>
+	</bean>
+	<!-- 关联物料service-->
+	<bean id="AdvMaterialService" class="com.ku6ads.services.impl.advflight.AdvMaterialServiceImpl" scope="singleton">
+		<property name="baseDao" ref="AdvMaterialDao"></property>
+	</bean>
+	<!-- 关联物料Dao-->
+	<bean id="AdvMaterialDao" class="com.ku6ads.dao.impl.advflight.AdvMaterialDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="advflight.AdvMaterial"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 投放 -->
+	<bean id="AdvFlightAction" class="com.ku6ads.struts.advflight.AdvFlightAction" scope="prototype">
+		<property name="advMaterialService" ref="AdvMaterialService"></property>
+		<property name="advRelationBookService" ref="AdvRelationBookService"></property>
+		<property name="advFlightService" ref="AdvFlightService"></property>
+		<property name="advertisementService" ref="AdvertisementService"></property>
+		<property name="bookService" ref="BookService"></property>
+	</bean>
+	<!-- 投放service-->
+	<bean id="AdvFlightService" class="com.ku6ads.services.impl.advflight.AdvFlightServiceImpl" scope="singleton">
+		<property name="baseDao" ref="AdvFlightDao"></property>
+		<property name="bookService" ref="BookService"></property>
+		<property name="advbarService" ref="AdvbarService"></property>
+		<property name="advpositionService" ref="AdvpositionService"></property>
+		<property name="materialService" ref="MaterialService"></property>
+		<property name="advFlightDao" ref="AdvFlightDao"></property>
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="advertisementService" ref="AdvertisementService"></property>
+		<property name="bookPackageService" ref="BookPackageService"></property>
+		<property name="advFlightTransService" ref="AdvFlightTransService"></property>
+	</bean>
+	
+	<!-- List投放service-->
+	<bean id="AdvFlightTransService" class="com.ku6ads.services.impl.advflight.AdvFlightTransServiceImpl" scope="singleton">
+		<property name="baseDao" ref="AdvFlightDao"></property>
+	</bean>
+  
+  
+  	<!--  生成CDN文件service-->
+	<bean id="PathToCDNService" class="com.ku6ads.services.impl.advflight.PathToCDNServiceImpl" scope="singleton">
+		<property name="materialDao" ref="MaterialDao"></property>
+	</bean>
+    	
+	<!-- 生成路径，五分钟一次-->
+    <bean name="makeMpathTask" class="org.springframework.scheduling.quartz.JobDetailBean">
+    	<property name="jobClass" value="com.ku6ads.services.impl.advflight.makeCDNPathTask"></property>
+    	 
+    </bean>
+    <bean id="makeMpathTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">   
+        <property name="jobDetail" ref="makeMpathTask" /> 
+        <property name="cronExpression" value="0 */5 * * * ?"/>  
+    </bean>
+    
+    <!-- 更改投放完成 每天一次 每天0点10分执行-->
+    <bean name="flightCompleteTask" class="org.springframework.scheduling.quartz.JobDetailBean">
+    	<property name="jobClass" value="com.ku6ads.services.impl.advflight.AdvFlightStatusTask"></property>
+    	  <property name="jobDataAsMap"> 
+        	<map>
+        		<entry key="advFlightDao" value-ref="AdvFlightDao">
+        		</entry>
+        	</map>
+        </property>
+    </bean>
+    <bean id="flightCompleteTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">   
+        <property name="jobDetail" ref="flightCompleteTask" /> 
+        <property name="cronExpression" value="0 10 0 * * ?"/>  
+    </bean>
+    
+  	 <!-- 生成路径action-->
+	<bean id="MakeMPathAtion" class="com.ku6ads.struts.advflight.MakeMPathAtion" scope="prototype">
+		<property name="pathToCDNService" ref="PathToCDNService"></property>
+	</bean>
+	
+	<!-- 关联物料Dao-->
+	<bean id="AdvFlightDao" class="com.ku6ads.dao.impl.advflight.AdvFlightDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="advflight.AdvFlight"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	 <!-- Spring广告通知定时任务   开始 -->
+	 
+	 <bean name="mailNotify" class="org.springframework.scheduling.quartz.JobDetailBean">   
+        <property name="jobClass" value="com.ku6ads.services.impl.advflight.MailNotifyService"></property>
+        <property name="jobDataAsMap"> 
+        	<map>
+        		<entry key="advertisementService" value-ref="AdvertisementService">
+        		</entry>
+        		<entry key="userService" value-ref="UserService">
+        		</entry>
+        		<entry key="roleService" value-ref="RoleService">
+        		</entry>
+        	</map>
+        </property>
+    </bean>   
+    
+    <bean id="mailTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">   
+        <!-- 指向我们的任务 -->   
+        <property name="jobDetail" ref="mailNotify" />   
+        <!--  每天定时运行一次片单任务 -->   
+        <property name="cronExpression" value="0 0 3 * * ?" />   
+    </bean>
+    
+	<bean id="AdvflightLogAction" class="com.ku6ads.struts.advflight.AdvflightLogAction" scope="singleton">
+		<property name="advflightService" ref="AdvFlightService"></property>
+	</bean>
+</beans>

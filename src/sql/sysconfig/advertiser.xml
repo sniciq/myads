@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sysconfig.Advertiser">
+
+	<select id="selectByEntity" resultClass="com.ku6ads.dao.entity.sysconfig.Advertiser">
+		SELECT id,name FROM t_advertiser where status = 0
+	</select>
+	
+	<select id="selectByAdvertiserCount"  parameterClass="com.ku6ads.dao.entity.sysconfig.Advertiser" resultClass="java.lang.Integer">
+		select count(1) from t_advertiser
+		where status != 1
+		<isNotEmpty property="name" prepend=" AND ">name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="area" prepend=" AND ">area = '%$area$%'</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status = '%$status$%'</isNotEmpty>
+		<isNotEmpty property="industry" prepend=" AND ">industry = '%$industry$%'</isNotEmpty>
+	</select>
+	
+	<select id="selectByAdvertiserLimit" resultClass="com.ku6ads.dao.entity.sysconfig.Advertiser" parameterClass="com.ku6ads.dao.entity.sysconfig.Advertiser">
+			select a.id,a.name,a.company,a.status , b.dataName as areaName , c.dataName as industryName
+			from t_advertiser a 
+			left join t_basedata  b on a.area = b.dataValue and  b.dataType = 'area'
+			left join t_basedata c on a.industry = c.dataValue and c.dataType = 'industrytype'
+			where a.status != 1
+			<isNotEmpty property="name" prepend=" and ">a.name like '%$name$%'</isNotEmpty>
+			<isNotEmpty property="area" prepend=" and ">a.area=#area#</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">a.status=#status#</isNotEmpty>
+			<isNotEmpty property="industry" prepend=" and ">a.industry=#industry#</isNotEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isEmpty property="extLimit.sort">order by a.id desc</isEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	
+	</select>
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.sysconfig.Advertiser">
+			select a.* , b.dataName as areaName , c.dataName as industryName
+			from t_advertiser a 
+			left join t_basedata  b on a.area = b.dataValue and  b.dataType = 'area'
+			left join t_basedata c on a.industry = c.dataValue and c.dataType = 'industry'
+			where a.id =  #value#
+	</select>
+	
+	
+	<insert id="insertAdvertiser" parameterClass="com.ku6ads.dao.entity.sysconfig.Advertiser">
+		
+		insert into t_advertiser(	
+			
+			<isNotEmpty property="industry">industry,</isNotEmpty>
+			<isNotEmpty property="area">area,</isNotEmpty>
+			<isNotEmpty property="company">company,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime,</isNotEmpty>
+			name
+
+		)values(	
+			<isNotEmpty property="industry">#industry#,</isNotEmpty>
+			<isNotEmpty property="area">#area#,</isNotEmpty>
+			<isNotEmpty property="company">#company#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="createTime">#createTime#,</isNotEmpty>
+			<isNotEmpty property="modifier">#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">#modifyTime#,</isNotEmpty>
+			#name#
+		)
+	</insert>
+	
+
+	<update id="updateAdvertiser" parameterClass="com.ku6ads.dao.entity.sysconfig.Advertiser">
+		update t_advertiser set
+			<isNotEmpty property="company">company=#company#,</isNotEmpty>
+			<isNotEmpty property="industry">industry=#industry#,</isNotEmpty>
+			<isNotEmpty property="area">area=#area#,</isNotEmpty>
+			<isNotEmpty property="name">name=#name#,</isNotEmpty>
+			<isNotEmpty property="status">status=#status#,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier=#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime=#modifyTime#,</isNotEmpty>
+			id=#id#
+		where id=#id#
+	</update>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		update t_advertiser set status=1 where id=#value#
+	</delete>
+</sqlMap>

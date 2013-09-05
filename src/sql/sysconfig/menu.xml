@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sysconfig.Menu">
+
+	<select id="selectUserMenu" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.sysconfig.Menu">
+		SELECT * FROM t_menu where pnodeId = 0 and userId = #value# order by nodeId desc 
+	</select>
+	
+	<select id="selectMenuByPnodeId" parameterClass="com.ku6ads.dao.entity.sysconfig.Menu" resultClass="com.ku6ads.dao.entity.sysconfig.Menu">
+		SELECT * FROM t_menu t join t_menu m on t.pnodeId = m.nodeId where 1=1
+		<isNotEmpty property="nodeId" prepend=" and ">t.pnodeId = #nodeId#</isNotEmpty>
+		and t.userId = #userId# group by t.id
+	</select>
+	
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.sysconfig.Menu">
+		insert into t_menu(
+			<isNotEmpty property="nodeId">nodeId,</isNotEmpty>
+			<isNotEmpty property="pnodeId">pnodeId,</isNotEmpty>
+			<isNotEmpty property="name">name,</isNotEmpty>
+			<isNotEmpty property="url">url,</isNotEmpty>
+			<isNotEmpty property="icon1">icon1,</isNotEmpty>
+			<isNotEmpty property="icon2">icon2,</isNotEmpty>
+			<isNotEmpty property="userId">userId,</isNotEmpty>
+			<isNotEmpty property="sort">sort,</isNotEmpty>
+			id
+		) values (
+			<isNotEmpty property="nodeId">#nodeId#,</isNotEmpty>
+			<isNotEmpty property="pnodeId">#pnodeId#,</isNotEmpty>
+			<isNotEmpty property="name">#name#,</isNotEmpty>
+			<isNotEmpty property="url">#url#,</isNotEmpty>
+			<isNotEmpty property="icon1">#icon1#,</isNotEmpty>
+			<isNotEmpty property="icon2">#icon2#,</isNotEmpty>
+			<isNotEmpty property="userId">#userId#,</isNotEmpty>
+			<isNotEmpty property="sort">#sort#,</isNotEmpty>
+			#id#
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		delete from t_menu where userId=#value#
+	</delete>
+	
+</sqlMap>

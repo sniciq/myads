@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<settings useStatementNamespaces="true"/>
+	<sqlMap resource="sql/sys/SysSequence.xml" />
+	<sqlMap resource="sql/basic/BaseData.xml" />
+	<sqlMap resource="sql/sysconfig/channel.xml" />
+	<sqlMap resource="sql/sysconfig/department.xml" />
+	<sqlMap resource="sql/sysconfig/site.xml" />
+	<sqlMap resource="sql/sysconfig/role.xml" />
+	<sqlMap resource="sql/sysconfig/group.xml" />
+	<sqlMap resource="sql/sysconfig/user.xml" />
+	<sqlMap resource="sql/sysconfig/area.xml" />
+	<sqlMap resource="sql/sysconfig/industry.xml" />
+	<sqlMap resource="sql/sysconfig/advertiser.xml" />
+	<sqlMap resource="sql/sysconfig/category.xml" />
+	<sqlMap resource="sql/sysconfig/product.xml" />
+	<sqlMap resource="sql/sysconfig/productLine.xml" />
+	<sqlMap resource="sql/sysconfig/consumer.xml" />
+	<sqlMap resource="sql/sysconfig/company.xml" />
+	<sqlMap resource="sql/sysconfig/contactPerson.xml" />
+	<sqlMap resource="sql/sysconfig/Proportion.xml" />
+	<sqlMap resource="sql/sysconfig/Province.xml" />
+	<sqlMap resource="sql/sysconfig/city.xml" />
+	<sqlMap resource="sql/advert/advbar.xml" />
+	<sqlMap resource="sql/advert/advbarprice.xml" />
+	<sqlMap resource="sql/advert/bartemplate.xml" />
+	<sqlMap resource="sql/advert/positionsize.xml" />
+	<sqlMap resource="sql/advert/advposition.xml" />
+	<sqlMap resource="sql/advert/postemplate.xml" />
+	<sqlMap resource="sql/advert/barproportion.xml" />
+	<sqlMap resource="sql/advflight/project.xml" />
+	<sqlMap resource="sql/advflight/advActive.xml" />
+	<sqlMap resource="sql/advflight/Advertisement.xml" />
+	
+	<sqlMap resource="sql/advproduct/t_advproduct.xml" />
+	<sqlMap resource="sql/advproduct/updateStatus.xml" />
+	<sqlMap resource="sql/advproduct/t_advproduct_advbar.xml" />
+	<sqlMap resource="sql/sysconfig/t_price.xml" />
+	
+	<sqlMap resource="sql/advflight/book.xml" />
+	<sqlMap resource="sql/advflight/AdvRelationBook.xml" />
+	<sqlMap resource="sql/advflight/FutureFlight.xml" />
+	<sqlMap resource="sql/advflight/FlowForecast.xml" />
+	<sqlMap resource="sql/advflight/AdvbarBooked.xml" />
+	<sqlMap resource="sql/advflight/AdvbarPreBook.xml" />
+	<sqlMap resource="sql/advflight/BookPackage.xml" />
+	
+	<sqlMap resource="sql/advflight/material.xml" />
+	<sqlMap resource="sql/advflight/advMaterial.xml" />
+	<sqlMap resource="sql/advflight/advFlight.xml" />
+	<sqlMap resource="sql/webdata/WebdataMovies.xml" />
+	<sqlMap resource="sql/webdata/WebdataMoviesMaintain.xml" />
+	<sqlMap resource="sql/webdata/WebdataMoviesSellstate.xml" />
+	<sqlMap resource="sql/sysconfig/menu.xml" />
+	<sqlMap resource="sql/sysconfig/ip.xml" />
+	
+	<sqlMap resource="sql/statistics/StatisticsChannelMonth.xml" />
+	<sqlMap resource="sql/statistics/StatisticsChannelDay.xml" />
+	<sqlMap resource="sql/statistics/StatisticsAdvpositionDay.xml" />
+	<sqlMap resource="sql/statistics/StatisticsAdvpositionMonth.xml" />
+	<sqlMap resource="sql/statistics/StatisticsAdvbarDay.xml" />
+	<sqlMap resource="sql/statistics/StatisticsAdvbarMonth.xml" />
+	<sqlMap resource="sql/statistics/StatisticsAdvActiveDay.xml" />
+	<sqlMap resource="sql/statistics/StatisticsAdvActiveMonth.xml" />
+	<sqlMap resource="sql/statistics/StatisticsAdvertisementDay.xml" />
+	<sqlMap resource="sql/statistics/StatisticsAdvertisementMonth.xml" />
+	<sqlMap resource="sql/statistics/StatisticsBookpackageMonth.xml" />
+	<sqlMap resource="sql/statistics/StatisticsProjectMonth.xml" />
+	<sqlMap resource="sql/statistics/StatisticsProjectDay.xml" />
+	<sqlMap resource="sql/statistics/StatisticsBookpackageDay.xml" />
+	
+	<sqlMap resource="sql/statistics/StatisticsProductMonth.xml" />
+	<sqlMap resource="sql/statistics/StatisticsProductDay.xml" />
+	
+	<sqlMap resource="sql/statistics/CpmhisAccount.xml" />
+	<sqlMap resource="sql/statistics/CpdhisAccount.xml" />
+	<sqlMap resource="sql/statistics/CpdFuture.xml" />
+	<sqlMap resource="sql/statistics/CpmFuture.xml" />
+	<sqlMap resource="sql/statistics/BookCount.xml" />
+	
+	<sqlMap resource="sql/statistics/StatisticsProductViewsMonth.xml"/>
+	
+	<sqlMap resource="sql/statistics/t_statistics_channel_views.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_site_views.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_advActive_views.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_advbar_views.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_advertisement_views.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_advposition_views.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_bookpackage_views.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_project_views.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_advactive_views_day.xml"/>	
+	<sqlMap resource="sql/statistics/t_statistics_advbar_views_day.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_advbar_views_month.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_advertisement_views_day.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_advertisement_views_month.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_advposition_views_month.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_advpositoin_views_day.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_bookpackage_views_day.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_bookpackage_views_month.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_channel_views_day.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_channel_views_month.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_project_views_day.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_project_views_month.xml"/>
+	<sqlMap resource="sql/statistics/t_statistics_advactive_views_month.xml"/>
+	
+	<sqlMap resource="sql/statistics/StatisticsAAContext.xml"/>
+	
+</sqlMapConfig>

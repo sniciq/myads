@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+	<bean id="AdvproductDao" class="com.ku6ads.dao.impl.advproduct.AdvproductDaoImpl" scope="singleton">		
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">			
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">				
+				<property name="domainName" value="default.t_advproduct"/>			
+			</bean>		
+		</property>	
+	</bean>
+	<bean id="AdvproductAction" class="com.ku6ads.struts.advproduct.AdvproductAction" scope="prototype"></bean>
+	
+	<bean id="UpdateStatusDao" class="com.ku6ads.dao.impl.advproduct.UpdateStatusDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">			
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">				
+				<property name="domainName" value="default.updateStatus"/>			
+			</bean>		
+		</property>	
+	</bean>
+	
+	<bean id="UpdateStateAction" class="com.ku6ads.struts.advproduct.UpdateStateAction" scope="prototype">
+		<property name="updateStatusDao" ref="UpdateStatusDao"></property>
+	</bean>
+	
+	<bean id="AdvproductAdvbarDao" class="com.ku6ads.dao.impl.advproduct.AdvproductAdvbarDaoImpl" scope="singleton">		
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">			
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">				
+				<property name="domainName" value="default.t_advproduct_advbar"/>			
+			</bean>		
+		</property>	
+	</bean>
+	
+	<bean id="AdvproductAdvbarAction" class="com.ku6ads.struts.advproduct.AdvproductAdvbarAction" scope="prototype">
+		<property name="advproductAdvbarDao" ref="AdvproductAdvbarDao"/>
+		<property name="advbarDao" ref="AdvbarDao"></property>
+	</bean>
+	
+	<bean id="PriceDao" class="com.ku6ads.dao.impl.sysconfig.PriceDaoImpl" scope="singleton">		
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">			
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">				
+				<property name="domainName" value="default.t_price"/>			
+			</bean>		
+		</property>	
+	</bean>
+	<bean id="PriceAction" class="com.ku6ads.struts.sysconfig.PriceAction" scope="prototype">
+		<property name="priceDao" ref="PriceDao"/>
+	</bean>
+	
+</beans>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC  
+     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
+     "http://struts.apache.org/dtds/struts-2.0.dtd"> 
+
+<struts>
+	<package name="HTML/statistics" extends="basePackage">
+	
+		<action name="StatisticsMediaAction_*" class="StatisticsMediaAction" method="{1}"></action>
+		
+		<!-- 广告活动月报 -->
+		<action name="StatisticsCustomerAction_getAdvActiveMonthData" class="StatisticsCustomerAction" method="getAdvActiveMonthData"></action>
+		
+		<!-- 广告活动月报导出-->
+		<action name="StatisticsCustomerAction_exportAdvActiveMonthData" class="StatisticsCustomerAction" method="exportAdvActiveMonthData"></action>
+		
+		<!-- 广告活动日报 -->
+		<action name="StatisticsCustomerAction_getAdvActiveDailyData" class="StatisticsCustomerAction" method="getAdvActiveDailyData"></action>
+		
+		<!-- 广告活动日报导出-->
+		<action name="StatisticsCustomerAction_exportAdvActiveDailyData" class="StatisticsCustomerAction" method="exportAdvActiveDailyData"></action>
+		
+		<!-- 广告月报 -->
+		<action name="StatisticsCustomerAction_getAdvertisementMonthData" class="StatisticsCustomerAction" method="getAdvertisementMonthData"></action>
+		
+		<!-- 广告月报导出-->
+		<action name="StatisticsCustomerAction_exportAdvertisementMonthData" class="StatisticsCustomerAction" method="exportAdvertisementMonthData"></action>
+		
+		<!-- 广告日报 -->
+		<action name="StatisticsCustomerAction_getAdvertisementDailyData" class="StatisticsCustomerAction" method="getAdvertisementDailyData"></action>
+		
+		<!-- 广告日报导出-->
+		<action name="StatisticsCustomerAction_exportAdvertisementDailyData" class="StatisticsCustomerAction" method="exportAdvertisementDailyData"></action>
+		
+		<action name="StatisticsCustomerAction_getViewAdvActive" class="StatisticsCustomerAction" method="getViewAdvActive"></action>
+		<action name="StatisticsCustomerAction_getViewAdvertisement" class="StatisticsCustomerAction" method="getViewAdvertisement"></action>
+		
+		<action name="StatisticsBusinessAction_*" class="StatisticsBusinessAction" method="{1}"></action>
+		<action name="StatisticsBusinessSearchAction_*" class="StatisticsBusinessSearchAction" method="{1}"></action>
+		
+		<action name="StatisticsAAContextAction_*" class="StatisticsAAContextAction" method="{1}"></action>
+		
+		<!-- 历史CPM统计 -->
+		<action name="CpmhisAccountAction_showHisCpmByDate" class="CpmhisAccountAction" method="showHisCpmByDate"></action>
+		<!-- 历史CPD统计 -->
+		<action name="CpdhisAccountAction_showHisCpdByDate" class="CpdhisAccountAction" method="showHisCpdByDate"></action>
+		<!-- 未来CPD预订情况 -->
+		<action name="CpdFutureAction_showFutureCpdByDate" class="CpdFutureAction" method="showFutureCpdByDate"></action>
+		<!-- 未来CPM预订情况 -->
+		<action name="CpmFutureAction_showFuCpmByDate" class="CpmFutureAction" method="showFuCpmByDate"></action>
+		<!-- 广告使用统计 -->
+		<action name="BookCountAction_showBookCountByDate" class="BookCountAction" method="showBookCountByDate"></action>
+		
+		
+	</package>
+</struts>

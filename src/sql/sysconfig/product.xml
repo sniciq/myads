@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sysconfig.Product">
+
+	<select id="selectByEntity" resultClass="com.ku6ads.dao.entity.sysconfig.Product">
+		SELECT ProductId,productName FROM t_product where status=0
+	</select>
+
+	<insert id="insertProduct" parameterClass="com.ku6ads.dao.entity.sysconfig.Product">
+		insert into t_product(	
+			<isNotEmpty property="productLineId">productLineId,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime,</isNotEmpty>
+			productName	
+		)values(	
+			<isNotEmpty property="productLineId">#productLineId#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="createTime">#createTime#,</isNotEmpty>
+			<isNotEmpty property="modifier">#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">#modifyTime#,</isNotEmpty>
+			#productName#
+			)
+	</insert>
+	
+	<select id="selectByProductCount"  parameterClass="com.ku6ads.dao.entity.sysconfig.Product" resultClass="java.lang.Integer">
+		select count(1) from t_product
+		where status != 1 
+		and productLineId = #productLineId#
+	</select>
+	
+	<select id="selectByProductLimit" resultClass="com.ku6ads.dao.entity.sysconfig.Product" parameterClass="com.ku6ads.dao.entity.sysconfig.Product">
+			select * from t_product
+			where status != 1 
+			<isNotEmpty property="productLineId" prepend=" and "> productLineId= #productLineId#</isNotEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isEmpty property="extLimit.sort">order by productId </isEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		update t_product set status=1 where productId=#value#
+	</delete>
+	
+	<delete id="deleteByLineId" parameterClass="java.lang.Integer">
+		update t_product set status=1 where productLineId=#value#
+	</delete>
+	
+	<select id="selectByLineId" resultClass="com.ku6ads.dao.entity.sysconfig.Product" parameterClass="Integer">
+			select * from t_product
+			where status != 1 
+			and productLineId = #productLineId#
+	</select>
+</sqlMap>

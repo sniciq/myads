@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.t_statistics_project_views_month">
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsProjectViewsMonth">
+ 		insert into t_statistics_project_views_month(
+			<isNotEmpty property="projectId">projectId,</isNotEmpty>
+			<isNotEmpty property="updateTime">updateTime,</isNotEmpty>
+			<isNotEmpty property="onceMore">onceMore,</isNotEmpty>
+			<isNotEmpty property="twiceMore">twiceMore,</isNotEmpty>
+			<isNotEmpty property="threeMore">threeMore,</isNotEmpty>
+			<isNotEmpty property="fourthMore">fourthMore,</isNotEmpty>
+			<isNotEmpty property="fiveMore">fiveMore,</isNotEmpty>
+			<isNotEmpty property="sixMore">sixMore,</isNotEmpty>
+			<isNotEmpty property="sevenMore">sevenMore,</isNotEmpty>
+			<isNotEmpty property="eightMore">eightMore,</isNotEmpty>
+			<isNotEmpty property="nineMore">nineMore,</isNotEmpty>
+			<isNotEmpty property="teenMore">teenMore,</isNotEmpty>
+			id
+		) values (
+			<isNotEmpty property="projectId">#projectId#,</isNotEmpty>
+			<isNotEmpty property="updateTime">#updateTime#,</isNotEmpty>
+			<isNotEmpty property="onceMore">#onceMore#,</isNotEmpty>
+			<isNotEmpty property="twiceMore">#twiceMore#,</isNotEmpty>
+			<isNotEmpty property="threeMore">#threeMore#,</isNotEmpty>
+			<isNotEmpty property="fourthMore">#fourthMore#,</isNotEmpty>
+			<isNotEmpty property="fiveMore">#fiveMore#,</isNotEmpty>
+			<isNotEmpty property="sixMore">#sixMore#,</isNotEmpty>
+			<isNotEmpty property="sevenMore">#sevenMore#,</isNotEmpty>
+			<isNotEmpty property="eightMore">#eightMore#,</isNotEmpty>
+			<isNotEmpty property="nineMore">#nineMore#,</isNotEmpty>
+			<isNotEmpty property="teenMore">#teenMore#,</isNotEmpty>
+			#id#
+		)
+	</insert>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsProjectViewsMonth" resultClass="com.ku6ads.dao.entity.statistics.StatisticsProjectViewsMonth">
+ 		SELECT id,projectId,updateTime,onceMore,twiceMore,threeMore,fourthMore,fiveMore,sixMore,sevenMore,eightMore,nineMore,teenMore 
+		FROM t_statistics_project_views_month
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="projectId" prepend=" AND ">projectId=#projectId#</isNotEmpty>
+		<isNotEmpty property="updateTime" prepend=" AND ">updateTime=#updateTime#</isNotEmpty>
+		<isNotEmpty property="onceMore" prepend=" AND ">onceMore=#onceMore#</isNotEmpty>
+		<isNotEmpty property="twiceMore" prepend=" AND ">twiceMore=#twiceMore#</isNotEmpty>
+		<isNotEmpty property="threeMore" prepend=" AND ">threeMore=#threeMore#</isNotEmpty>
+		<isNotEmpty property="fourthMore" prepend=" AND ">fourthMore=#fourthMore#</isNotEmpty>
+		<isNotEmpty property="fiveMore" prepend=" AND ">fiveMore=#fiveMore#</isNotEmpty>
+		<isNotEmpty property="sixMore" prepend=" AND ">sixMore=#sixMore#</isNotEmpty>
+		<isNotEmpty property="sevenMore" prepend=" AND ">sevenMore=#sevenMore#</isNotEmpty>
+		<isNotEmpty property="eightMore" prepend=" AND ">eightMore=#eightMore#</isNotEmpty>
+		<isNotEmpty property="nineMore" prepend=" AND ">nineMore=#nineMore#</isNotEmpty>
+		<isNotEmpty property="teenMore" prepend=" AND ">teenMore=#teenMore#</isNotEmpty>
+	</select>
+
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsProjectViewsMonth">
+ 		UPDATE t_statistics_project_views_month SET 
+		<isNotNull property="projectId">projectId=#projectId#, </isNotNull>
+		<isNotNull property="updateTime">updateTime=#updateTime#, </isNotNull>
+		<isNotNull property="onceMore">onceMore=#onceMore#, </isNotNull>
+		<isNotNull property="twiceMore">twiceMore=#twiceMore#, </isNotNull>
+		<isNotNull property="threeMore">threeMore=#threeMore#, </isNotNull>
+		<isNotNull property="fourthMore">fourthMore=#fourthMore#, </isNotNull>
+		<isNotNull property="fiveMore">fiveMore=#fiveMore#, </isNotNull>
+		<isNotNull property="sixMore">sixMore=#sixMore#, </isNotNull>
+		<isNotNull property="sevenMore">sevenMore=#sevenMore#, </isNotNull>
+		<isNotNull property="eightMore">eightMore=#eightMore#, </isNotNull>
+		<isNotNull property="nineMore">nineMore=#nineMore#, </isNotNull>
+		<isNotNull property="teenMore">teenMore=#teenMore#, </isNotNull>
+		 id=#id#
+		WHERE
+		 id=#id#
+	</update>
+
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.statistics.StatisticsProjectViewsMonth">
+		select * from t_statistics_project_views_month WHERE id=#value#
+	</select>
+
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+ 		DELETE FROM t_statistics_project_views_month WHERE 
+		 id=#id#
+	</delete>
+
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsProjectViewsMonth" resultClass="java.lang.Integer">
+ 		SELECT count(1) 		FROM t_statistics_project_views_month
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="projectId" prepend=" AND ">projectId=#projectId#</isNotEmpty>
+		<isNotEmpty property="updateTime" prepend=" AND ">updateTime=#updateTime#</isNotEmpty>
+		<isNotEmpty property="onceMore" prepend=" AND ">onceMore=#onceMore#</isNotEmpty>
+		<isNotEmpty property="twiceMore" prepend=" AND ">twiceMore=#twiceMore#</isNotEmpty>
+		<isNotEmpty property="threeMore" prepend=" AND ">threeMore=#threeMore#</isNotEmpty>
+		<isNotEmpty property="fourthMore" prepend=" AND ">fourthMore=#fourthMore#</isNotEmpty>
+		<isNotEmpty property="fiveMore" prepend=" AND ">fiveMore=#fiveMore#</isNotEmpty>
+		<isNotEmpty property="sixMore" prepend=" AND ">sixMore=#sixMore#</isNotEmpty>
+		<isNotEmpty property="sevenMore" prepend=" AND ">sevenMore=#sevenMore#</isNotEmpty>
+		<isNotEmpty property="eightMore" prepend=" AND ">eightMore=#eightMore#</isNotEmpty>
+		<isNotEmpty property="nineMore" prepend=" AND ">nineMore=#nineMore#</isNotEmpty>
+		<isNotEmpty property="teenMore" prepend=" AND ">teenMore=#teenMore#</isNotEmpty>
+		<isNotEmpty property="stateDayTime" prepend=" AND ">DATE_FORMAT(updateTime, '%Y-%m-%d')=DATE_FORMAT(#stateDayTime#, '%Y-%m-%d')</isNotEmpty>
+		<isNotEmpty property="stateMonthTimeStart" prepend=" AND ">DATE_FORMAT(updateTime, '%Y-%m') >= DATE_FORMAT(#stateMonthTimeStart#, '%Y-%m')</isNotEmpty>
+		<isNotEmpty property="stateMonthTimeEnd" prepend=" AND "> DATE_FORMAT(updateTime, '%Y-%m') <![CDATA[ <= ]]> DATE_FORMAT(#stateMonthTimeEnd#, '%Y-%m')</isNotEmpty>
+	</select>
+
+	<select id="selectByLimit" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsProjectViewsMonth" resultClass="com.ku6ads.dao.entity.statistics.StatisticsProjectViewsMonth">
+ 		SELECT t.*, p.name
+		FROM t_statistics_project_views_month t
+		left join t_project p on p.id=t.projectId
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">t.id=#id#</isNotEmpty>
+		<isNotEmpty property="projectId" prepend=" AND ">t.projectId=#projectId#</isNotEmpty>
+		<isNotEmpty property="updateTime" prepend=" AND ">t.updateTime=#updateTime#</isNotEmpty>
+		<isNotEmpty property="onceMore" prepend=" AND ">onceMore=#onceMore#</isNotEmpty>
+		<isNotEmpty property="twiceMore" prepend=" AND ">twiceMore=#twiceMore#</isNotEmpty>
+		<isNotEmpty property="threeMore" prepend=" AND ">threeMore=#threeMore#</isNotEmpty>
+		<isNotEmpty property="fourthMore" prepend=" AND ">fourthMore=#fourthMore#</isNotEmpty>
+		<isNotEmpty property="fiveMore" prepend=" AND ">fiveMore=#fiveMore#</isNotEmpty>
+		<isNotEmpty property="sixMore" prepend=" AND ">sixMore=#sixMore#</isNotEmpty>
+		<isNotEmpty property="sevenMore" prepend=" AND ">sevenMore=#sevenMore#</isNotEmpty>
+		<isNotEmpty property="eightMore" prepend=" AND ">eightMore=#eightMore#</isNotEmpty>
+		<isNotEmpty property="nineMore" prepend=" AND ">nineMore=#nineMore#</isNotEmpty>
+		<isNotEmpty property="teenMore" prepend=" AND ">teenMore=#teenMore#</isNotEmpty>
+		<isNotEmpty property="stateDayTime" prepend=" AND ">DATE_FORMAT(t.updateTime, '%Y-%m-%d')=DATE_FORMAT(#stateDayTime#, '%Y-%m-%d')</isNotEmpty>
+		<isNotEmpty property="stateMonthTimeStart" prepend=" AND ">DATE_FORMAT(t.updateTime, '%Y-%m') >= DATE_FORMAT(#stateMonthTimeStart#, '%Y-%m')</isNotEmpty>
+		<isNotEmpty property="stateMonthTimeEnd" prepend=" AND "> DATE_FORMAT(t.updateTime, '%Y-%m') <![CDATA[ <= ]]> DATE_FORMAT(#stateMonthTimeEnd#, '%Y-%m')</isNotEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+
+</sqlMap>

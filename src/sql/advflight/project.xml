@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="advflight.project">
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.advflight.Project">
+		SELECT * FROM t_project WHERE id=#value#
+	</select >
+	
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.advflight.Project">
+ 		insert into t_project(
+			<isNotEmpty property="contractNum">contractNum,</isNotEmpty>
+			<isNotEmpty property="discount">discount,</isNotEmpty>
+			<isNotEmpty property="sendRate">sendRate,</isNotEmpty>
+			<isNotEmpty property="explains">explains,</isNotEmpty>
+			<isNotEmpty property="impression">impression,</isNotEmpty>
+			<isNotEmpty property="click">click,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime,</isNotEmpty>
+			<isNotEmpty property="note">note,</isNotEmpty>
+			<isNotEmpty property="ditchName">ditchName,</isNotEmpty>
+			<isNotEmpty property="ditchId">ditchId,</isNotEmpty>
+			<isNotEmpty property="saleName">saleName,</isNotEmpty>
+			<isNotEmpty property="saleId">saleId,</isNotEmpty>
+			<isNotEmpty property="bussinessStatus">bussinessStatus,</isNotEmpty>
+			<isNotEmpty property="statusFlag">statusFlag,</isNotEmpty>
+			<isNotEmpty property="isDefault">isDefault,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			type,
+			name,
+			consumerName,
+			consumerId,
+			advertiserName,
+			advertiserId,
+			productLineName,
+			productLineId,
+			productName,
+			productId,
+			area,
+			sum,
+			startTime,
+			endTime,
+			creator,
+			createTime
+		) values (
+			<isNotEmpty property="contractNum">#contractNum#,</isNotEmpty>
+			<isNotEmpty property="discount">#discount#,</isNotEmpty>
+			<isNotEmpty property="sendRate">#sendRate#,</isNotEmpty>
+			<isNotEmpty property="explains">#explains#,</isNotEmpty>
+			<isNotEmpty property="impression">#impression#,</isNotEmpty>
+			<isNotEmpty property="click">#click#,</isNotEmpty>
+			<isNotEmpty property="modifier">#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">#modifyTime#,</isNotEmpty>
+			<isNotEmpty property="note">#note#,</isNotEmpty>
+			<isNotEmpty property="ditchName">#ditchName#,</isNotEmpty>
+			<isNotEmpty property="ditchId">#ditchId#,</isNotEmpty>
+			<isNotEmpty property="saleName">#saleName#,</isNotEmpty>
+			<isNotEmpty property="saleId">#saleId#,</isNotEmpty>
+			<isNotEmpty property="bussinessStatus">#bussinessStatus#,</isNotEmpty>
+			<isNotEmpty property="statusFlag">#statusFlag#,</isNotEmpty>
+			<isNotEmpty property="isDefault">#isDefault#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			#type#,
+			#name#,
+			#consumerName#,
+			#consumerId#,
+			#advertiserName#,
+			#advertiserId#,
+			#productLineName#,
+			#productLineId#,
+			#productName#,
+			#productId#,
+			#area#,
+			#sum#,
+			#startTime#,
+			#endTime#,
+			#creator#,
+			#createTime#
+		)
+	</insert>
+	
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.advflight.Project" resultClass="com.ku6ads.dao.entity.advflight.Project">
+ 		SELECT id,contractNum,type,name,consumerName,consumerId,advertiserName,advertiserId,productLineName,productLineId,productName,productId,area,ditchName,ditchId,saleName,saleId,sum,discount,sendRate,startTime,endTime,explains,impression,click,status,creator,createTime,modifier,modifyTime,note,bussinessStatus,statusFlag 
+		FROM T_PROJECT
+		WHERE 1=1 and status!=1
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="contractNum" prepend=" AND ">contractNum=#contractNum#</isNotEmpty>
+		<isNotEmpty property="type" prepend=" AND ">type=#type#</isNotEmpty>
+		<isNotEmpty property="name" prepend=" AND ">name=#name#</isNotEmpty>
+		<isNotEmpty property="consumerName" prepend=" AND ">consumerName=#consumerName#</isNotEmpty>
+		<isNotEmpty property="consumerId" prepend=" AND ">consumerId=#consumerId#</isNotEmpty>
+		<isNotEmpty property="advertiserName" prepend=" AND ">advertiserName=#advertiserName#</isNotEmpty>
+		<isNotEmpty property="advertiserId" prepend=" AND ">advertiserId=#advertiserId#</isNotEmpty>
+		<isNotEmpty property="productLineName" prepend=" AND ">productLineName=#productLineName#</isNotEmpty>
+		<isNotEmpty property="productLineId" prepend=" AND ">productLineId=#productLineId#</isNotEmpty>
+		<isNotEmpty property="productName" prepend=" AND ">productName=#productName#</isNotEmpty>
+		<isNotEmpty property="productId" prepend=" AND ">productId=#productId#</isNotEmpty>
+		<isNotEmpty property="area" prepend=" AND ">area=#area#</isNotEmpty>
+		<isNotEmpty property="ditchName" prepend=" AND ">ditchName=#ditchName#</isNotEmpty>
+		<isNotEmpty property="ditchId" prepend=" AND ">ditchId=#ditchId#</isNotEmpty>
+		<isNotEmpty property="saleName" prepend=" AND ">saleName=#saleName#</isNotEmpty>
+		<isNotEmpty property="saleId" prepend=" AND ">saleId=#saleId#</isNotEmpty>
+		<isNotEmpty property="sum" prepend=" AND ">sum=#sum#</isNotEmpty>
+		<isNotEmpty property="discount" prepend=" AND ">discount=#discount#</isNotEmpty>
+		<isNotEmpty property="sendRate" prepend=" AND ">sendRate=#sendRate#</isNotEmpty>
+		<isNotEmpty property="startTime" prepend=" AND ">startTime=#startTime#</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND ">endTime=#endTime#</isNotEmpty>
+		<isNotEmpty property="explains" prepend=" AND ">explains=#explains#</isNotEmpty>
+		<isNotEmpty property="impression" prepend=" AND ">impression=#impression#</isNotEmpty>
+		<isNotEmpty property="click" prepend=" AND ">click=#click#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+		<isNotEmpty property="creator" prepend=" AND ">creator=#creator#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+		<isNotEmpty property="modifier" prepend=" AND ">modifier=#modifier#</isNotEmpty>
+		<isNotEmpty property="modifyTime" prepend=" AND ">modifyTime=#modifyTime#</isNotEmpty>
+		<isNotEmpty property="note" prepend=" AND ">note=#note#</isNotEmpty>
+		<isNotEmpty property="bussinessStatus" prepend=" AND ">bussinessStatus=#bussinessStatus#</isNotEmpty>
+		<isNotEmpty property="statusFlag" prepend=" AND ">statusFlag=#statusFlag#</isNotEmpty>
+		<isNotEmpty property="isDefault" prepend=" AND ">isDefault=#isDefault#</isNotEmpty>
+	</select>
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.advflight.Project" resultClass="java.lang.Integer">
+		SELECT count(1) FROM t_project WHERE status !=1
+			<isNotEmpty property="name" prepend=" and ">name like '%$name$%'</isNotEmpty>
+			<isNotEmpty property="contractNum" prepend=" and ">contractNum = #contractNum#</isNotEmpty>
+			<isNotEmpty property="type" prepend=" and ">type = #type#</isNotEmpty>
+			<isNotEmpty property="bussinessStatus" prepend=" and ">bussinessStatus = #bussinessStatus#</isNotEmpty>
+			<isNotEmpty property="isDefault" prepend=" and ">isDefault = #isDefault#</isNotEmpty>
+			<isNotEmpty property="advertiserId" prepend=" and ">advertiserId = #advertiserId#</isNotEmpty>
+			<isNotEmpty property="consumerId" prepend=" and ">consumerId = #consumerId#</isNotEmpty>
+			<isNotEmpty property="ditchId" prepend=" and ">ditchId = #ditchId#</isNotEmpty>
+			<isNotEmpty property="saleId" prepend=" and ">saleId = #saleId#</isNotEmpty>
+			<isNotEmpty property="creator" prepend=" and ">creator = #creator#</isNotEmpty>
+			<isNotEmpty property="id" prepend=" and ">id = #id#</isNotEmpty>
+			
+			<isNotEmpty property="extLimit.permissionstr" prepend=" and ">$extLimit.permissionstr$</isNotEmpty>
+	</select>
+	
+	<select id="selectByLimit" resultClass="com.ku6ads.dao.entity.advflight.Project" parameterClass="com.ku6ads.dao.entity.advflight.Project">
+		SELECT * FROM t_project WHERE status !=1
+			<isNotEmpty property="name" prepend=" and ">name like '%$name$%'</isNotEmpty>
+			<isNotEmpty property="contractNum" prepend=" and ">contractNum = #contractNum#</isNotEmpty>
+			<isNotEmpty property="type" prepend=" and ">type = #type#</isNotEmpty>
+			<isNotEmpty property="bussinessStatus" prepend=" and ">bussinessStatus = #bussinessStatus#</isNotEmpty>
+			<isNotEmpty property="isDefault" prepend=" and ">isDefault = #isDefault#</isNotEmpty>
+			<isNotEmpty property="advertiserId" prepend=" and ">advertiserId = #advertiserId#</isNotEmpty>
+			<isNotEmpty property="consumerId" prepend=" and ">consumerId = #consumerId#</isNotEmpty>
+			<isNotEmpty property="ditchId" prepend=" and ">ditchId = #ditchId#</isNotEmpty>
+			<isNotEmpty property="saleId" prepend=" and ">saleId = #saleId#</isNotEmpty>
+			<isNotEmpty property="creator" prepend=" and ">creator = #creator#</isNotEmpty>
+			<isNotEmpty property="id" prepend=" and ">id = #id#</isNotEmpty>
+			
+			<isNotEmpty property="extLimit.permissionstr" prepend=" and ">$extLimit.permissionstr$</isNotEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isEmpty property="extLimit.sort">order by id desc</isEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.advflight.Project">
+ 		UPDATE t_project SET 
+		<isNotNull property="contractNum">contractNum=#contractNum#, </isNotNull>
+		<isNotNull property="type">type=#type#, </isNotNull>
+		<isNotNull property="name">name=#name#, </isNotNull>
+		<isNotNull property="consumerName">consumerName=#consumerName#, </isNotNull>
+		<isNotNull property="consumerId">consumerId=#consumerId#, </isNotNull>
+		<isNotNull property="advertiserName">advertiserName=#advertiserName#, </isNotNull>
+		<isNotNull property="advertiserId">advertiserId=#advertiserId#, </isNotNull>
+		<isNotNull property="productLineName">productLineName=#productLineName#, </isNotNull>
+		<isNotNull property="productLineId">productLineId=#productLineId#, </isNotNull>
+		<isNotNull property="productName">productName=#productName#, </isNotNull>
+		<isNotNull property="productId">productId=#productId#, </isNotNull>
+		<isNotNull property="area">area=#area#, </isNotNull>
+		<isNotNull property="ditchName">ditchName=#ditchName#, </isNotNull>
+		<isNotNull property="ditchId">ditchId=#ditchId#, </isNotNull>
+		<isNotNull property="saleName">saleName=#saleName#, </isNotNull>
+		<isNotNull property="saleId">saleId=#saleId#, </isNotNull>
+		<isNotNull property="sum">sum=#sum#, </isNotNull>
+		<isNotNull property="discount">discount=#discount#, </isNotNull>
+		<isNotNull property="sendRate">sendRate=#sendRate#, </isNotNull>
+		<isNotNull property="startTime">startTime=#startTime#, </isNotNull>
+		<isNotNull property="endTime">endTime=#endTime#, </isNotNull>
+		<isNotNull property="explains">explains=#explains#, </isNotNull>
+		<isNotNull property="impression">impression=#impression#, </isNotNull>
+		<isNotNull property="click">click=#click#, </isNotNull>
+		<isNotNull property="status">status=#status#, </isNotNull>
+		<isNotNull property="creator">creator=#creator#, </isNotNull>
+		<isNotNull property="createTime">createTime=#createTime#, </isNotNull>
+		<isNotNull property="modifier">modifier=#modifier#, </isNotNull>
+		<isNotNull property="modifyTime">modifyTime=#modifyTime#, </isNotNull>
+		<isNotNull property="note">note=#note#, </isNotNull>
+		<isNotNull property="bussinessStatus">bussinessStatus=#bussinessStatus#, </isNotNull>
+		<isNotNull property="statusFlag">statusFlag=#statusFlag#, </isNotNull>
+		<isNotNull property="isDefault">isDefault=#isDefault#, </isNotNull>
+		 id=#id#
+		WHERE
+		 id=#id#
+	</update>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		UPDATE t_project SET status = 1 WHERE id=#value#
+	</delete>
+	
+	<select id="statisticProjectCount" parameterClass="com.ku6ads.dao.entity.advflight.Project" resultClass="com.ku6ads.dao.entity.advflight.ProjectCount">
+		SELECT bussinessStatus,count(*) as num FROM t_project WHERE status !=1 and isDefault = 0
+		<isNotEmpty property="extLimit.permissionstr" prepend=" and ">$extLimit.permissionstr$</isNotEmpty>
+	 	GROUP BY bussinessStatus
+	</select>
+	
+	<select id="selectProjectDetailById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.struts.advflight.ProjectForm">
+		select b.dataName as useTypeName, c.dataName as areaName, p.*  from t_project p
+		left join t_basedata b on p.type = b.dataValue and b.dataType='usetype'
+		left join t_basedata c on p.type = c.dataValue and c.dataType='area'
+		where p.id = #value#
+	</select>
+	
+	<!-- reason -->
+	<insert id="insertProjectVerifyReason" parameterClass="com.ku6ads.dao.entity.advflight.ProjectReason">
+ 		insert into t_project_reason(
+			<isNotEmpty property="projectId">projectId,</isNotEmpty>
+			<isNotEmpty property="reason">reason,</isNotEmpty>
+			creator,
+			createTime
+		) values (
+			<isNotEmpty property="projectId">#projectId#,</isNotEmpty>
+			<isNotEmpty property="reason">#reason#,</isNotEmpty>
+			#creator#,
+			#createTime#
+		)
+	</insert>
+	
+	<select id="selectVerifyReasonByProjectId" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.advflight.ProjectReason">
+		SELECT * FROM t_project_reason WHERE projectId=#projectId#
+	</select >
+	
+	<update id="updateProjectReason" parameterClass="com.ku6ads.dao.entity.advflight.ProjectReason">
+ 		UPDATE t_project_reason SET 
+		<isNotNull property="reason">reason=#reason#</isNotNull>
+		WHERE
+		 id=#id#
+	</update>
+	
+	<select id="selectOveredBPCount" parameterClass="java.lang.Integer" resultClass="java.lang.Integer">
+		select count(1) from t_bookpackage where projectId=#value# and DATE_FORMAT(endTime, '%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(now(), '%Y-%m-%d')
+	</select>
+</sqlMap>

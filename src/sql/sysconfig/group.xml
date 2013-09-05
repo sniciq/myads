@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sysconfig.Group">
+	
+	<select id="selectByEntity" resultClass="com.ku6ads.dao.entity.sysconfig.Group">
+		SELECT id,name FROM t_group where status != 1
+	</select>
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.sysconfig.Group">
+		select * from t_group where id = #value#
+	</select >
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.sysconfig.Group" resultClass="java.lang.Integer">
+		select count(1) from t_group
+		where status !=1
+		<isNotEmpty property="name" prepend=" AND ">name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<select id="selectByLimit" resultClass="com.ku6ads.dao.entity.sysconfig.Group" parameterClass="com.ku6ads.dao.entity.sysconfig.Group">
+		select * from t_group where status !=1
+ 			<isNotEmpty property="name" prepend=" and ">name like '%$name$%'</isNotEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isEmpty property="extLimit.sort">order by id desc </isEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.sysconfig.Group">
+		insert into t_group(
+			<isNotEmpty property="name">name,</isNotEmpty>
+			<isNotEmpty property="remark">remark,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime</isNotEmpty>
+		)values(
+			<isNotEmpty property="name">#name#,</isNotEmpty>
+			<isNotEmpty property="remark">#remark#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="createTime">#createTime#</isNotEmpty>
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		UPDATE t_group SET status = 1 WHERE id=#value#
+	</delete>
+	
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.sysconfig.Group">
+		update t_group set
+			<isNotEmpty property="name">name=#name#,</isNotEmpty>
+			<isNotEmpty property="remark">remark=#remark#,</isNotEmpty>
+			<isNotEmpty property="status">status=#status#,</isNotEmpty>
+			<isNotEmpty property="flag">flag=#flag#,</isNotEmpty>
+			id=#id#
+		where id=#id#
+	</update>
+	
+	<!-- user_group entity -->
+	<insert id="insertUserGroup" parameterClass="com.ku6ads.dao.entity.sysconfig.UserGroup">
+		insert into t_user_group(
+			<isNotEmpty property="userId">userId,</isNotEmpty>
+			<isNotEmpty property="groupId">groupId</isNotEmpty>
+		)values(
+			<isNotEmpty property="userId">#userId#,</isNotEmpty>
+			<isNotEmpty property="groupId">#groupId#</isNotEmpty>
+		)
+	</insert>
+	
+	<select id="selectUserByGroupId" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.sysconfig.User">
+		select ug.status as status,ug.id as userGroupId,u.id,u.username,u.name 
+			from t_user_group as ug 
+				left join t_user as u on ug.userId = u.id
+			where ug.status != 1 and ug.groupId = #value#
+	</select>
+	
+	<select id="selectUserCountByGroupId" parameterClass="java.lang.Integer" resultClass="java.lang.Integer">
+		select count(1) from t_user_group as ug left join t_user as u on ug.userId = u.id
+			where ug.groupId = #value#
+	</select>
+	
+	<select id="selectAddUser" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.sysconfig.User">
+		select * from t_user where status = 0 and id not in
+			(select userId from t_user_group where groupId = #value# and status = 0)
+	</select>
+	
+	<delete id="deleteUserGroupById" parameterClass="java.lang.Integer">
+		update t_user_group set status = 1 where id=#value#
+	</delete>
+	
+	<update id="specifiedAdmin" parameterClass="java.lang.Integer">
+		update t_user_group set status = 3 where id=#value#
+	</update>
+	
+	<update id="cancelSpecifiedAdmin" parameterClass="java.lang.Integer">
+		update t_user_group set status = 0 where id=#value#
+	</update>
+	
+	<select id="checkUserGroupAdminById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.sysconfig.UserGroup">
+		select * from t_user_group where status = 3 and groupId = #value#
+	</select>
+	
+	<select id="selectUserGroupByUserName" parameterClass="java.lang.String" resultClass="com.ku6ads.dao.entity.sysconfig.UserGroup">
+		select u.username,g.name,ug.status,ug.groupId,g.flag as flag from t_user_group as ug
+			left join t_user as u on ug.userId = u.id
+			left join t_group as g on ug.groupId = g.id
+		where ug.status !=1 and u.username = #value#
+	</select>
+	
+	<select id="selectUserGroupByUserNameNotIn" parameterClass="com.ku6ads.dao.entity.sysconfig.UserGroup" resultClass="com.ku6ads.dao.entity.sysconfig.UserGroup">
+		select u.username as userName from t_user_group as ug
+			left join t_user as u on ug.userId = u.id
+		where ug.status = 0
+		<isNotEmpty property="groupId" prepend=" AND ">ug.groupId=#groupId#</isNotEmpty>
+		and ug.userId not in 
+			(
+				select id from t_user where 1=1
+				<isNotEmpty property="userName" prepend=" AND ">username = #userName#</isNotEmpty>
+			) 
+		group by ug.userId
+	</select>
+	
+	<select id="selectMailGroupPersonnel" resultClass="com.ku6ads.dao.entity.sysconfig.User">
+		select u.mail from t_user_group as ug
+			left join t_user u on ug.userId = u.id 
+		where ug.status = 0 and ug.groupId in 
+			(select id from t_group where status = 3) group by u.id
+	</select>
+</sqlMap>

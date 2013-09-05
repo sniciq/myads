@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.t_advproduct">
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.advproduct.AdvproductEty">
+ 		insert into t_advproduct(
+			<isNotEmpty property="advproductName">advproductName,</isNotEmpty>
+			<isNotEmpty property="type">type,</isNotEmpty>
+			<isNotEmpty property="remark">remark,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			id
+		) values (
+			<isNotEmpty property="advproductName">#advproductName#,</isNotEmpty>
+			<isNotEmpty property="type">#type#,</isNotEmpty>
+			<isNotEmpty property="remark">#remark#,</isNotEmpty>
+			<isNotEmpty property="createTime">#createTime#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="modifier">#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">#modifyTime#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			#id#
+		)
+	</insert>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.advproduct.AdvproductEty" resultClass="com.ku6ads.dao.entity.advproduct.AdvproductEty">
+ 		SELECT id,advproductName,type,remark,createTime,creator,modifier,modifyTime,status 
+		FROM t_advproduct
+		WHERE status != 1
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="advproductName" prepend=" AND ">advproductName=#advproductName#</isNotEmpty>
+		<isNotEmpty property="type" prepend=" AND ">type=#type#</isNotEmpty>
+		<isNotEmpty property="remark" prepend=" AND ">remark=#remark#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+		<isNotEmpty property="creator" prepend=" AND ">creator=#creator#</isNotEmpty>
+		<isNotEmpty property="modifier" prepend=" AND ">modifier=#modifier#</isNotEmpty>
+		<isNotEmpty property="modifyTime" prepend=" AND ">modifyTime=#modifyTime#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+	</select>
+
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.advproduct.AdvproductEty">
+ 		UPDATE t_advproduct SET 
+		<isNotNull property="advproductName">advproductName=#advproductName#, </isNotNull>
+		<isNotNull property="type">type=#type#, </isNotNull>
+		<isNotNull property="remark">remark=#remark#, </isNotNull>
+		<isNotNull property="createTime">createTime=#createTime#, </isNotNull>
+		<isNotNull property="creator">creator=#creator#, </isNotNull>
+		<isNotNull property="modifier">modifier=#modifier#, </isNotNull>
+		<isNotNull property="modifyTime">modifyTime=#modifyTime#, </isNotNull>
+		<isNotNull property="status">status=#status#, </isNotNull>
+		 id=#id#
+		WHERE
+		 id=#id#
+	</update>
+
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.advproduct.AdvproductEty">
+		select * from t_advproduct WHERE id=#value#
+	</select>
+
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+ 		update t_advproduct set status=1 WHERE id=#id#
+	</delete>
+
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.advproduct.AdvproductEty" resultClass="java.lang.Integer">
+ 		SELECT count(1) 		
+ 		FROM t_advproduct
+		WHERE status != 1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="advproductName" prepend=" AND ">advproductName like '%$advproductName$%'</isNotEmpty>
+		<isNotEmpty property="type" prepend=" AND ">type=#type#</isNotEmpty>
+		<isNotEmpty property="remark" prepend=" AND ">remark=#remark#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+		<isNotEmpty property="creator" prepend=" AND ">creator=#creator#</isNotEmpty>
+		<isNotEmpty property="modifier" prepend=" AND ">modifier=#modifier#</isNotEmpty>
+		<isNotEmpty property="modifyTime" prepend=" AND ">modifyTime=#modifyTime#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+	</select>
+
+	<select id="selectByLimit" parameterClass="com.ku6ads.dao.entity.advproduct.AdvproductEty" resultClass="com.ku6ads.dao.entity.advproduct.AdvproductEty">
+ 		SELECT t.id,t.advproductName,t.type,t.remark,t.createTime,t.creator,t.modifier,t.modifyTime,
+		t.status,sm.advbarCount
+		FROM t_advproduct t
+		left join (select count(1) advbarCount, advproductId from t_advproduct_advbar group by advproductId) sm
+		on t.id = sm.advproductId
+		WHERE status != 1
+		<isNotEmpty property="id" prepend=" AND ">t.id=#id#</isNotEmpty>
+		<isNotEmpty property="advproductName" prepend=" AND ">t.advproductName like '%$advproductName$%'</isNotEmpty>
+		<isNotEmpty property="type" prepend=" AND ">t.type=#type#</isNotEmpty>
+		<isNotEmpty property="remark" prepend=" AND ">t.remark=#remark#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">t.createTime=#createTime#</isNotEmpty>
+		<isNotEmpty property="creator" prepend=" AND ">t.creator=#creator#</isNotEmpty>
+		<isNotEmpty property="modifier" prepend=" AND ">t.modifier=#modifier#</isNotEmpty>
+		<isNotEmpty property="modifyTime" prepend=" AND ">t.modifyTime=#modifyTime#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">t.status=#status#</isNotEmpty>
+		<isNotEmpty property="extLimit.sort">order by t.$extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<select id="selectByAdvproductName" parameterClass="com.ku6ads.dao.entity.advproduct.AdvproductEty" resultClass="com.ku6ads.dao.entity.advproduct.AdvproductEty">
+		SELECT t.id,t.advproductName,t.type,t.remark,t.createTime,t.creator,t.modifier,t.modifyTime,t.status
+		FROM t_advproduct t 
+		WHERE t.status = 0 
+		and not exists (
+		select 1 from t_advproduct_advbar pa
+			left join t_advbar b on pa.advbarId = b.id
+			left join t_advposition p on b.posId = p.id
+			where pa.advproductId = t.id and (b.status != 0 or p.status != 2)
+		)
+		<isNotEmpty property="id" prepend=" AND ">t.id=#id#</isNotEmpty>
+		<isNotEmpty property="advproductName" prepend=" AND ">t.advproductName like '%$advproductName$%'</isNotEmpty>
+		<isNotEmpty property="type" prepend=" AND ">t.type=#type#</isNotEmpty>
+		<isNotEmpty property="remark" prepend=" AND ">t.remark=#remark#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">t.createTime=#createTime#</isNotEmpty>
+		<isNotEmpty property="creator" prepend=" AND ">t.creator=#creator#</isNotEmpty>
+		<isNotEmpty property="modifier" prepend=" AND ">t.modifier=#modifier#</isNotEmpty>
+		<isNotEmpty property="modifyTime" prepend=" AND ">t.modifyTime=#modifyTime#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">t.status=#status#</isNotEmpty>
+		<isNotEmpty property="extLimit.sort">order by t.$extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+
+</sqlMap>

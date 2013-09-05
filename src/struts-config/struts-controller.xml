@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC  
+	 "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
+	 "http://struts.apache.org/dtds/struts-2.0.dtd"> 
+
+<struts>
+	<package name="HTML/controller" extends="basePackage">
+	
+		<interceptors>
+			<interceptor name="logger" class="com.ku6ads.interceptor.LogInterceptor"></interceptor>
+		</interceptors>
+
+		<!-- 处理请求cookie -->
+		<action name="GuidCookieAction_processingCookie" method="processingCookie" class="GuidCookieAction"></action>
+		
+		<!-- 处理地域cookie -->
+		<action name="AreaCookieAction_processingAreaCookie" method="processingAreaCookie" class="AreaCookieAction"></action>
+		
+		<!-- 处理广告位 -->
+		<action name="ControllerAction_processingAdvposition" method="processingAdvposition" class="ControllerAction"></action>
+		
+	</package>
+</struts>

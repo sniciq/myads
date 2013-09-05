@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.webdata.hotfilm">
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.webdata.Hotfilm">
+ 		insert into hotfilm(
+			<isNotEmpty property="time_start">time_start,</isNotEmpty>
+			<isNotEmpty property="time_end">time_end,</isNotEmpty>
+			<isNotEmpty property="isstate">isstate,</isNotEmpty>
+			<isNotEmpty property="remark">remark,</isNotEmpty>
+			film_name
+		) values (
+			<isNotEmpty property="time_start">#time_start#,</isNotEmpty>
+			<isNotEmpty property="time_end">#time_end#,</isNotEmpty>
+			<isNotEmpty property="isstate">#isstate#,</isNotEmpty>
+			<isNotEmpty property="remark">#remark#,</isNotEmpty>
+			#film_name#
+		)
+	</insert>
+	
+	<select id="selectById" resultClass="com.ku6ads.dao.entity.webdata.Hotfilm" parameterClass="java.lang.Integer">
+		select * from HOTFILM where id=#value#
+	</select>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.webdata.Hotfilm" resultClass="com.ku6ads.dao.entity.webdata.Hotfilm">
+ 		SELECT id,film_name,time_start,time_end,isstate,case when(isstate = true) THEN '统计' when(isstate = false) then '不统计' end as stateText,remark 
+		FROM HOTFILM
+		WHERE isDelete = false 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="film_name" prepend=" AND ">film_name=#film_name#</isNotEmpty>
+		<isNotEmpty property="time_start" prepend=" AND ">time_start=#time_start#</isNotEmpty>
+		<isNotEmpty property="time_end" prepend=" AND ">time_end=#time_end#</isNotEmpty>
+		<isNotEmpty property="isstate" prepend=" AND ">isstate=#isstate#</isNotEmpty>
+		<isNotEmpty property="remark" prepend=" AND ">remark=#remark#</isNotEmpty>
+	</select>
+	
+	<select id="selectByLimit" parameterClass="com.ku6ads.dao.entity.webdata.Hotfilm" resultClass="com.ku6ads.dao.entity.webdata.Hotfilm">
+		SELECT id,film_name,time_start,time_end,isstate,case when(isstate = true) THEN '统计' when(isstate = false) then '不统计' end as stateText,remark 
+		FROM HOTFILM WHERE isDelete = false 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="film_name" prepend=" AND ">film_name like '%$film_name$%'</isNotEmpty>
+		<isNotEmpty property="time_start" prepend=" AND ">time_start=#time_start#</isNotEmpty>
+		<isNotEmpty property="time_end" prepend=" AND ">time_end=#time_end#</isNotEmpty>
+		<isNotEmpty property="isstate" prepend=" AND ">isstate=#isstate#</isNotEmpty>
+		<isNotEmpty property="remark" prepend=" AND ">remark=#remark#</isNotEmpty>
+		<isEmpty property="extLimit.sort">order by film_name</isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.limit$ offset $extLimit.start$</isNotEmpty>
+	</select>
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.webdata.Hotfilm" resultClass="java.lang.Integer">
+		SELECT count(1) FROM HOTFILM WHERE isDelete = false 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="film_name" prepend=" AND ">film_name like '%$film_name$%'</isNotEmpty>
+		<isNotEmpty property="time_start" prepend=" AND ">time_start=#time_start#</isNotEmpty>
+		<isNotEmpty property="time_end" prepend=" AND ">time_end=#time_end#</isNotEmpty>
+		<isNotEmpty property="isstate" prepend=" AND ">isstate=#isstate#</isNotEmpty>
+		<isNotEmpty property="remark" prepend=" AND ">remark=#remark#</isNotEmpty>
+	</select>
+
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.webdata.Hotfilm">
+ 		UPDATE HOTFILM SET 
+		<isNotNull property="film_name">film_name=#film_name#, </isNotNull>
+		<isNotNull property="time_start">time_start=#time_start#, </isNotNull>
+		<isNotNull property="time_end">time_end=#time_end#, </isNotNull>
+		<isNotNull property="isstate">isstate=#isstate#, </isNotNull>
+		<isNotNull property="remark">remark=#remark#, </isNotNull>
+		 id=#id#
+		WHERE
+		 id=#id#
+	</update>
+
+	<delete id="deleteHotfilm" parameterClass="com.ku6ads.dao.entity.webdata.Hotfilm">
+ 		DELETE FROM HOTFILM
+		WHERE 
+		 id=#id#
+		<isNotEmpty property="film_name" prepend=" AND ">film_name=#film_name#</isNotEmpty>
+		<isNotEmpty property="time_start" prepend=" AND ">time_start=#time_start#</isNotEmpty>
+		<isNotEmpty property="time_end" prepend=" AND ">time_end=#time_end#</isNotEmpty>
+		<isNotEmpty property="isstate" prepend=" AND ">isstate=#isstate#</isNotEmpty>
+		<isNotEmpty property="remark" prepend=" AND ">remark=#remark#</isNotEmpty>
+	</delete>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		update HOTFILM set isDelete = true where id=#value#
+	</delete>
+
+</sqlMap>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sysconfig.Consumer">
+
+	<select id="selectByEntity" resultClass="com.ku6ads.dao.entity.sysconfig.Consumer">
+		SELECT consumerId,consumerName FROM t_consumer where status =0
+	</select>
+	
+	<select id="selectByConsumerCount"  parameterClass="com.ku6ads.dao.entity.sysconfig.Consumer" resultClass="java.lang.Integer">
+		select count(1) from t_consumer
+		where 1=1 and status != 1
+		<isNotEmpty property="consumerName" prepend=" AND ">consumerName like '%$consumerName$%'</isNotEmpty>
+		<isNotEmpty property="areaId" prepend=" AND ">areaId = '%$areaId$%'</isNotEmpty>
+		<isNotEmpty property="categoryId" prepend=" AND ">categoryId = '%$categoryId$%'</isNotEmpty>
+		<isNotEmpty property="consumerPid" prepend=" AND ">consumerPid = #consumerPid#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status = #status#</isNotEmpty>
+	</select>
+	
+	<select id="selectByConsumerLimit" resultClass="com.ku6ads.dao.entity.sysconfig.Consumer" parameterClass="com.ku6ads.dao.entity.sysconfig.Consumer">
+			select a.consumerName,a.consumerId,a.status ,  b.dataName as areaName ,c.dataName as categoryName,d.consumerName as companyName
+			from t_consumer a 
+			left join t_basedata  b on a.areaId = b.dataValue and  b.dataType = 'area'
+			left join t_basedata c on a.categoryId = c.dataValue and c.dataType = 'consumertype'
+			left join t_consumer d on a.consumerPid = d.consumerId
+			where 1=1 and a.status != 1
+			<isNotEmpty property="consumerName" prepend=" and ">a.consumerName like  '%$consumerName$%'</isNotEmpty>
+			<isNotEmpty property="areaId" prepend=" and ">a.areaId=#areaId#</isNotEmpty>
+			<isNotEmpty property="categoryId" prepend=" and ">a.categoryId=#categoryId#</isNotEmpty>
+			<isNotEmpty property="status" prepend=" and ">a.status=#status#</isNotEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isEmpty property="extLimit.sort">order by a.ConsumerId desc</isEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	
+	</select>
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.sysconfig.Consumer">
+		<!--  
+		select a.consumerName,a.consumerId ,  b.dataName as areaName ,a.companyName
+			from t_consumer a 
+			left join t_basedata  b on a.areaId = b.dataValue and  b.dataType = 'area'
+			left join t_basedata c on a.categoryId = c.dataValue and c.dataType = 'consumertype'
+			where 
+		a.consumerId =  #value#
+		-->
+		select a.*,b.consumerName as companyName from t_consumer a left join t_consumer b
+		on a.consumerPid = b.consumerId
+		where 
+		a.consumerId =  #value#
+	</select>
+	
+	
+	<insert id="insertConsumer" parameterClass="com.ku6ads.dao.entity.sysconfig.Consumer">
+		insert into t_consumer(	
+			<isNotEmpty property="consumerPid">consumerPid,</isNotEmpty>
+			<isNotEmpty property="consumerAdress">consumerAdress,</isNotEmpty>
+			<isNotEmpty property="consumerZip">consumerZip,</isNotEmpty>
+			<isNotEmpty property="categoryId">categoryId,</isNotEmpty>
+			<isNotEmpty property="areaId">areaId,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			consumerName
+			
+		)values(	
+			<isNotEmpty property="consumerPid">#consumerPid#,</isNotEmpty>
+			<isNotEmpty property="consumerAdress">#consumerAdress#,</isNotEmpty>
+			<isNotEmpty property="consumerZip">#consumerZip#,</isNotEmpty>
+			<isNotEmpty property="categoryId">#categoryId#,</isNotEmpty>
+			<isNotEmpty property="areaId">#areaId#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			#consumerName#
+			
+		)
+	</insert>
+	
+
+
+	<update id="updateConsumer" parameterClass="com.ku6ads.dao.entity.sysconfig.Consumer">
+		update t_consumer set
+			<isNotEmpty property="categoryId">categoryId=#categoryId#,</isNotEmpty>
+			<isNotEmpty property="consumerPid">consumerPid=#consumerPid#,</isNotEmpty>
+			<isNotEmpty property="areaId">areaId=#areaId#,</isNotEmpty>
+			<isNotEmpty property="consumerName">consumerName=#consumerName#,</isNotEmpty>
+			<isNotEmpty property="consumerAdress">consumerAdress=#consumerAdress#,</isNotEmpty>
+			<isNotEmpty property="consumerZip">consumerZip=#consumerZip#,</isNotEmpty>
+			<isNotEmpty property="status">status=#status#,</isNotEmpty>
+			consumerId=#consumerId#
+		where consumerId=#consumerId#
+	</update>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		update t_consumer set status=1 where consumerId=#value#
+	</delete>
+</sqlMap>

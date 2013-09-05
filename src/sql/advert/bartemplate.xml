@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="advert.Bartemplate">
+	<!-- 
+	<cacheModel type="LRU" id="bartemplateCache">
+		<flushOnExecute statement="advert.Bartemplate.insert"/>
+		<flushOnExecute statement="advert.Bartemplate.deleteById"/>
+		<flushOnExecute statement="advert.Bartemplate.updateById"/>
+		<flushInterval hours="4"/>
+		<property name="size" value="2"/>
+	</cacheModel>
+	 -->
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.advert.Bartemplate">
+		SELECT * FROM t_bartemplate WHERE id=#value#
+	</select >
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.advert.Bartemplate" resultClass="java.lang.Integer">
+		SELECT COUNT(1) FROM t_bartemplate WHERE status != 1
+		<isNotEmpty property="name" prepend=" AND ">name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="status" prepend=" and ">status like '%$status$%'</isNotEmpty>
+	</select>
+	
+	<select id="selectByLimit" resultClass="com.ku6ads.dao.entity.advert.Bartemplate" parameterClass="com.ku6ads.dao.entity.advert.Bartemplate">
+		SELECT * FROM t_bartemplate
+			WHERE status != 1
+ 			<isNotEmpty property="name" prepend=" and ">name like '%$name$%'</isNotEmpty>
+ 			<isNotEmpty property="status" prepend=" and ">status like '%$status$%'</isNotEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isEmpty property="extLimit.sort">order by id desc</isEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	
+	<select id="selectEnableBartemplate" resultClass="com.ku6ads.dao.entity.advert.Bartemplate">
+		SELECT * FROM t_bartemplate WHERE status = 0
+	</select>
+	
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.advert.Bartemplate">
+		INSERT INTO t_bartemplate(
+			<isNotEmpty property="name">name,</isNotEmpty>
+			<isNotEmpty property="nameEn">nameEn,</isNotEmpty>
+			<isNotEmpty property="textNum">textNum,</isNotEmpty>
+			<isNotEmpty property="imgNum">imgNum,</isNotEmpty>
+			<isNotEmpty property="videoNum">videoNum,</isNotEmpty>
+			<isNotEmpty property="materialSum">materialSum,</isNotEmpty>
+			<isNotEmpty property="demoUrl">demoUrl,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="code">code,</isNotEmpty>
+			<isNotEmpty property="type">type,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime</isNotEmpty>
+		)VALUES(
+			<isNotEmpty property="name">#name#,</isNotEmpty>
+			<isNotEmpty property="nameEn">#nameEn#,</isNotEmpty>
+			<isNotEmpty property="textNum">#textNum#,</isNotEmpty>
+			<isNotEmpty property="imgNum">#imgNum#,</isNotEmpty>
+			<isNotEmpty property="videoNum">#videoNum#,</isNotEmpty>
+			<isNotEmpty property="materialSum">#materialSum#,</isNotEmpty>
+			<isNotEmpty property="demoUrl">#demoUrl#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="code">#code#,</isNotEmpty>
+			<isNotEmpty property="type">#type#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="createTime">#createTime#</isNotEmpty>
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		UPDATE t_bartemplate SET status = 1 WHERE id=#value#
+	</delete>
+	
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.advert.Bartemplate">
+		UPDATE t_bartemplate SET 
+			<isNotEmpty property="name">name=#name#,</isNotEmpty>
+			<isNotEmpty property="nameEn">nameEn=#nameEn#,</isNotEmpty>
+			<isNotEmpty property="status">status=#status#,</isNotEmpty>
+			<isNotEmpty property="textNum">textNum=#textNum#,</isNotEmpty>
+			<isNotEmpty property="imgNum">imgNum=#imgNum#,</isNotEmpty>
+			<isNotEmpty property="videoNum">videoNum=#videoNum#,</isNotEmpty>
+			<isNotEmpty property="materialSum">materialSum=#materialSum#,</isNotEmpty>
+			<isNotEmpty property="demoUrl">demoUrl=#demoUrl#,</isNotEmpty>
+			<isNotEmpty property="type">type=#type#,</isNotEmpty>
+			code=#code#,
+			id=#id#
+		WHERE id=#id#
+	</update>
+
+</sqlMap>

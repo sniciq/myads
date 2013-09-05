@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="advflight.AdvFlight">
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.advflight.AdvFlight">
+ 		insert into t_advflight(
+			<isNotEmpty property="projectId">projectId,</isNotEmpty>
+			<isNotEmpty property="format">format,</isNotEmpty>
+			<isNotEmpty property="advposId">advposId,</isNotEmpty>
+			<isNotEmpty property="advActiveId">advActiveId,</isNotEmpty>
+			<isNotEmpty property="bookId">bookId,</isNotEmpty>
+			<isNotEmpty property="bookPackageId">bookPackageId,</isNotEmpty>
+			<isNotEmpty property="advbarId">advbarId,</isNotEmpty>
+			<isNotEmpty property="channelId">channelId,</isNotEmpty>
+			<isNotEmpty property="startTime">startTime,</isNotEmpty>
+			<isNotEmpty property="endTime">endTime,</isNotEmpty>
+			<isNotEmpty property="saleType">saleType,</isNotEmpty>
+			<isNotEmpty property="price">price,</isNotEmpty>
+			<isNotEmpty property="discount">discount,</isNotEmpty>
+			<isNotEmpty property="disprice">disprice,</isNotEmpty>
+			<isNotEmpty property="useType">useType,</isNotEmpty>
+			<isNotEmpty property="flightNum">flightNum,</isNotEmpty>
+			<isNotEmpty property="priority">priority,</isNotEmpty>
+			<isNotEmpty property="proportion">proportion,</isNotEmpty>
+			<isNotEmpty property="priceId">priceId,</isNotEmpty>
+			<isNotEmpty property="hourDirect">hourDirect,</isNotEmpty>
+			<isNotEmpty property="areaDirect">areaDirect,</isNotEmpty>
+			<isNotEmpty property="isFrequency">isFrequency,</isNotEmpty>
+			<isNotEmpty property="frequencyType">frequencyType,</isNotEmpty>
+			<isNotEmpty property="frequencyNum">frequencyNum,</isNotEmpty>
+			<isNotEmpty property="isContentDirect">isContentDirect,</isNotEmpty>
+			<isNotEmpty property="keyword">keyword,</isNotEmpty>
+			<isNotEmpty property="user">user,</isNotEmpty>
+			<isNotEmpty property="video">video,</isNotEmpty>
+			<isNotEmpty property="program">program,</isNotEmpty>
+			<isNotEmpty property="activity">activity,</isNotEmpty>
+			<isNotEmpty property="subject">subject,</isNotEmpty>
+			<isNotEmpty property="isnull">isnull,</isNotEmpty>
+			<isNotEmpty property="advId">advId,</isNotEmpty>
+			<isNotEmpty property="flightcode">flightcode,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="flightstatus">flightstatus,</isNotEmpty>
+			<isNotEmpty property="scrBPackageId">scrBPackageId,</isNotEmpty>
+			<isNotEmpty property="monition">monition,</isNotEmpty>
+			<isNotEmpty property="flightcodejson">flightcodejson,</isNotEmpty>
+			<isNotEmpty property="maxTime">maxTime,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime</isNotEmpty>
+			
+		) values (
+			<isNotEmpty property="projectId">#projectId#,</isNotEmpty>
+			<isNotEmpty property="format">#format#,</isNotEmpty>
+			<isNotEmpty property="advposId">#advposId#,</isNotEmpty>
+			<isNotEmpty property="advActiveId">#advActiveId#,</isNotEmpty>
+			<isNotEmpty property="bookId">#bookId#,</isNotEmpty>
+			<isNotEmpty property="bookPackageId">#bookPackageId#,</isNotEmpty>
+			<isNotEmpty property="advbarId">#advbarId#,</isNotEmpty>
+			<isNotEmpty property="channelId">#channelId#,</isNotEmpty>
+			<isNotEmpty property="startTime">#startTime#,</isNotEmpty>
+			<isNotEmpty property="endTime">#endTime#,</isNotEmpty>
+			<isNotEmpty property="saleType">#saleType#,</isNotEmpty>
+			<isNotEmpty property="price">#price#,</isNotEmpty>
+			<isNotEmpty property="discount">#discount#,</isNotEmpty>
+			<isNotEmpty property="disprice">#disprice#,</isNotEmpty>
+			<isNotEmpty property="useType">#useType#,</isNotEmpty>
+			<isNotEmpty property="flightNum">#flightNum#,</isNotEmpty>
+			<isNotEmpty property="priority">#priority#,</isNotEmpty>
+			<isNotEmpty property="proportion">#proportion#,</isNotEmpty>
+			<isNotEmpty property="priceId">#priceId#,</isNotEmpty>
+			<isNotEmpty property="hourDirect">#hourDirect#,</isNotEmpty>
+			<isNotEmpty property="areaDirect">#areaDirect#,</isNotEmpty>
+			<isNotEmpty property="isFrequency">#isFrequency#,</isNotEmpty>
+			<isNotEmpty property="frequencyType">#frequencyType#,</isNotEmpty>
+			<isNotEmpty property="frequencyNum">#frequencyNum#,</isNotEmpty>
+			<isNotEmpty property="isContentDirect">#isContentDirect#,</isNotEmpty>
+			<isNotEmpty property="keyword">#keyword#,</isNotEmpty>
+			<isNotEmpty property="user">#user#,</isNotEmpty>
+			<isNotEmpty property="video">#video#,</isNotEmpty>
+			<isNotEmpty property="program">#program#,</isNotEmpty>
+			<isNotEmpty property="activity">#activity#,</isNotEmpty>
+			<isNotEmpty property="subject">#subject#,</isNotEmpty>
+			<isNotEmpty property="isnull">#isnull#,</isNotEmpty>
+			<isNotEmpty property="advId">#advId#,</isNotEmpty>
+			<isNotEmpty property="flightcode">#flightcode#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="flightstatus">#flightstatus#,</isNotEmpty>
+			<isNotEmpty property="scrBPackageId">#scrBPackageId#,</isNotEmpty>
+			<isNotEmpty property="monition">#monition#,</isNotEmpty>
+			<isNotEmpty property="flightcodejson">#flightcodejson#,</isNotEmpty>
+			<isNotEmpty property="maxTime">#maxTime#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="createTime">#createTime#</isNotEmpty>
+		
+		)
+		<selectKey resultClass="int" keyProperty="id" >  
+          SELECT @@IDENTITY AS id  
+     </selectKey> 
+	</insert>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.advflight.AdvFlight" resultClass="com.ku6ads.dao.entity.advflight.AdvFlight">
+ 		SELECT * 
+		FROM t_advflight
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="projectId" prepend=" AND ">projectId=#projectId#</isNotEmpty>
+		<isNotEmpty property="advActiveId" prepend=" AND ">advActiveId=#advActiveId#</isNotEmpty>
+		<isNotEmpty property="bookId" prepend=" AND ">bookId=#bookId#</isNotEmpty>
+		<isNotEmpty property="bookPackageId" prepend=" AND ">bookPackageId=#bookPackageId#</isNotEmpty>
+		<isNotEmpty property="advbarId" prepend=" AND ">advbarId=#advbarId#</isNotEmpty>
+		<isNotEmpty property="channelId" prepend=" AND ">channelId=#channelId#</isNotEmpty>
+		<isNotEmpty property="startTime" prepend=" AND ">startTime=#startTime#</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND ">endTime=#endTime#</isNotEmpty>
+		<isNotEmpty property="saleType" prepend=" AND ">saleType=#saleType#</isNotEmpty>
+		<isNotEmpty property="price" prepend=" AND ">price=#price#</isNotEmpty>
+		<isNotEmpty property="discount" prepend=" AND ">discount=#discount#</isNotEmpty>
+		<isNotEmpty property="disprice" prepend=" AND ">disprice=#disprice#</isNotEmpty>
+		<isNotEmpty property="useType" prepend=" AND ">useType=#useType#</isNotEmpty>
+		<isNotEmpty property="flightNum" prepend=" AND ">flightNum=#flightNum#</isNotEmpty>
+		<isNotEmpty property="priority" prepend=" AND ">priority=#priority#</isNotEmpty>
+		<isNotEmpty property="proportion" prepend=" AND ">proportion=#proportion#</isNotEmpty>
+		<isNotEmpty property="priceId" prepend=" AND ">priceId=#priceId#</isNotEmpty>
+		<isNotEmpty property="hourDirect" prepend=" AND ">hourDirect=#hourDirect#</isNotEmpty>
+		<isNotEmpty property="areaDirect" prepend=" AND ">areaDirect=#areaDirect#</isNotEmpty>
+		<isNotEmpty property="isFrequency" prepend=" AND ">isFrequency=#isFrequency#</isNotEmpty>
+		<isNotEmpty property="frequencyType" prepend=" AND ">frequencyType=#frequencyType#</isNotEmpty>
+		<isNotEmpty property="frequencyNum" prepend=" AND ">frequencyNum=#frequencyNum#</isNotEmpty>
+		<isNotEmpty property="isContentDirect" prepend=" AND ">isContentDirect=#isContentDirect#</isNotEmpty>
+		<isNotEmpty property="keyword" prepend=" AND ">keyword=#keyword#</isNotEmpty>
+		<isNotEmpty property="user" prepend=" AND ">user=#user#</isNotEmpty>
+		<isNotEmpty property="video" prepend=" AND ">video=#video#</isNotEmpty>
+		<isNotEmpty property="program" prepend=" AND ">program=#program#</isNotEmpty>
+		<isNotEmpty property="activity" prepend=" AND ">activity=#activity#</isNotEmpty>
+		<isNotEmpty property="subject" prepend=" AND ">subject=#subject#</isNotEmpty>
+		<isNotEmpty property="isnull" prepend=" AND ">isnull=#isnull#</isNotEmpty>
+		<isNotEmpty property="advId" prepend=" AND ">advId=#advId#</isNotEmpty>
+		<isNotEmpty property="flightcode" prepend=" AND ">flightcode=#flightcode#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+		<isNotEmpty property="creator" prepend=" AND ">creator=#creator#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+		<isNotEmpty property="modifier" prepend=" AND ">modifier=#modifier#</isNotEmpty>
+		<isNotEmpty property="modifyTime" prepend=" AND ">modifyTime=#modifyTime#</isNotEmpty>
+		<isNotEmpty property="format" prepend=" AND ">format=#format#</isNotEmpty>
+		<isNotEmpty property="advposId" prepend=" AND ">advposId=#advposId#</isNotEmpty>
+		<isNotEmpty property="flightstatus" prepend=" AND ">flightstatus=#flightstatus#</isNotEmpty>
+		<isNotEmpty property="scrBPackageId" prepend=" AND ">scrBPackageId=#scrBPackageId#</isNotEmpty>
+		<isNotEmpty property="monition" prepend=" AND ">monition=#monition#</isNotEmpty>
+		<isNotEmpty property="flightcodejson" prepend=" AND ">flightcodejson=#flightcodejson#</isNotEmpty>
+		<isNotEmpty property="maxTime" prepend=" AND ">maxTime=#maxTime#</isNotEmpty>
+	</select>
+
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.advflight.AdvFlight">
+ 		UPDATE t_advflight SET 
+		<isNotNull property="projectId">projectId=#projectId#, </isNotNull>
+		<isNotNull property="advActiveId">advActiveId=#advActiveId#, </isNotNull>
+		<isNotNull property="bookId">bookId=#bookId#, </isNotNull>
+		<isNotNull property="bookPackageId">bookPackageId=#bookPackageId#, </isNotNull>
+		<isNotNull property="advbarId">advbarId=#advbarId#, </isNotNull>
+		<isNotNull property="channelId">channelId=#channelId#, </isNotNull>
+		<isNotNull property="startTime">startTime=#startTime#, </isNotNull>
+		<isNotNull property="endTime">endTime=#endTime#, </isNotNull>
+		<isNotNull property="saleType">saleType=#saleType#, </isNotNull>
+		<isNotNull property="price">price=#price#, </isNotNull>
+		<isNotNull property="discount">discount=#discount#, </isNotNull>
+		<isNotNull property="disprice">disprice=#disprice#, </isNotNull>
+		<isNotNull property="useType">useType=#useType#, </isNotNull>
+		<isNotNull property="flightNum">flightNum=#flightNum#, </isNotNull>
+		<isNotNull property="priority">priority=#priority#, </isNotNull>
+		<isNotNull property="proportion">proportion=#proportion#, </isNotNull>
+		<isNotNull property="priceId">priceId=#priceId#, </isNotNull>
+		<isNotNull property="hourDirect">hourDirect=#hourDirect#, </isNotNull>
+		<isNotNull property="areaDirect">areaDirect=#areaDirect#, </isNotNull>
+		<isNotNull property="isFrequency">isFrequency=#isFrequency#, </isNotNull>
+		<isNotNull property="frequencyType">frequencyType=#frequencyType#, </isNotNull>
+		<isNotNull property="frequencyNum">frequencyNum=#frequencyNum#, </isNotNull>
+		<isNotNull property="isContentDirect">isContentDirect=#isContentDirect#, </isNotNull>
+		<isNotNull property="keyword">keyword=#keyword#, </isNotNull>
+		<isNotNull property="user">user=#user#, </isNotNull>
+		<isNotNull property="video">video=#video#, </isNotNull>
+		<isNotNull property="program">program=#program#, </isNotNull>
+		<isNotNull property="activity">activity=#activity#, </isNotNull>
+		<isNotNull property="subject">subject=#subject#, </isNotNull>
+		<isNotNull property="isnull">isnull=#isnull#, </isNotNull>
+		<isNotNull property="advId">advId=#advId#, </isNotNull>
+		<isNotNull property="flightcode">flightcode=#flightcode#, </isNotNull>
+		<isNotNull property="status">status=#status#, </isNotNull>
+		<isNotNull property="flightstatus">flightstatus=#flightstatus#, </isNotNull>
+		<isNotNull property="creator">creator=#creator#, </isNotNull>
+		<isNotNull property="createTime">createTime=#createTime#, </isNotNull>
+		<isNotNull property="modifier">modifier=#modifier#, </isNotNull>
+		<isNotNull property="modifytime">modifytime=#modifytime#, </isNotNull>
+		<isNotNull property="format">format=#format#, </isNotNull>
+		<isNotNull property="advposId">advposId=#advposId#, </isNotNull>
+		<isNotNull property="monition">monition=#monition#, </isNotNull>
+		<isNotNull property="flightcodejson">flightcodejson=#flightcodejson#, </isNotNull>
+		<isNotNull property="maxTime">maxTime=#maxTime#, </isNotNull>
+		<isNotNull property="scrBPackageId">scrBPackageId=#scrBPackageId#, </isNotNull>
+		 id=#id#
+		WHERE
+		 id=#id#
+	</update>
+	
+	<update id="updateStatus" parameterClass="com.ku6ads.dao.entity.advflight.AdvFlight">
+ 		UPDATE t_advflight SET 
+		flightstatus=#flightstatus#
+		WHERE
+		advId=#advId#
+		and flightstatus!=3
+		<isNotEmpty property="flightstatusBack" prepend=" and ">flightstatus=#flightstatusBack#</isNotEmpty>
+		
+	</update>
+	
+	<update id="ModifyByPackageId" parameterClass="com.ku6ads.dao.entity.advflight.AdvFlight">
+ 		UPDATE t_advflight SET 
+		priority=#priority#
+		WHERE
+		bookPackageId=#bookPackageId# and flightstatus != #flightstatus#
+	</update>
+	
+	
+	<select id="selectByPackageId" parameterClass="com.ku6ads.dao.entity.advflight.AdvFlight" resultClass="com.ku6ads.dao.entity.advflight.AdvFlight">
+ 		SELECT id 
+		FROM t_advflight
+		WHERE 1=1 
+		<isNotEmpty property="priority" prepend=" AND ">priority=#priority#</isNotEmpty>
+		<isNotEmpty property="bookPackageId" prepend=" AND ">bookPackageId=#bookPackageId#</isNotEmpty>
+		<isNotEmpty property="flightstatus" prepend=" AND ">flightstatus!=#flightstatus#</isNotEmpty>
+	</select>
+	
+	<!-- 投放完成状态值为3 -->
+	<update id="flightComplete" parameterClass="com.ku6ads.dao.entity.advflight.AdvFlight">
+ 		UPDATE t_advflight SET 
+		flightstatus=3
+		WHERE status=#status# and endTime between #endTime# and #endTimeEnd#
+	</update>
+
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		DELETE FROM t_advflight
+		WHERE   id=#value# 
+	</delete>
+
+	<select id="selectFlightListByDate" resultClass="com.ku6ads.dao.entity.advflight.AdvFlight">
+		select id,channelId,advposId,advbarId,advActiveId,advId,projectId,bookId,priceId,format,saletype,bookPackageId,scrBPackageId
+			from t_advflight 
+		where DATE_FORMAT(startTime, '%Y-%m-%d') <![CDATA[ = ]]> DATE_FORMAT(now(), '%Y-%m-%d')
+	</select>
+</sqlMap>

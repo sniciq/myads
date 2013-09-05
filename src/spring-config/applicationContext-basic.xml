@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="BaseDataAction" class="com.ku6ads.struts.basic.BaseDataAction" scope="prototype">
+		<property name="baseDataService" ref="BaseDataService"></property>
+	</bean>
+	
+	<bean id="OptionsAction" class="com.ku6ads.struts.basic.OptionsAction" scope="prototype">
+		<property name="baseDataDao" ref="BaseDataDao"></property>
+		<property name="advbarPriceDao" ref="AdvbarPriceDao"></property>
+		<property name="advbarDao" ref="AdvbarDao"></property>
+	</bean>
+	
+	<bean id="DictionaryFactory" class="com.ku6ads.struts.basic.cache.DictionaryFactory">
+		<property name="baseDataService" ref="BaseDataService"></property>
+	</bean>
+	
+	<bean id="ProviceService" class="com.ku6ads.services.impl.common.ProviceServiceImpl"  scope="singleton">
+		<property name="cityDao" ref="CityDao"></property>
+		<property name="provinceDao" ref="ProvinceDao"></property>
+	</bean>
+	
+	<bean id="ProviceAction" class="com.ku6ads.struts.common.ProviceAction" scope="prototype">
+		<property name="proviceService" ref="ProviceService"></property>
+	</bean>
+	
+	<bean id="ProvinceDao" class="com.ku6ads.dao.impl.sysconfig.ProvinceDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.province"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="CityDao" class="com.ku6ads.dao.impl.sysconfig.CityDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.city"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="CalendarDataAction" class="com.ku6ads.struts.common.CalendarDataAction" scope="singleton"></bean>
+</beans>

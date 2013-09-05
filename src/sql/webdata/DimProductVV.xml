@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.webdata.DimProductVV">
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.webdata.DimProductVV">
+ 		insert into dim_product_vv(
+			<isNotEmpty property="prod_name">prod_name,</isNotEmpty>
+			<isNotEmpty property="prod_code">prod_code,</isNotEmpty>
+			vv_prod_id
+		) values (
+			<isNotEmpty property="prod_name">#prod_name#,</isNotEmpty>
+			<isNotEmpty property="prod_code">#prod_code#,</isNotEmpty>
+			#vv_prod_id#
+		)
+	</insert>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.webdata.DimProductVV" resultClass="com.ku6ads.dao.entity.webdata.DimProductVV">
+ 		SELECT vv_prod_id,prod_name,prod_code 
+		FROM DIM_PRODUCT_VV
+		WHERE 1=1 
+		<isNotEmpty property="vv_prod_id" prepend=" AND ">vv_prod_id=#vv_prod_id#</isNotEmpty>
+		<isNotEmpty property="prod_name" prepend=" AND ">prod_name=#prod_name#</isNotEmpty>
+		<isNotEmpty property="prod_code" prepend=" AND ">prod_code=#prod_code#</isNotEmpty>
+	</select>
+
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.webdata.DimProductVV">
+ 		UPDATE DIM_PRODUCT_VV SET 
+		<isNotNull property="prod_name">prod_name=#prod_name#, </isNotNull>
+		<isNotNull property="prod_code">prod_code=#prod_code#, </isNotNull>
+		 vv_prod_id=#vv_prod_id#
+		WHERE
+		 vv_prod_id=#vv_prod_id#
+	</update>
+
+	<delete id="deleteById" parameterClass="com.ku6ads.dao.entity.webdata.DimProductVV">
+ 		DELETE FROM DIM_PRODUCT_VV WHERE vv_prod_id=#vv_prod_id#
+	</delete>
+
+</sqlMap>

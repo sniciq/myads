@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="advert.Postemplate">
+<!-- 
+	<cacheModel type="LRU" id="postemplateCache">
+		<flushOnExecute statement="advert.Postemplate.insert"/>
+		<flushOnExecute statement="advert.Postemplate.deleteById"/>
+		<flushOnExecute statement="advert.Postemplate.updateById"/>
+		<flushInterval hours="4"/>
+		<property name="size" value="2"/>
+	</cacheModel>
+ -->	
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.advert.Postemplate">
+		SELECT * FROM t_postemplate WHERE id=#value#
+	</select >
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.advert.Postemplate" resultClass="java.lang.Integer">
+		SELECT COUNT(1) FROM t_postemplate WHERE  status != 1
+		<isNotEmpty property="name" prepend=" AND ">name like '%$name$%'</isNotEmpty>
+		<isNotEmpty property="status" prepend=" and ">status=#status#</isNotEmpty>
+		<isNotEmpty property="type" prepend=" and ">type=#type#</isNotEmpty>
+	</select>
+	
+	<select id="selectByLimit" resultClass="com.ku6ads.dao.entity.advert.Postemplate" parameterClass="com.ku6ads.dao.entity.advert.Postemplate">
+		SELECT a.* ,b.dataName as typeString FROM t_postemplate a
+		left join t_basedata  b on a.type = b.dataValue and  b.dataType = 'postemtype' 
+		
+			WHERE  a.status != 1
+ 			<isNotEmpty property="name" prepend=" and ">a.name like '%$name$%'</isNotEmpty>
+ 			<isNotEmpty property="status" prepend=" and ">a.status=#status#</isNotEmpty>
+ 			<isNotEmpty property="type" prepend=" and ">a.type=#type#</isNotEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isEmpty property="extLimit.sort">order by a.id desc</isEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	
+	<select id="selectBartemCountByPostemId" parameterClass="com.ku6ads.dao.entity.advert.PostemBartem" resultClass="java.lang.Integer">
+		SELECT COUNT(1) FROM t_postem_bartem WHERE  status != 1
+		<isNotEmpty property="postemId" prepend=" and ">postemId=#postemId#</isNotEmpty>
+		<isNotEmpty property="bartemId" prepend=" and ">bartemId=#bartemId#</isNotEmpty>
+	</select>
+	
+	<select id="selectBartemByPostemId" resultClass="com.ku6ads.dao.entity.advert.PostemBartem" parameterClass="com.ku6ads.dao.entity.advert.PostemBartem">
+			select a.*,b.name as bartemName from t_postem_bartem a 
+			left join t_bartemplate b on a.bartemId = b.id
+			where a.status != 1
+ 			<isNotEmpty property="postemId" prepend=" and ">a.postemId=#postemId#</isNotEmpty>
+ 			<isNotEmpty property="status" prepend=" and ">a.status=#status#</isNotEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isEmpty property="extLimit.sort">order by id desc</isEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+		<insert id="insert" parameterClass="com.ku6ads.dao.entity.advert.Postemplate">
+		INSERT INTO t_postemplate(
+			<isNotEmpty property="name">name,</isNotEmpty>
+			<isNotEmpty property="nameEn">nameEn,</isNotEmpty>
+			<isNotEmpty property="type">type,</isNotEmpty>
+			<isNotEmpty property="ptype">ptype,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="barNum">barNum,</isNotEmpty>
+			<isNotEmpty property="code">code,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime</isNotEmpty>
+		)VALUES(
+			<isNotEmpty property="name">#name#,</isNotEmpty>
+			<isNotEmpty property="nameEn">#nameEn#,</isNotEmpty>
+			<isNotEmpty property="type">#type#,</isNotEmpty>
+			<isNotEmpty property="ptype">#ptype#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="barNum">#barNum#,</isNotEmpty>
+			<isNotEmpty property="code">#code#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="createTime">#createTime#,</isNotEmpty>
+			<isNotEmpty property="modifier">#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">#modifyTime#</isNotEmpty>
+		)
+	</insert>
+	
+	
+	<select id="selectEnablePostemplate" resultClass="com.ku6ads.dao.entity.advert.Postemplate">
+		SELECT * FROM t_postemplate WHERE status = 0
+	</select>
+	
+	<insert id="insertPostemBartem" parameterClass="com.ku6ads.dao.entity.advert.PostemBartem">
+		INSERT INTO t_postem_bartem(
+			<isNotEmpty property="status">status,</isNotEmpty>
+			<isNotEmpty property="postemId">postemId,</isNotEmpty>
+			<isNotEmpty property="bartemId">bartemId,</isNotEmpty>
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime</isNotEmpty>
+			
+		)VALUES(
+			<isNotEmpty property="status">#status#,</isNotEmpty>
+			<isNotEmpty property="postemId">#postemId#,</isNotEmpty>
+			<isNotEmpty property="bartemId">#bartemId#,</isNotEmpty>
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="createTime">#createTime#,</isNotEmpty>
+			<isNotEmpty property="modifier">#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">#modifyTime#</isNotEmpty>
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		UPDATE t_postemplate SET status = 1 WHERE id=#value#
+	</delete>
+	
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.advert.Postemplate">
+		UPDATE t_postemplate SET 
+			<isNotEmpty property="name">name=#name#,</isNotEmpty>
+			<isNotEmpty property="nameEn">nameEn=#nameEn#,</isNotEmpty>
+			<isNotEmpty property="type">type=#type#,</isNotEmpty>
+			<isNotEmpty property="ptype">ptype=#ptype#,</isNotEmpty>
+			<isNotEmpty property="status">status=#status#,</isNotEmpty>
+			<isNotEmpty property="barNum">barNum=#barNum#,</isNotEmpty>
+			<isNotEmpty property="creator">creator=#creator#,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime=#createTime#,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier=#modifier#,</isNotEmpty>
+			<isNotEmpty property="modifyTime">modifyTime=#modifyTime#,</isNotEmpty>
+			code=#code#
+			
+		WHERE id=#id#
+	</update>
+	
+	<delete id="deletePostemBartem" parameterClass="java.lang.Integer">
+		UPDATE t_postem_bartem SET status = 1 WHERE id=#value#
+	</delete>
+	<delete id="deletePostemBartemByPId" parameterClass="java.lang.Integer">
+		UPDATE t_postem_bartem SET status = 1 WHERE postemId=#value#
+	</delete>
+	
+	<select id="selectByTwoId" parameterClass="com.ku6ads.dao.entity.advert.PostemBartem" resultClass="com.ku6ads.dao.entity.advert.PostemBartem">
+		SELECT * FROM t_postem_bartem
+		where status != 1
+		<isNotEmpty property="postemId" prepend=" and ">postemId=#postemId#</isNotEmpty>
+		<isNotEmpty property="bartemId" prepend=" and ">bartemId=#bartemId#</isNotEmpty>
+	</select >
+
+</sqlMap>

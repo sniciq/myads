@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.webdata.FlowData">
+	<select id="searchEveryDayDataCount" parameterClass="com.ku6ads.struts.webdata.FlowData" resultClass="java.lang.Integer">
+		select count(1) from fact_product_pv_d 
+		where 1=1 
+			<isNotEmpty property="startTime" prepend=" and ">day_id >= '$startTime$'</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" and "><![CDATA[ day_id <= '$endTime$ 23:59:59' ]]></isNotEmpty>
+			<isNotEmpty property="prodIdList" prepend=" and ">prod_id in($prodIdList$)</isNotEmpty>
+			<isNotEmpty property="areaIdList" prepend=" and ">area_id in($areaIdList$)</isNotEmpty>
+	</select>
+	
+	<select id="searchEveryDayData" parameterClass="com.ku6ads.struts.webdata.FlowData" resultClass="com.ku6ads.struts.webdata.FlowData">
+		select fp.*, da.city, pd.prod_name from (
+				select * from fact_product_pv_d 
+				where 1=1 
+				<isNotEmpty property="startTime" prepend=" and ">day_id >= '$startTime$'</isNotEmpty>
+				<isNotEmpty property="endTime" prepend=" and "><![CDATA[ day_id <= '$endTime$ 23:59:59' ]]></isNotEmpty>
+				<isNotEmpty property="prodIdList" prepend=" and ">prod_id in($prodIdList$)</isNotEmpty>
+				<isNotEmpty property="areaIdList" prepend=" and ">area_id in($areaIdList$)</isNotEmpty> 
+			) fp 
+		left join dim_area da on fp.area_id = da.area_id
+		left join meta_prod_name pd on fp.prod_id = pd.id
+		<isEmpty property="extLimit.sort">order by prod_id,area_id,day_id </isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.limit$ offset $extLimit.start$</isNotEmpty>
+	</select>
+	
+	<select id="searchAvgDataCount" parameterClass="com.ku6ads.struts.webdata.FlowData" resultClass="java.lang.Integer">
+		select count(1) from (
+			select area_id, prod_id, avg(pv) as pv, avg(uv) as uv from fact_product_pv_d 
+			where 1=1 
+			<isNotEmpty property="startTime" prepend=" and ">day_id >= '$startTime$'</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" and "><![CDATA[ day_id <= '$endTime$ 23:59:59' ]]></isNotEmpty>
+			<isNotEmpty property="prodIdList" prepend=" and ">prod_id in($prodIdList$)</isNotEmpty>
+			<isNotEmpty property="areaIdList" prepend=" and ">area_id in($areaIdList$)</isNotEmpty> 
+			group by area_id, prod_id
+		) fp
+	</select>
+	
+	<select id="searchAvgData" parameterClass="com.ku6ads.struts.webdata.FlowData" resultClass="com.ku6ads.struts.webdata.FlowData">
+		select fp.*, da.city, pd.prod_name from (
+			select area_id, prod_id, avg(pv) as pv, avg(uv) as uv from fact_product_pv_d 
+			where 1=1 
+			<isNotEmpty property="startTime" prepend=" and ">day_id >= '$startTime$'</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" and "><![CDATA[ day_id <= '$endTime$ 23:59:59' ]]></isNotEmpty>
+			<isNotEmpty property="prodIdList" prepend=" and ">prod_id in($prodIdList$)</isNotEmpty>
+			<isNotEmpty property="areaIdList" prepend=" and ">area_id in($areaIdList$)</isNotEmpty> 
+			group by area_id, prod_id
+		) fp 
+		left join dim_area da on fp.area_id = da.area_id
+		left join meta_prod_name pd on fp.prod_id = pd.id
+		<isEmpty property="extLimit.sort">order by prod_id,area_id </isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.limit$ offset $extLimit.start$</isNotEmpty>
+	</select>
+	
+	<select id="searchReportCityCount" parameterClass="com.ku6ads.struts.webdata.FlowData" resultClass="java.lang.Integer">
+		select count(1) from (
+			select day.day_time,day.province , day.city , avg(pv)::int pv , avg(uv)::int uv , avg(pvv)::int pvv , avg(vv)::int vv from (
+				select f.day_time,f.province , f.city, sum(pv) pv , sum(uv) uv , sum(pvv) pvv , sum(vv) vv
+				from (
+				select a.day_time , b.province ,c.city, 0 pv , 0 uv , 0 pvv , sum(vv) vv
+					from t_stat_area_vv a , dim_cdn_area b , dim_cdn_city c
+					where a.day_time between '$startTime$' and '$endTime$' and a.pcode = b.pcode and b.pcode = c.pcode and a.dcode = c.dcode   
+					group by a.day_time , b.province , c.city
+				union all
+				select a.day_id day_time , c.province , d.city , sum(a.pv)::bigint pv , sum(a.uv)::bigint uv , sum(a.pvv)::bigint pvv , 0 vv
+					from fact_product_pv_d a , pv_areacode b , dim_cdn_area c , dim_cdn_city d
+					where a.day_id between '$startTime$' and '$endTime$' and a.area_id = b.area_id and b.pcode = c.pcode and c.pcode = d.pcode and b.dcode = d.dcode 
+					group by a.day_id , c.province , d.city
+				) f
+				group by f.day_time,f.province , f.city
+			) day
+			group by day.day_time,day.province , day.city
+		)t_count
+	</select>
+	
+	<select id="searchReportCity" parameterClass="com.ku6ads.struts.webdata.FlowData" resultClass="com.ku6ads.struts.webdata.FlowData">
+		select day.day_time,day.province , day.city , avg(pv)::int pv , avg(uv)::int uv , avg(pvv)::int pvv , avg(vv)::int vv from (
+			select f.day_time,f.province , f.city, sum(pv) pv , sum(uv) uv , sum(pvv) pvv , sum(vv) vv
+			from (
+			select a.day_time , b.province ,c.city, 0 pv , 0 uv , 0 pvv , sum(vv) vv
+				from t_stat_area_vv a , dim_cdn_area b , dim_cdn_city c
+				where a.day_time between '$startTime$' and '$endTime$' and a.pcode = b.pcode and b.pcode = c.pcode and a.dcode = c.dcode   
+				group by a.day_time , b.province , c.city
+			union all
+			select a.day_id day_time , c.province , d.city , sum(a.pv)::bigint pv , sum(a.uv)::bigint uv , sum(a.pvv)::bigint pvv , 0 vv
+				from fact_product_pv_d a , pv_areacode b , dim_cdn_area c , dim_cdn_city d
+				where a.day_id between '$startTime$' and '$endTime$' and a.area_id = b.area_id and b.pcode = c.pcode and c.pcode = d.pcode and b.dcode = d.dcode 
+				group by a.day_id , c.province , d.city
+			) f
+			group by f.day_time,f.province , f.city
+		) day
+		group by day.day_time,day.province , day.city
+		<isEmpty property="extLimit.sort">order by day.day_time,day.province , day.city , pv</isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.limit$ offset $extLimit.start$</isNotEmpty>
+	</select>
+	
+	<select id="searchReportProvinceCount" parameterClass="com.ku6ads.struts.webdata.FlowData" resultClass="java.lang.Integer">
+		select count(1) from (
+			select m.province , avg(pv)::int pv , avg(uv)::int uv , avg(pvv)::int pvv , avg(vv)::int vv
+			from(
+				select f.province , f.day_time , sum(pv)::int pv , sum(uv)::int uv , sum(pvv)::int pvv , sum(vv)::int vv
+				from (
+					select c.province ,  a.day_id day_time, sum(a.pv)::int pv , sum(a.uv)::int uv , sum(a.pvv)::int pvv , 0 vv
+					from fact_product_pv_d a , pv_areacode b , dim_cdn_area c 
+					where a.day_id between '$startTime$' and '$endTime$' 
+					and a.area_id = b.area_id and b.pcode = c.pcode 
+					group by c.province , a.day_id
+					union all
+					select b.province , a.day_time day_time, 0 pv , 0 uv , 0 pvv , sum(vv) vv
+					from t_stat_area_vv a , dim_cdn_area b
+					where a.day_time between '$startTime$' and '$endTime$' 
+					and a.pcode = b.pcode 
+					group by b.province , a.day_time
+				) f
+				group by f.province , f.day_time
+			) m
+			group by m.province
+		) pb
+	</select>
+	
+	<select id="searchReportProvince" parameterClass="com.ku6ads.struts.webdata.FlowData" resultClass="com.ku6ads.struts.webdata.FlowData">
+		select m.province , avg(pv)::int pv , avg(uv)::int uv , avg(pvv)::int pvv , avg(vv)::int vv
+		from(
+			select f.province , f.day_time , sum(pv)::int pv , sum(uv)::int uv , sum(pvv)::int pvv , sum(vv)::int vv
+			from (
+				select c.province ,  a.day_id day_time, sum(a.pv)::int pv , sum(a.uv)::int uv , sum(a.pvv)::int pvv , 0 vv
+				from fact_product_pv_d a , pv_areacode b , dim_cdn_area c 
+				where a.day_id between '$startTime$' and '$endTime$' 
+				and a.area_id = b.area_id and b.pcode = c.pcode 
+				group by c.province , a.day_id
+				union all
+				select b.province , a.day_time day_time, 0 pv , 0 uv , 0 pvv , sum(vv) vv
+				from t_stat_area_vv a , dim_cdn_area b
+				where a.day_time between '$startTime$' and '$endTime$' 
+				and a.pcode = b.pcode 
+				group by b.province , a.day_time
+			) f
+			group by f.province , f.day_time
+		) m
+		group by m.province
+		<isEmpty property="extLimit.sort">order by m.province</isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.limit$ offset $extLimit.start$</isNotEmpty>
+	</select>
+	
+	<select id="searchReportHour" parameterClass="com.ku6ads.struts.webdata.FlowData" resultClass="com.ku6ads.struts.webdata.FlowData">
+		select a.hour_id , avg(a.ct_pv)::int pv , avg(a.ct_uv)::int uv , avg(a.v_pv)::int v_pv,avg(b.vv)::int vv
+		from t_stat_pv_hour_result a  , t_stat_hour_vv b 
+		where 
+			a.day_time between '$startTime$' and '$endTime$'   
+			and a.prod_code ~*'^[^root]' 
+			and  a.hour_id = b.hour_id    
+			and a.day_time=b.day_time     
+			
+		group by a.hour_id
+		<isEmpty property="extLimit.sort">order by hour_id</isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+	</select>
+	
+	<select id="searchReportProdCount" parameterClass="com.ku6ads.struts.webdata.FlowData" resultClass="java.lang.Integer">
+		
+	</select>
+	
+	<select id="searchReportProd" parameterClass="com.ku6ads.struts.webdata.FlowData" resultClass="com.ku6ads.struts.webdata.FlowData">
+		select prod_name, avg(pv)::int pv, avg(uv)::int uv, avg(pvv)::int pvv, avg(vv)::int  vv from              
+		(
+			select prod_name,  day_time ,sum(pv) pv, sum(uv) uv, sum(pvv) pvv, sum(vv) vv
+			from (
+				select prod_name, day_id as day_time, sum(pv) pv, sum(uv) uv, sum(pvv) pvv, 0 vv 
+				   from fact_product_pv_d f, meta_prod_name m 
+				   where  f.day_id between '$startTime$' and '$endTime$'
+					and f.prod_id = m.id 
+				  group by prod_name,day_id       
+				union
+				 select prod_name,day_time, 0 pv, 0 uv, 0 pvv, sum(vv) vv 
+				   from t_stat_channel_vv t, dim_product_vv d 
+				   where t.day_time between '$startTime$' and '$endTime$'
+					and channel_id = vv_prod_id 
+				  group by prod_name,day_time
+			) f
+			group by prod_name,day_time
+		) s
+		group by prod_name
+		<isEmpty property="extLimit.sort">order by prod_name</isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+	</select>
+	
+	<select id="searchReportWeekDay" resultClass="com.ku6ads.struts.webdata.FlowData">
+		select EXTRACT(DOW FROM a.day_time) as weekday,  avg(a.ct_pv) :: int pv , avg(a.ct_uv) :: int uv , avg(a.v_pv) :: int v_pv, avg(b.vv) :: int vv
+		from t_stat_pv_hour_result a  , t_stat_hour_vv b 
+		where a.prod_code ~*'^[^root]' 
+			and  a.hour_id = b.hour_id
+			and a.day_time=b.day_time 
+			and a.day_time between '$startTime$' and '$endTime$'    
+		group by weekday
+		<isEmpty property="extLimit.sort">order by weekday</isEmpty>
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+	</select>
+	
+</sqlMap>

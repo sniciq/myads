@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+	<!-- 广告条模板 -->
+	<bean id="BartemplateAction" class="com.ku6ads.struts.advert.BartemplateAction" scope="prototype">
+		<property name="bartemplateService" ref="BartemplateService"></property>
+		<property name="advbarService" ref="AdvbarService"></property>
+		<property name="postemplateService" ref="PostemplateService"></property>
+	</bean>
+	
+ 	<!-- 广告位模板 -->
+	<bean id="PostemplateAction" class="com.ku6ads.struts.advert.PostemplateAction" scope="prototype">
+		<property name="postemplateService" ref="PostemplateService"></property>
+		<property name="advpositionService" ref="AdvpositionService"></property>
+	</bean>
+	
+	<!-- 广告位 -->
+	<bean id="AdvpositionAction" class="com.ku6ads.struts.advert.AdvpositionAction" scope="prototype">
+		<property name="advpositionService" ref="AdvpositionService"></property>
+		<property name="advbarService" ref="AdvbarService"></property>
+		<property name="positionsizeService" ref="PositionsizeService"></property>
+		<property name="postemplateService" ref="PostemplateService"></property>
+		<property name="channelService" ref="ChannelService"></property>
+		<property name="siteService" ref="SiteService"></property>
+		<property name="posDivId" value="posDivId"></property>
+	</bean>
+	
+	<!-- 广告条 -->
+	<bean id="AdvbarAction" class="com.ku6ads.struts.advert.AdvbarAction" scope="prototype">
+		<property name="advbarService" ref="AdvbarService"></property>
+		<property name="bartemplateService" ref="BartemplateService"></property>
+		<property name="postemplateService" ref="PostemplateService"></property>
+		<property name="positionsizeService" ref="PositionsizeService"></property>
+		<property name="futureFlightDao" ref="FutureFlightDao"></property>
+		<property name="barDivId" value="barDivId"></property>
+		<property name="bookPackageService" ref="BookPackageService"></property>
+		<property name="advpositionService" ref="AdvpositionService"></property>
+	</bean>
+	
+	<!-- 广告条刊例 -->
+	<bean id="AdvbarPriceAction" class="com.ku6ads.struts.advert.AdvbarPriceAction" scope="prototype">
+		<property name="advbarPriceService" ref="AdvbarPriceService"></property>
+	</bean>
+	
+	<!-- 广告位 规格-->
+	<bean id="PositionsizeAction" class="com.ku6ads.struts.advert.PositionsizeAction" scope="prototype">
+		<property name="positionsizeService" ref="PositionsizeService"></property>
+		<property name="advpositionService" ref="AdvpositionService"></property>
+	</bean>
+	
+	
+	<!-- 系数service -->
+	<bean id="BarProportionService" class="com.ku6ads.services.impl.advert.BarProportionServiceImpl" scope="singleton">
+		<property name="baseDao" ref="BarProportionDao"></property>
+	</bean>
+	
+	<!-- 系数 Dao -->
+	<bean id="BarProportionDao" class="com.ku6ads.dao.impl.advert.BarProportionDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="advert.BarProportion"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 广告条系数-->
+	<bean id="BarProportionAction" class="com.ku6ads.struts.advert.BarProportionAction" scope="prototype">
+		<property name="barProportionService" ref="BarProportionService"></property>
+	</bean>
+	
+</beans>

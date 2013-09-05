@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC  
+     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
+     "http://struts.apache.org/dtds/struts-2.0.dtd"> 
+
+<struts>
+	<package name="HTML/basic" extends="basePackage">
+	
+		<!-- 资源列表显示 -->
+		<action name="BaseDataAction_search" method="search" class="BaseDataAction"></action>
+		<action name="BaseDataAction_save" method="save" class="BaseDataAction"></action>
+		<action name="BaseDataAction_getBaseDataDetail" method="getBaseDataDetail" class="BaseDataAction"></action>
+		<action name="BaseDataAction_delete" method="delete" class="BaseDataAction"></action>
+		
+		<action name="OptionsAction_getBaseDataTypes" method="getBaseDataTypes" class="OptionsAction"></action>
+		<action name="OptionsAction_getBaseDataNamesByType" method="getBaseDataNamesByType" class="OptionsAction"></action>
+		<action name="OptionsAction_getAllAdvBarInChannel" method="getAllAdvBarInChannel" class="OptionsAction"></action>
+		
+		<action name="OptionsAction_getAdvbarSaleTypes" method="getAdvbarSaleTypes" class="OptionsAction"></action>
+		<action name="OptionsAction_getAdvbarSaleTypeFormat" method="getAdvbarSaleTypeFormat" class="OptionsAction"></action>
+		
+		<!-- 得到所有的省份 -->
+		<action name="ProviceAction_getAllProvice" class="ProviceAction" method="getAllProvice"></action>
+		<!-- 得到省份下的所有城市 -->
+		<action name="ProviceAction_getAllCityInProvice" class="ProviceAction" method="getAllCityInProvice"></action>
+		
+		<action name="CalendarDataAction_getCalendar" class="CalendarDataAction" method="getCalendar"></action>
+	</package>
+</struts>

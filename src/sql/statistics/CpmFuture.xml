@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.CpmFuture">
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.statistics.CpmFuture" resultClass="java.lang.Integer">
+	select count(2) from 
+	(
+		SELECT count(1)
+		FROM t_book as a 
+		inner join  t_advbar as b on  a.advbarId = b.id
+		where a.status != 1 and b.status!=1 and a.saletype=2
+		<isNotEmpty property="startTime" prepend=" AND ">startTime >= #startTime#</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND "><![CDATA[endTime <= #endTime#]]></isNotEmpty> 
+		group by a.advbarId,a.format,a.disprice
+		) d
+	</select>
+	
+	<select id="selectByLimit" parameterClass="com.ku6ads.dao.entity.statistics.CpmFuture" resultClass="com.ku6ads.dao.entity.statistics.CpmFuture">
+		SELECT b.id as advbarId,b.name as advbarName,b.channelName as channelName,a.format as format,a.disprice as price
+		FROM t_book as a 
+		inner join  t_advbar as b on  a.advbarId = b.id
+		where a.status != 1 and b.status!=1 and a.saletype=2
+		<isNotEmpty property="startTime" prepend=" AND ">startTime >= #startTime#</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND "><![CDATA[endTime <= #endTime#]]></isNotEmpty>
+		group by a.advbarId,a.format,a.disprice
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<select id="selectSumFlightNum" parameterClass="java.lang.Integer" resultClass="java.lang.Integer">
+	     select num1+num2+num3+num4+num5+num6+num7 from t_futureflight where advbarId=#value# and date(createTime)=curdate()
+	</select>
+	
+	<select id="selectFlightNum" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+	     select 
+	     case
+	     when $dateNum$=0 then num1
+	     when $dateNum$=1 then num2
+	     when $dateNum$=2 then num3
+	     when $dateNum$=3 then num4
+	     when $dateNum$=4 then num5
+	     when $dateNum$=5 then num6
+	     else  num7 
+	     end as num
+	     from t_futureflight where advbarId=#advbarId# and date(createTime)=curdate() limit 0, 1
+	</select>
+	
+	<select id="selectDateDiff" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		select datediff(#firstDate#,#secondDate#) as v
+	</select>
+	
+	<select id="selectBookByDate" parameterClass="com.ku6ads.dao.entity.statistics.CpmFuture" resultClass="java.lang.Integer">
+		select sum(flightNum)
+		from t_book
+		where bussinessStatus=5 and saletype=2 and status!=1
+		<isNotEmpty property="startTime" prepend=" AND ">startTime >= #startTime#</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND "><![CDATA[endTime <= #endTime#]]></isNotEmpty>
+		<isNotEmpty property="advbarId" prepend=" AND ">advbarId=#advbarId#</isNotEmpty>
+	</select>
+	
+	<select id="selectConfirmByDate" parameterClass="com.ku6ads.dao.entity.statistics.CpmFuture" resultClass="java.lang.Integer">
+		select sum(flightNum)
+		from t_book
+		where bussinessStatus=7 and saletype=2 and status!=1
+		<isNotEmpty property="startTime" prepend=" AND ">startTime >= #startTime#</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND "><![CDATA[endTime <= #endTime#]]></isNotEmpty>
+		<isNotEmpty property="advbarId" prepend=" AND ">advbarId=#advbarId#</isNotEmpty>
+	</select>
+</sqlMap>

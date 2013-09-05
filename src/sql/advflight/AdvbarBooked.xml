@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.advbarbooked">
+	<insert id="insert" parameterClass="com.ku6ads.dao.entity.advflight.AdvbarBooked">
+ 		insert into t_advbarbooked(
+			<isNotEmpty property="advbarId">advbarId,</isNotEmpty>
+			<isNotEmpty property="saleType">saleType,</isNotEmpty>
+			<isNotEmpty property="bookDate">bookDate,</isNotEmpty>
+			<isNotEmpty property="bookedFlight">bookedFlight,</isNotEmpty>
+			<isNotEmpty property="hour">hour,</isNotEmpty>
+			<isNotEmpty property="city">city,</isNotEmpty>
+			<isNotEmpty property="strategyCode">strategyCode,</isNotEmpty>
+			<isNotEmpty property="priority">priority,</isNotEmpty>
+			id
+		) values (
+			<isNotEmpty property="advbarId">#advbarId#,</isNotEmpty>
+			<isNotEmpty property="saleType">#saleType#,</isNotEmpty>
+			<isNotEmpty property="bookDate">#bookDate#,</isNotEmpty>
+			<isNotEmpty property="bookedFlight">#bookedFlight#,</isNotEmpty>
+			<isNotEmpty property="hour">#hour#,</isNotEmpty>
+			<isNotEmpty property="city">#city#,</isNotEmpty>
+			<isNotEmpty property="strategyCode">#strategyCode#,</isNotEmpty>
+			<isNotEmpty property="priority">#priority#,</isNotEmpty>
+			#id#
+		)
+	</insert>
+
+	<select id="selectByEntity" parameterClass="com.ku6ads.dao.entity.advflight.AdvbarBooked" resultClass="com.ku6ads.dao.entity.advflight.AdvbarBooked">
+ 		SELECT id,advbarId,saleType,bookDate,bookedFlight,priority,hour,city 
+		FROM t_advbarbooked
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="advbarId" prepend=" AND ">advbarId=#advbarId#</isNotEmpty>
+		<isNotEmpty property="priority" prepend=" AND ">priority=#priority#</isNotEmpty>
+		<isNotEmpty property="saleType" prepend=" AND ">saleType=#saleType#</isNotEmpty>
+		<isNotEmpty property="bookDate" prepend=" AND ">bookDate=#bookDate#</isNotEmpty>
+		<isNotEmpty property="bookedFlight" prepend=" AND ">bookedFlight=#bookedFlight#</isNotEmpty>
+		<isNotEmpty property="hour" prepend=" AND ">hour=#hour#</isNotEmpty>
+		<isNotEmpty property="city" prepend=" AND ">city=#city#</isNotEmpty>
+		<isNotEmpty property="strategyCode" prepend=" AND ">strategyCode=#strategyCode#</isNotEmpty>
+	</select>
+
+	<update id="updateById" parameterClass="com.ku6ads.dao.entity.advflight.AdvbarBooked">
+ 		UPDATE t_advbarbooked SET 
+		<isNotNull property="advbarId">advbarId=#advbarId#, </isNotNull>
+		<isNotNull property="saleType">saleType=#saleType#, </isNotNull>
+		<isNotNull property="priority">priority=#priority#, </isNotNull>
+		<isNotNull property="bookDate">bookDate=#bookDate#, </isNotNull>
+		<isNotNull property="bookedFlight">bookedFlight=#bookedFlight#, </isNotNull>
+		<isNotNull property="hour">hour=#hour#, </isNotNull>
+		<isNotNull property="city">city=#city#, </isNotNull>
+		<isNotNull property="strategyCode">strategyCode=#strategyCode#, </isNotNull>
+		 id=#id#
+		WHERE
+		 id=#id#
+	</update>
+
+	<delete id="deleteById" parameterClass="com.ku6ads.dao.entity.advflight.AdvbarBooked">
+ 		DELETE FROM t_advbarbooked WHERE id=#id#
+	</delete>
+	
+	<select id="selectOtherTypeBookedCount" parameterClass="com.ku6ads.dao.entity.advflight.AdvbarBooked" resultClass="java.lang.Integer">
+		select count(1) from t_advbarbooked
+		where bookedFlight != 0  
+		<isNotEmpty property="advbarId" prepend=" AND ">advbarId=#advbarId#</isNotEmpty>
+		<isNotEmpty property="priority" prepend=" AND ">priority=#priority#</isNotEmpty>
+		<isNotEmpty property="saleType" prepend=" AND ">saleType != #saleType#</isNotEmpty>
+		<isNotEmpty property="bookDate" prepend=" AND ">bookDate=#bookDate#</isNotEmpty>
+	</select>
+	
+	<select id="selectSaleTypeBookedCount" parameterClass="com.ku6ads.dao.entity.advflight.AdvbarBooked" resultClass="java.lang.Integer">
+		select count(1) from t_advbarbooked where 1=1 
+		<isNotEmpty property="advbarId" prepend=" AND ">advbarId=#advbarId#</isNotEmpty>
+		<isNotEmpty property="priority" prepend=" AND ">priority=#priority#</isNotEmpty>
+		<isNotEmpty property="saleType" prepend=" AND ">saleType=#saleType#</isNotEmpty>
+		<isNotEmpty property="bookDate" prepend=" AND ">bookDate=#bookDate#</isNotEmpty>
+	</select>
+	
+	<update id="releaseDeleteBooks" parameterClass="java.util.HashMap">
+		update t_advbarbooked t, (
+			select sum(flightNum) as flightNum, startTime from t_book
+			where bookPackageId = #bookPackageId#
+				and advbarId=#advbarId#
+				and priority=#priority#
+				<isNotEmpty property="notDelBookIds" prepend=" AND ">id not in($notDelBookIds$)</isNotEmpty>
+			group by startTime
+		) v
+		set t.bookedFlight = if(t.bookedFlight - v.flightNum >=0, t.bookedFlight - v.flightNum, 0)
+		where t.advbarId = #advbarId# 
+		and priority=#priority#
+		and t.bookDate = v.startTime
+	</update>
+	
+	<update id="releaseBookPackage" parameterClass="com.ku6ads.dao.entity.advflight.BookPackage">
+		update t_advbarbooked t, (
+			select sum(flightNum) as flightNum, startTime from t_book
+			where bookPackageId = #id# 
+			group by startTime
+		) v
+		set t.bookedFlight = if(t.bookedFlight - v.flightNum >=0, t.bookedFlight - v.flightNum, 0)
+		where t.advbarId in (select distinct advbarId from t_book where bookPackageId = #id# ) 
+		and priority=#priority#
+		and t.bookDate = v.startTime
+	</update>
+</sqlMap>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+	<!-- 控制器-->
+	<bean id="ControllerAction" class="com.ku6ads.struts.controller.ControllerAction" scope="prototype"></bean>
+	
+	<!-- guid cookie -->
+	<bean id="GuidCookieAction" class="com.ku6ads.struts.controller.GuidCookieAction" scope="prototype"></bean>
+	
+	<!-- 地域 cookie -->
+	<bean id="AreaCookieAction" class="com.ku6ads.struts.controller.AreaCookieAction" scope="prototype">
+		<property name="ipDao" ref="IPDao"></property>
+	</bean>
+	
+</beans>

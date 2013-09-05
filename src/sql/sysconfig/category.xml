@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sysconfig.Category">	
+	<select id="selectCategorys" resultClass="com.ku6ads.dao.entity.sysconfig.AdvertiserCategory">
+		select * from t_category where type = 'a'
+	</select>
+	<select id="selectBrandGroupCategorys" resultClass="com.ku6ads.dao.entity.sysconfig.AdvertiserCategory">
+		select * from t_category where type = 'b'
+	</select>
+	<select id="selectConsumerCategorys" resultClass="com.ku6ads.dao.entity.sysconfig.AdvertiserCategory">
+		select * from t_category where type = 'c'
+	</select>
+</sqlMap>

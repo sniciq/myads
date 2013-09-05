@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC  
+     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
+     "http://struts.apache.org/dtds/struts-2.0.dtd"> 
+
+<struts>
+	<package name="HTML/webdata/Movies" extends="basePackage">
+	
+		<action name="WebdataMoviesAction_search" method="search" class="WebdataMoviesAction"></action>
+		<action name="WebdataMoviesAction_export" method="export" class="WebdataMoviesAction"></action>
+		
+		<action name="WebdataMoviesAction_getMovieMaintainList" method="getMovieMaintainList" class="WebdataMoviesAction"></action>
+		<action name="WebdataMoviesAction_saveMovieMaintain" method="saveMovieMaintain" class="WebdataMoviesAction"></action>
+		<action name="WebdataMoviesAction_deleteMovieMaintain" method="deleteMovieMaintain" class="WebdataMoviesAction"></action>
+		
+		<action name="WebdataMoviesAction_getMovieSellstateList" method="getMovieSellstateList" class="WebdataMoviesAction"></action>
+		<action name="WebdataMoviesAction_saveMovieSellstate" method="saveMovieSellstate" class="WebdataMoviesAction"></action>
+		<action name="WebdataMoviesAction_deleteMovieSellstate" method="deleteMovieSellstate" class="WebdataMoviesAction"></action>
+		
+	</package>
+</struts>

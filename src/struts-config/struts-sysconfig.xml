@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC  
+	 "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
+	 "http://struts.apache.org/dtds/struts-2.0.dtd"> 
+
+<struts>
+	<package name="HTML/sysfun" extends="basePackage">
+	
+		<!-- 频道 -->
+		<!-- 显示所有频道 -->
+		<action name="ChannelAction_showAll" method="showAll" class="ChannelAction"></action>
+		<!-- 显示频道列表 -->
+		<action name="ChannelAction_channelList" method="getChannelList" class="ChannelAction"></action>
+		<!-- save频道 -->
+		<action name="ChannelAction_save" method="save" class="ChannelAction"></action>
+		<!-- 删除频道 -->
+		<action name="ChannelAction_delete" method="delete" class="ChannelAction"></action>
+		<!-- 获得频道详细信息 -->
+		<action name="ChannelAction_detail" method="getChannelDetail" class="ChannelAction"></action>
+		
+		<!-- 得到所有频道 -->
+		<action name="ChannelAction_getAllChannelList" class="ChannelAction" method="getAllChannelList"></action>
+		<!-- 根据网站id得到对应的频道 -->
+		<action name="ChannelAction_getChannelListBySiteId" class="ChannelAction" method="getChannelListBySiteId"></action>
+		<!-- 验证网站下的频道名称是否重复 -->
+		<action name="ChannelAction_vldChannelNameRepeated" class="ChannelAction" method="vldChannelNameRepeated"></action>
+		
+		<!-- 部门 -->
+		<!-- 显示所有部门 -->
+		<action name="DepartmentAction_showAll" method="showAll" class="DepartmentAction"></action>
+		<!-- 显示部门列表 -->
+		<action name="DepartmentAction_departmentList" method="getDepartmentList" class="DepartmentAction"></action>
+		<!-- save部门 -->
+		<action name="DepartmentAction_save" method="save" class="DepartmentAction"></action>
+		<!-- 删除部门 -->
+		<action name="DepartmentAction_delete" method="delete" class="DepartmentAction"></action>
+		<!-- 获得部门详细信息 -->
+		<action name="DepartmentAction_detail" method="getDepartmentDetail" class="DepartmentAction"></action>
+		
+		<!-- 网站 -->
+		<!-- 显示所有网站 -->
+		<action name="SiteAction_getSiteList" method="getSiteList" class="SiteAction"></action>
+		<!-- 显示所有网站 -->
+		<action name="SiteAction_showAll" method="showAll" class="SiteAction"></action>
+		<!-- 显示网站列表 -->
+		<action name="SiteAction_departmentList" method="getSiteList" class="SiteAction"></action>
+		<!-- save网站 -->
+		<action name="SiteAction_save" method="save" class="SiteAction"></action>
+		<!-- 删除网站 -->
+		<action name="SiteAction_delete" method="delete" class="SiteAction"></action>
+		<!-- 获得网站详细信息 -->
+		<action name="SiteAction_detail" method="getSiteDetail" class="SiteAction"></action>
+		
+		<!-- 角色 -->
+		<!-- 显示所有角色 -->
+		<action name="RoleAction_getRoleInfo" method="getRoleInfo" class="RoleAction"></action>
+		<!-- 显示关联用户列表 -->
+		<action name="RoleAction_getUserList" method="getUserList" class="RoleAction"></action>
+		<!-- 显示用户列表 -->
+		<action name="RoleAction_getUserAddList" method="getUserAddList" class="RoleAction"></action>
+		<!-- save角色 -->
+		<action name="RoleAction_save" method="save" class="RoleAction"></action>
+		<!-- 删除角色 -->
+		<action name="RoleAction_delete" method="delete" class="RoleAction"></action>
+		<!-- 获得角色详细信息 -->
+		<action name="RoleAction_detail" method="getRoleDetail" class="RoleAction"></action>
+		<!-- 增加用户 -->
+		<action name="RoleAction_insertUserByRole" method="insertUserByRole" class="RoleAction"></action>
+		<!-- 删除用户 -->
+		<action name="RoleAction_deleteUserByRole" method="deleteUserByRole" class="RoleAction"></action>
+		<!-- 获取角色名为直客、渠道时客户的信息-->
+		<action name="RoleAction_getUserInfoList" method="getUserInfoList" class="RoleAction"></action>
+		
+		<action name="LoginLocalAction_*" method="{1}" class="LoginLocalAction"></action>
+		
+		<!-- 账户 -->
+		<!-- 显示所有账户 -->
+		<action name="UserAction_getUserInfo" method="getUserInfo" class="UserAction"></action>
+		<!-- save账户 -->
+		<action name="UserAction_save" method="save" class="UserAction"></action>
+		<!-- 删除账户 -->
+		<action name="UserAction_delete" method="delete" class="UserAction"></action>
+		<!-- 获得账户详细信息 -->
+		<action name="UserAction_detail" method="getUserDetail" class="UserAction"></action>
+		
+		<!-- 用户登录 -->
+		<action name="UserAction_login" method="login" class="UserAction"></action>
+		<!-- 本地用户登录 -->
+		<action name="UserAction_locallogin" method="localLogin" class="UserAction"></action>
+		
+		<action name="UserAction_getUserResourcesMenu" method="getUserResourcesMenu" class="UserAction"></action>
+		<action name="UserAction_getUserResourcesTreeNode" method="getUserResourcesTreeNode" class="UserAction"></action>
+		
+		<!-- 注销 -->
+		<action name="UserAction_logout" method="logout" class="UserAction"></action>
+		
+		<!-- 客户-->
+		<!-- 显示所有客户-->
+		<action name="ConsumerAction_showAll" method="showAll" class="ConsumerAction"></action>
+		<!-- 显示客户列表 -->
+		<action name="ConsumerAction_categorylist" method="categorylist" class="ConsumerAction"></action>
+		<!-- save客户-->
+		<action name="ConsumerAction_save" method="save" class="ConsumerAction"></action>
+		<!-- 删除客户-->
+		<action name="ConsumerAction_delete" method="delete" class="ConsumerAction"></action>
+		<!-- 删除客户-->
+		<action name="AdvertiserAction_Companylist" method="companylist" class="ConsumerAction"></action>
+		<!-- 获得客户详细信息 -->
+		<action name="ConsumerAction_detail" method="getConsumerDetail" class="ConsumerAction"></action>
+		<!-- 显示广告主列表 -->
+		<action name="ConsumerAction_getCompanylist" method="getCompanylist" class="ConsumerAction"></action>
+		
+		<!-- 广告主 -->
+		<!-- 显示所有广告主 -->
+		<action name="AdvertiserAction_showAll" method="showAll" class="AdvertiserAction"></action>
+		<!-- 显示广告主列表 -->
+		<action name="AdvertiserAction_list" method="getAdvertiserList" class="AdvertiserAction"></action>
+		<!-- 显示广告主类别列表 -->
+		<action name="AdvertiserAction_Categorylist" method="Categorylist" class="AdvertiserAction"></action>	
+		<!-- save广告主 -->
+		<action name="AdvertiserAction_save" method="save" class="AdvertiserAction"></action>
+		<!-- 删除广告主-->
+		<action name="AdvertiserAction_delete" method="delete" class="AdvertiserAction"></action>
+		<!-- 获得广告主详细信息 -->
+		<action name="AdvertiserAction_detail" method="getAdvertiserDetail" class="AdvertiserAction"></action>
+		<!-- 获得品牌组类别列表 -->
+		<action name="AdvertiserAction_BrandCategorylist" method="getBrandCategorylist" class="AdvertiserAction"></action>
+		
+		<!-- 联系人 -->
+		<!-- 添加联系人 -->
+		<action name="ContactPerson_save" method="save" class="ContactPersonAction"></action>
+		<action name="ContactPerson_showAll" method="showAll" class="ContactPersonAction"></action>
+		<action name="ContactPerson_delete" method="delete" class="ContactPersonAction"></action>
+		
+		<!-- 添加产品 -->
+		<action name="ProductAction_save" method="save" class="ProductAction"></action>
+		<!-- 删除产品 -->
+		<action name="ProductAction_delete" method="delete" class="ProductAction"></action>
+		<!-- 根据产品线查询产品 -->
+		<action name="ProductAction_SelectByProductLineId" method="SelectByProductLineId" class="ProductAction"></action>
+		<!-- 根据产品线id查询对应产品列表 -->
+		<action name="ProductAction_getProductByLineId" method="getProductByLineId" class="ProductAction"></action>
+		
+		<!-- 添加产品线 -->
+		<!-- 显示所有产品线 -->
+		<action name="ProductLineAction_showAll" method="showAll" class="ProductLineAction"></action>
+		<!-- 根据广告主Id查询产品线列表 -->
+		<action name="ProductLine_SelectByAdvertiserId" method="getProductLineList" class="ProductLineAction"></action>
+		<!-- save产品线 -->
+		<action name="ProductLineAction_save" method="save" class="ProductLineAction"></action>
+		<!-- 删除产品线 -->
+		<action name="ProductLineAction_delete" method="delete" class="ProductLineAction"></action>
+		<!-- 获得产品线详细信息 -->
+		<action name="ProductLineAction_detail" method="getAccountDetail" class="ProductLineAction"></action>
+		<!-- 根据广告主Id查询产品线列表(许) -->
+		<action name="ProductLineAction_getProductLineById" method="getProductLineById" class="ProductLineAction"></action>
+		
+		<!-- 权重参数-->
+		<!-- 显示所有权重参数列表-->
+		<action name="ProportionAction_showAll" method="showAll" class="ProportionAction"></action>
+		<!-- save权重参数-->
+		<action name="ProportionAction_save" method="save" class="ProportionAction"></action>
+		<!-- 删除权重参数-->
+		<action name="ProportionAction_delete" method="delete" class="ProportionAction"></action>
+		<!-- 获得权重参数详细信息 -->
+		<action name="ProportionAction_detail" method="getProportionDetail" class="ProportionAction"></action>
+		
+		
+		<!-- 区域列表 -->
+		<action name="AreaAction_getAreaList" method="getAreaList" class="AreaAction"></action>
+		
+		<!-- Group save -->
+		<action name="GroupAction_save" method="save" class="GroupAction"></action>
+		<!-- Group 详细信息 -->
+		<action name="GroupAction_getGroupDetail" method="getGroupDetail" class="GroupAction"></action>
+		<!-- Group showAll -->
+		<action name="GroupAction_showAll" method="showAll" class="GroupAction"></action>
+		<!-- Group showAll -->
+		<action name="GroupAction_delete" method="delete" class="GroupAction"></action>
+		<!-- UserGroup userlist -->
+		<action name="GroupAction_getUserList" method="getUserList" class="GroupAction"></action>
+		<!-- getAddUserList -->
+		<action name="GroupAction_getAddUserList" method="getAddUserList" class="GroupAction"></action>
+		<!-- getAddUserList -->
+		<action name="GroupAction_insertUserGroup" method="insertUserGroup" class="GroupAction"></action>
+		<!-- deleteUserGroupById -->
+		<action name="GroupAction_deleteUserGroupById" method="deleteUserGroupById" class="GroupAction"></action>
+		<!-- 分配组内管理员 -->
+		<action name="GroupAction_specifiedAdmin" method="specifiedAdmin" class="GroupAction"></action>
+		<!-- 取消管理员 -->
+		<action name="GroupAction_cancelSpecifiedAdmin" method="cancelSpecifiedAdmin" class="GroupAction"></action>
+		
+	</package>
+</struts>

@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+	<bean id="StatisticsChannelMonthDao" class="com.ku6ads.dao.impl.statistics.StatisticsChannelMonthDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.StatisticsChannelMonth"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="StatisticsChannelDayDao" class="com.ku6ads.dao.impl.statistics.StatisticsChannelDayDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.StatisticsChannelDay"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="StatisticsAdvpositionDayDao" class="com.ku6ads.dao.impl.statistics.StatisticsAdvpositionDayDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.StatisticsAdvpositionDay"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="StatisticsAdvpositionMonthDao" class="com.ku6ads.dao.impl.statistics.StatisticsAdvpositionMonthDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.StatisticsAdvpositionMonth"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="StatisticsAdvbarDayDao" class="com.ku6ads.dao.impl.statistics.StatisticsAdvbarDayDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.StatisticsAdvbarDay"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="StatisticsAdvbarMonthDao" class="com.ku6ads.dao.impl.statistics.StatisticsAdvbarMonthDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.StatisticsAdvbarMonth"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="StatisticsAdvActiveDayDao" class="com.ku6ads.dao.impl.statistics.StatisticsAdvActiveDayDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.StatisticsAdvActiveDay"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="StatisticsAdvActiveMonthDao" class="com.ku6ads.dao.impl.statistics.StatisticsAdvActiveMonthDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.StatisticsAdvActiveMonth"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="StatisticsAdvertisementDayDao" class="com.ku6ads.dao.impl.statistics.StatisticsAdvertisementDayDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.StatisticsAdvertisementDay"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="StatisticsAdvertisementMonthDao" class="com.ku6ads.dao.impl.statistics.StatisticsAdvertisementMonthDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.StatisticsAdvertisementMonth"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="StatisticsChannelViewsDao" class="com.ku6ads.dao.impl.statistics.StatisticsChannelViewsDaoImpl" scope="singleton">		
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">			
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">				
+				<property name="domainName" value="default.t_statistics_channel_views"/>			
+			</bean>		
+		</property>	
+	</bean>
+	
+	<bean id="StatisticsSiteViewsDao" class="com.ku6ads.dao.impl.statistics.StatisticsSiteViewsDaoImpl" scope="singleton">		
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">			
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">				
+				<property name="domainName" value="default.t_statistics_site_views"/>			
+			</bean>		
+		</property>	
+	</bean>
+	
+	<bean id="StatisticsAdvbarViewsDao" class="com.ku6ads.dao.impl.statistics.StatisticsAdvbarViewsDaoImpl" scope="singleton">		
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">	
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">		
+				<property name="domainName" value="default.t_statistics_advbar_views"/>	
+			</bean>	
+		</property>	
+	</bean>
+	
+	<bean id="StatisticsAdvertisementViewsDao" class="com.ku6ads.dao.impl.statistics.StatisticsAdvertisementViewsDaoImpl" scope="singleton">		
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">			
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">				
+				<property name="domainName" value="default.t_statistics_advertisement_views"/>			
+			</bean>		
+		</property>	
+	</bean>
+
+	<bean id="StatisticsAdvpositionViewsDao" class="com.ku6ads.dao.impl.statistics.StatisticsAdvpositionViewsDaoImpl" scope="singleton">		
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">			
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">				
+				<property name="domainName" value="default.t_statistics_advposition_views"/>			
+			</bean>		
+		</property>	
+	</bean>
+	
+	<bean id="StatisticsBookpackageViewsDao" class="com.ku6ads.dao.impl.statistics.StatisticsBookpackageViewsDaoImpl" scope="singleton">		
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">			
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">				
+				<property name="domainName" value="default.t_statistics_bookpackage_views"/>			
+			</bean>		
+		</property>		
+	</bean>	
+	
+	<bean id="StatisticsProjectViewsDao" class="com.ku6ads.dao.impl.statistics.StatisticsProjectViewsDaoImpl" scope="singleton">		
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">			
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">				
+				<property name="domainName" value="default.t_statistics_project_views"/>			
+			</bean>		
+		</property>	
+	</bean>
+	
+	<bean id="StatisticsAdvActiveViewsDao" class="com.ku6ads.dao.impl.statistics.StatisticsAdvActiveViewsDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">			
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">				
+				<property name="domainName" value="default.t_statistics_advActive_views"/>			
+			</bean>		
+		</property>	
+	</bean>
+	
+	<bean id="StatisticsAdvactiveViewsMonthDao" class="com.ku6ads.dao.impl.statistics.StatisticsAdvactiveViewsMonthDaoImpl" scope="singleton">		
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">			
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">				
+				<property name="domainName" value="default.t_statistics_advactive_views_month"/>			
+			</bean>		
+		</property>	
+	</bean>
+	
+	<bean id="StatisticsAdvbarViewsMonthDao" class="com.ku6ads.dao.impl.statistics.StatisticsAdvbarViewsMonthDaoImpl" scope="singleton">		
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">			
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">				
+				<property name="domainName" value="default.t_statistics_advbar_views_month"/>			
+			</bean>		
+		</property>	
+	</bean>
+	
+	<bean id="StatisticsAdvertisementViewsMonthDao" class="com.ku6ads.dao.impl.statistics.StatisticsAdvertisementViewsMonthDaoImpl" scope="singleton">		
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">			
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">				
+				<property name="domainName" value="default.t_statistics_advertisement_views_month"/>			
+			</bean>		
+		</property>	
+	</bean>
+	
+	<bean id="StatisticsAdvpositionViewsMonthDao" class="com.ku6ads.dao.impl.statistics.StatisticsAdvpositionViewsMonthDaoImpl" scope="singleton">		
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">			
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">				
+				<property name="domainName" value="default.t_statistics_advposition_views_month"/>			
+			</bean>		
+		</property>	
+	</bean>
+	
+	<bean id="StatisticsBookpackageViewsMonthDao" class="com.ku6ads.dao.impl.statistics.StatisticsBookpackageViewsMonthDaoImpl" scope="singleton">		
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">			
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">				
+				<property name="domainName" value="default.t_statistics_bookpackage_views_month"/>			
+			</bean>		
+		</property>	
+	</bean>
+	
+	<bean id="StatisticsProductViewsMonthDao" class="com.ku6ads.dao.impl.statistics.StatisticsProductViewsMonthDaoImpl" scope="singleton">		
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">			
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">				
+				<property name="domainName" value="default.StatisticsProductViewsMonth"/>			
+			</bean>		
+		</property>	
+	</bean>
+	
+	<bean id="StatisticsChannelViewsMonthDao" class="com.ku6ads.dao.impl.statistics.StatisticsChannelViewsMonthDaoImpl" scope="singleton">		
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">			
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">				
+				<property name="domainName" value="default.t_statistics_channel_views_month"/>			
+			</bean>		
+		</property>	
+	</bean>
+	
+	<bean id="StatisticsProjectViewsMonthDao" class="com.ku6ads.dao.impl.statistics.StatisticsProjectViewsMonthDaoImpl" scope="singleton">		
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"/>		
+		<property name="mapping">			
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">				
+				<property name="domainName" value="default.t_statistics_project_views_month"/>			
+			</bean>		
+		</property>	
+	</bean>
+	
+	<bean id="StatisticsMediaAction" class="com.ku6ads.struts.statistics.StatisticsMediaAction" scope="prototype"></bean>
+	
+	<bean id="StatisticsCustomerAction" class="com.ku6ads.struts.statistics.StatisticsCustomerAction" scope="prototype"></bean>
+	
+	<bean id="StatisticsProjectMonthDao" class="com.ku6ads.dao.impl.statistics.StatisticsProjectMonthDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.StatisticsProjectMonth"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="StatisticsProjectDayDao" class="com.ku6ads.dao.impl.statistics.StatisticsProjectDayDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.StatisticsProjectDay"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="StatisticsBookpackageMonthDao" class="com.ku6ads.dao.impl.statistics.StatisticsBookpackageMonthDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.StatisticsBookpackageMonth"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="StatisticsProductMonthDao" class="com.ku6ads.dao.impl.statistics.StatisticsProductMonthDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.StatisticsProductMonth"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="StatisticsBookpackageDayDao" class="com.ku6ads.dao.impl.statistics.StatisticsBookpackageDayDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.StatisticsBookpackageDay"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="StatisticsProductDayDao" class="com.ku6ads.dao.impl.statistics.StatisticsProductDayDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.StatisticsProductDay"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<bean id="StatisticsBusinessSearchAction" class="com.ku6ads.struts.statistics.StatisticsBusinessSearchAction" scope="prototype"></bean>
+	
+	<bean id="StatisticsBusinessAction" class="com.ku6ads.struts.statistics.StatisticsBusinessAction" scope="singleton"></bean>
+	
+	<bean id="CpmhisAccountAction" class="com.ku6ads.struts.statistics.CpmhisAccountAction" scope="prototype">
+		<property name="cpmhisAccountService" ref="CpmhisAccountService"></property>
+		<property name="baseDataService" ref="BaseDataService"></property>
+	</bean>
+	
+	<bean id="CpmhisAccountService" class="com.ku6ads.services.impl.statistics.CpmhisAccountServiceImpl" scope="prototype">
+		<property name="baseDao" ref="CpmhisAccountDao"></property>
+	</bean>
+	
+	<bean id="CpmhisAccountDao" class="com.ku6ads.dao.impl.statistics.CpmhisAccountDaoImpl" scope="prototype">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.CpmhisAccount"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="CpdhisAccountAction" class="com.ku6ads.struts.statistics.CpdhisAccountAction" scope="prototype">
+		<property name="cpdhisAccountService" ref="CpdhisAccountService"></property>
+	</bean>
+	
+	<bean id="CpdhisAccountService" class="com.ku6ads.services.impl.statistics.CpdhisAccountServiceImpl" scope="prototype">
+		<property name="baseDao" ref="CpdhisAccountDao"></property>
+	</bean>
+	
+	<bean id="CpdhisAccountDao" class="com.ku6ads.dao.impl.statistics.CpdhisAccountDaoImpl" scope="prototype">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.CpdhisAccount"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="CpdFutureAction" class="com.ku6ads.struts.statistics.CpdFutureAction" scope="prototype">
+		<property name="cpdFutureService" ref="CpdFutureService"></property>
+		<property name="baseDataService" ref="BaseDataService"></property>
+	</bean>
+	
+	<bean id="CpdFutureService" class="com.ku6ads.services.impl.statistics.CpdFutureServiceImpl" scope="prototype">
+		<property name="baseDao" ref="CpdFutureDao"></property>
+	</bean>
+	
+	<bean id="CpdFutureDao" class="com.ku6ads.dao.impl.statistics.CpdFutureDaoImpl" scope="prototype">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.CpdFuture"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="BookCountAction" class="com.ku6ads.struts.statistics.BookCountAction" scope="prototype">
+		<property name="bookCountService" ref="BookCountService"></property>
+	</bean>
+	
+	<bean id="BookCountService" class="com.ku6ads.services.impl.statistics.BookCountServiceImpl" scope="prototype">
+		<property name="baseDao" ref="BookCountDao"></property>
+	</bean>
+	
+	<bean id="BookCountDao" class="com.ku6ads.dao.impl.statistics.BookCountDaoImpl" scope="prototype">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.BookCount"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="CpmFutureAction" class="com.ku6ads.struts.statistics.CpmFutureAction" scope="prototype">
+		<property name="cpmFutureService" ref="CpmFutureService"></property>
+		<property name="baseDataService" ref="BaseDataService"></property>
+	</bean>
+	
+	<bean id="CpmFutureService" class="com.ku6ads.services.impl.statistics.CpmFutureServiceImpl" scope="prototype">
+		<property name="baseDao" ref="CpmFutureDao"></property>
+	</bean>
+	
+	<bean id="CpmFutureDao" class="com.ku6ads.dao.impl.statistics.CpmFutureDaoImpl" scope="prototype">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.CpmFuture"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="StatisticsAAContextDao" class="com.ku6ads.dao.impl.statistics.StatisticsAAContextDaoImpl" scope="singleton">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.StatisticsAAContext"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="StatisticsAAContextAction" class="com.ku6ads.struts.statistics.StatisticsAAContextAction" scope="prototype"></bean>
+	
+</beans>

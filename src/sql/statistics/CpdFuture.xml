@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.CpdFuture">
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.statistics.CpdFuture" resultClass="java.lang.Integer">
+		select count(2) from
+		(
+			SELECT count(1)
+			FROM t_book as a 
+			inner join  t_advbar as b on  a.advbarId = b.id
+			where a.status != 1 and b.status!=1 and a.saletype=1
+			<isNotEmpty property="startTime" prepend=" AND ">startTime >= #startTime#</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" AND "><![CDATA[endTime <= #endTime#]]></isNotEmpty>
+			group by a.advbarId,a.format,a.disprice
+		) d
+	</select>
+	
+	<select id="selectByLimit" parameterClass="com.ku6ads.dao.entity.statistics.CpdFuture" resultClass="com.ku6ads.dao.entity.statistics.CpdFuture">
+		SELECT b.id as advbarId,b.name as advbarName,b.channelName as channelName,b.content as barContent,a.format as format,a.disprice as price
+		FROM t_book as a 
+		inner join  t_advbar as b on  a.advbarId = b.id
+		where a.status != 1 and b.status!=1 and a.saletype=1
+		<isNotEmpty property="startTime" prepend=" AND ">startTime >= #startTime#</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND "><![CDATA[endTime <= #endTime#]]></isNotEmpty>
+		group by a.advbarId,a.format,a.disprice
+		<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+		<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<select id="selectDateDiff" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		select datediff(#firstDate#,#secondDate#) as v
+	</select>
+	
+	<select id="selectBookByDate" parameterClass="com.ku6ads.dao.entity.statistics.CpdFuture" resultClass="java.lang.Integer">
+		select count(1)
+		from t_book
+		where bussinessStatus=5 and advbarId=#advbarId# and status!=1 and saletype=1
+		<isNotEmpty property="startTime" prepend=" AND ">startTime >= #startTime#</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND "><![CDATA[endTime <= #endTime#]]></isNotEmpty>
+	</select>
+	
+	<select id="selectConfirmByDate" parameterClass="com.ku6ads.dao.entity.statistics.CpdFuture" resultClass="java.lang.Integer">
+		select count(1)
+		from t_book
+		where bussinessStatus=7 and advbarId=#advbarId# and status!=1 and saletype=1
+		<isNotEmpty property="startTime" prepend=" AND ">startTime >= #startTime#</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND "><![CDATA[endTime <= #endTime#]]></isNotEmpty>
+	</select>
+</sqlMap>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap>
+	<select id="webdata.MetaProdName.selectMetaProdName" parameterClass="com.ku6ads.dao.entity.webdata.MetaProdName" resultClass="com.ku6ads.dao.entity.webdata.MetaProdName">
+		select * from Meta_Prod_Name
+	</select>
+
+</sqlMap>

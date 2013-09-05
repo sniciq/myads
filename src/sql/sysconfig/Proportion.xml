@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="sysconfig.Proportion">
+
+	
+	<select id="selectByProportionCount"  parameterClass="com.ku6ads.dao.entity.sysconfig.Proportion" resultClass="java.lang.Integer">
+		select count(1) from t_proportion
+		where 1=1 and status!=1
+		<isNotEmpty property="type" prepend=" AND ">type like '%$type$%'</isNotEmpty>
+		<isNotEmpty property="name" prepend=" AND ">name like #name#</isNotEmpty>
+		<isNotEmpty property="startTime" prepend=" AND ">startTime >= #startTime#</isNotEmpty>
+		<isNotEmpty property="endTime" prepend=" AND "><![CDATA[endTime <= #endTime#]]></isNotEmpty>
+	</select>
+	
+	<select id="selectByProportionLimit" resultClass="com.ku6ads.dao.entity.sysconfig.Proportion" parameterClass="com.ku6ads.dao.entity.sysconfig.Proportion">
+			select * from t_proportion
+			where 1=1 and status!=1
+			<isNotEmpty property="type" prepend=" and ">type like '%$type$%'</isNotEmpty>
+			<isNotEmpty property="name" prepend=" and ">name like '%$name$%'</isNotEmpty>
+			<isNotEmpty property="startTime" prepend=" and ">startTime >= #startTime#</isNotEmpty>
+			<isNotEmpty property="endTime" prepend=" and "><![CDATA[endTime <= #endTime#]]></isNotEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isEmpty property="extLimit.sort">order by id</isEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+	
+	<select id="selectByName" resultClass="com.ku6ads.dao.entity.sysconfig.Proportion" parameterClass="com.ku6ads.dao.entity.sysconfig.Proportion">
+			select * from t_proportion where name=#name# and status = 0
+			<isNotEmpty property="id" prepend=" AND ">id!=#id#</isNotEmpty>
+	</select>
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.sysconfig.Proportion">
+		select * from t_proportion where id=#id#
+	</select>
+	
+	
+	<insert id="insertProportion" parameterClass="com.ku6ads.dao.entity.sysconfig.Proportion">
+		insert into t_proportion(	
+			<isNotEmpty property="value">value,</isNotEmpty>
+			<isNotEmpty property="type">type,</isNotEmpty>
+			<isNotEmpty property="startTime">startTime,</isNotEmpty>
+			<isNotEmpty property="endTime">endTime,</isNotEmpty>
+			<isNotEmpty property="status">status,</isNotEmpty>		
+			<isNotEmpty property="creator">creator,</isNotEmpty>
+			<isNotEmpty property="createTime">createTime,</isNotEmpty>	
+			<isNotEmpty property="modifier">modifier,</isNotEmpty>	
+			<isNotEmpty property="modifyTime">modifyTime,</isNotEmpty>	
+			name
+		)values(	
+			<isNotEmpty property="value">#value#,</isNotEmpty>
+			<isNotEmpty property="type">#type#,</isNotEmpty>
+			<isNotEmpty property="startTime">#startTime#,</isNotEmpty>
+			<isNotEmpty property="endTime">#endTime#,</isNotEmpty>
+			<isNotEmpty property="status">#status#,</isNotEmpty>		
+			<isNotEmpty property="creator">#creator#,</isNotEmpty>
+			<isNotEmpty property="createTime">#createTime#,</isNotEmpty>		
+			<isNotEmpty property="modifier">#modifier#,</isNotEmpty>	
+			<isNotEmpty property="modifyTime">#modifyTime#,</isNotEmpty>	
+			#name#
+		)
+	</insert>
+	
+	
+	<update id="updateProportion" parameterClass="com.ku6ads.dao.entity.sysconfig.Proportion">
+		update t_proportion set
+			<isNotEmpty property="value">value=#value#,</isNotEmpty>
+			<isNotEmpty property="type">name=#type#,</isNotEmpty>
+			<isNotEmpty property="startTime">startTime=#startTime#,</isNotEmpty>
+			<isNotEmpty property="endTime">endTime=#endTime#,</isNotEmpty>
+			<isNotEmpty property="status">status=#status#,</isNotEmpty>		
+			<isNotEmpty property="creator">creator=#creator#,</isNotEmpty>
+			<isNotEmpty property="modifier">modifier=#modifier#,</isNotEmpty>	
+			<isNotEmpty property="modifyTime">modifyTime=#modifyTime#,</isNotEmpty>	
+			name=#name# where id=#id#
+	</update>
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		update t_proportion set status = 1 where id=#value#
+	</delete>
+	
+	<select id="selectNowProportion" parameterClass="com.ku6ads.dao.entity.sysconfig.Proportion" resultClass="com.ku6ads.dao.entity.sysconfig.Proportion">
+		select * from t_proportion 
+		where type = #type# and name=#name# 
+		and <![CDATA[ startTime <= now() and  endTime >= now() ]]>  
+	</select>
+</sqlMap>

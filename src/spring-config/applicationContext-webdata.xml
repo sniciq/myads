@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+    
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
+						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<!-- 
+	<bean id="dataSource-webdata" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="org.postgresql.Driver"></property>
+		<property name="url" value="jdbc:postgresql://59.151.121.36:6543/pv_ad?charSet=gbk"></property>
+		<property name="username" value="postgres"></property>
+		<property name="password" value="1234"></property>
+		<property name="maxActive" value="10"></property>
+		<property name="initialSize" value="5"></property>
+		<property name="maxIdle" value="10"></property>
+		<property name="logAbandoned" value="true"></property>
+		<property name="maxWait" value="1000"></property>
+		<property name="validationQuery" value="select now()"></property>
+	</bean>
+	 -->
+	 
+	 <bean id="dataSource-webdata" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://10.228.130.116:3306/ku6ads?useUnicode=true&amp;characterEncoding=GBK"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="123321"></property>
+		<property name="maxActive" value="5"></property>
+		<property name="initialSize" value="3"></property>
+		<property name="maxIdle" value="3"></property>
+		<property name="maxWait" value="30"></property>
+		<property name="validationQuery" value="select now()"></property>
+	</bean>
+	
+	<bean id="sqlMapClient-webdata" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap-config-webdata.xml"></property>
+		<property name="dataSource" ref="dataSource-webdata"></property>
+	</bean>
+	
+	<bean id="ibatisTemplate-webdata" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+		<property name="sqlMapClient" ref="sqlMapClient-webdata"></property>
+	</bean>
+	
+	<bean id="DimAreaDao" class="com.ku6ads.dao.impl.webdata.DimAreaDaoImpl">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate-webdata"></property>
+	</bean>
+	
+	<bean id="MetaProdNameDao" class="com.ku6ads.dao.impl.webdata.MetaProdNameDaoImpl">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate-webdata"></property>
+	</bean>
+	
+	<bean id="FlowDataDao" class="com.ku6ads.dao.impl.webdata.FlowDataDaoImpl">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate-webdata"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.webdata.FlowData"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="HotProgramDao" class="com.ku6ads.dao.impl.webdata.HotProgramDaoImpl">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate-webdata"></property>
+	</bean>
+	
+	<bean id="HotfilmDao" class="com.ku6ads.dao.impl.webdata.HotfilmDaoImpl">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate-webdata"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.webdata.hotfilm"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="HotfilmService" class="com.ku6ads.services.impl.webdata.HotfilmServiceImpl">
+		<property name="baseDao" ref="HotfilmDao"></property>
+		<property name="hotfilmVideoDao" ref="HotfilmVideoDao"></property>
+	</bean>
+	
+	<bean id="HotfilmVideoDao" class="com.ku6ads.dao.impl.webdata.HotfilmVideoDaoImpl">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate-webdata"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.HotfilmVideo"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="DimCdnAreaDao" class="com.ku6ads.dao.impl.webdata.DimCdnAreaDaoImpl">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate-webdata"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.webdata.DimCdnArea"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="DimCdnCityDao" class="com.ku6ads.dao.impl.webdata.DimCdnCityDaoImpl">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate-webdata"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.webdata.DimCdnCity"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="DimProductVVDao" class="com.ku6ads.dao.impl.webdata.DimProductVVDaoImpl">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate-webdata"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.webdata.DimProductVV"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="HotDataDao" class="com.ku6ads.dao.impl.webdata.HotDataDaoImpl">
+		<property name="sqlMapClientTemplate" ref="ibatisTemplate-webdata"></property>
+		<property name="mapping">
+			<bean class="com.ku6ads.dao.base.IbatisMethodMapping">
+				<property name="domainName" value="default.webdata.hotdata"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="HotfilmVideoService" class="com.ku6ads.services.impl.webdata.HotFilmVideoServiceImpl">
+		<property name="baseDao" ref="HotfilmVideoDao"></property>
+	</bean>
+	
+	<bean id="ConstantAction" class="com.ku6ads.struts.webdata.ConstantAction" scope="prototype">
+		<property name="dimAreaDao" ref="DimAreaDao"></property>
+		<property name="metaProdNameDao" ref="MetaProdNameDao"></property>
+	</bean>
+	
+	<bean id="FlowDataAction" class="com.ku6ads.struts.webdata.FlowDataAction" scope="prototype">
+		<property name="flowDataDao" ref="FlowDataDao"></property>
+	</bean>
+	
+	<bean id="HotProgramAction" class="com.ku6ads.struts.webdata.HotProgramAction">
+		<property name="hotProgramDao" ref="HotProgramDao"></property>
+	</bean>
+	
+	<bean id="HotFilmAction" class="com.ku6ads.struts.webdata.HotFilmAction" scope="prototype">
+		<property name="hotfilmService" ref="HotfilmService"></property>
+	</bean>
+	
+	<bean id="HotFilmVideoAction" class="com.ku6ads.struts.webdata.HotFilmVideoAction" scope="prototype">
+		<property name="hotfilmVideoService" ref="HotfilmVideoService"></property>
+	</bean>
+	
+	<bean id="HotFilmService" class="com.ku6ads.struts.webdata.HotFilmService" scope="singleton">
+		<property name="hotfilmDao" ref="HotfilmDao"></property>
+		<property name="hotfilmVideoDao" ref="HotfilmVideoDao"></property>
+	</bean>
+	
+	<bean id="HotFilmDataAction" class="com.ku6ads.struts.webdata.HotFilmDataAction" scope="prototype">
+		<property name="hotDataDao" ref="HotDataDao"></property>
+		<property name="dimCdnAreaDao" ref="DimCdnAreaDao"></property>
+		<property name="dimCdnCityDao" ref="DimCdnCityDao"></property>
+	</bean>
+	
+	<bean id="ProgramDataAction" class="com.ku6ads.struts.webdata.ProgramDataAction" scope="prototype">
+		<property name="hotDataDao" ref="HotDataDao"></property>
+	</bean>
+	
+	<bean id="HotFilmDataVVAction" class="com.ku6ads.struts.webdata.HotFilmDataVVAction" scope="prototype">
+		<property name="hotDataDao" ref="HotDataDao"></property>
+		<property name="dimProductVVDao" ref="DimProductVVDao"></property>
+	</bean>
+	
+	<!-- 定时检查数据库任务 -->
+	<!-- 
+	<bean id="DataBaseTimer" class="com.ku6ads.struts.webdata.DataBaseTimer" scope="singleton">
+		<property name="hotfilmVideoDao" ref="HotfilmVideoDao"></property>
+	</bean>
+	
+	<bean id="scheduledTimer" class="org.springframework.scheduling.timer.ScheduledTimerTask">
+		<property name="timerTask" ref="DataBaseTimer"></property>
+		<property name="period" value="20000"></property>
+		<property name="delay" value="5000"></property>
+	</bean>
+	
+	<bean class="org.springframework.scheduling.timer.TimerFactoryBean">
+		<property name="scheduledTimerTasks">
+			<list>
+				<ref bean="scheduledTimer"/>
+			</list>
+		</property>
+	</bean>
+	 -->
+</beans>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="default.StatisticsProductMonth">
+	
+	<select id="statisticsSearch" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsProductMonth" resultClass="com.ku6ads.dao.entity.statistics.StatisticsProductMonth">
+		select org.*, ad.productName from (
+			SELECT id,month,statTime,DATE_FORMAT(statTime, '%Y-%m-%d') as xField,productId,sum(pv) as pv,sum(uv) as uv,sum(click) as click,sum(uc) as uc
+			FROM t_statistics_product_month
+			WHERE 1=1 
+			<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+			<isNotEmpty property="month" prepend=" AND ">month=#month#</isNotEmpty>
+			<isNotEmpty property="productId" prepend=" AND ">productId=#productId#</isNotEmpty>
+			<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+			<isNotEmpty property="statTime" prepend=" AND ">DATE_FORMAT(statTime, '%Y-%m-%d') >= DATE_FORMAT(#statTime#, '%Y-%m-%d')</isNotEmpty>
+			<isNotEmpty property="stateTimeMonthEnd" prepend=" AND "> DATE_FORMAT(statTime, '%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#stateTimeMonthEnd#, '%Y-%m-%d')</isNotEmpty>
+			group by statTime, productId 
+		) org left join t_product ad on org.productId = ad.productId
+	</select>
+
+	<select id="statisticsSearchLimitCount" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsProductMonth" resultClass="java.lang.Integer">
+		select count(1) FROM t_statistics_product_month
+		WHERE 1=1 
+		<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+		<isNotEmpty property="month" prepend=" AND ">month=#month#</isNotEmpty>
+		<isNotEmpty property="productId" prepend=" AND ">productId=#productId#</isNotEmpty>
+		<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+		<isNotEmpty property="statTime" prepend=" AND ">DATE_FORMAT(statTime, '%Y-%m-%d') >= DATE_FORMAT(#statTime#, '%Y-%m-%d')</isNotEmpty>
+		<isNotEmpty property="stateTimeMonthEnd" prepend=" AND "> DATE_FORMAT(statTime, '%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#stateTimeMonthEnd#, '%Y-%m-%d')</isNotEmpty>
+	</select>
+	
+	<select id="statisticsSearchByLimit" parameterClass="com.ku6ads.dao.entity.statistics.StatisticsProductMonth" resultClass="com.ku6ads.dao.entity.statistics.StatisticsProductMonth">
+		select org.*, ad.productName from (
+			SELECT t.id,t.month,t.statTime,productId,pv,uv,click,uc,createTime,t.pcode,t.dcode, p.province,c.city 
+			FROM t_statistics_product_month t
+			left join t_province p on p.pcode = t.pcode
+			left join t_city c on c.pcode = t.pcode and c.dcode = t.dcode
+			WHERE 1=1 
+			<isNotEmpty property="id" prepend=" AND ">id=#id#</isNotEmpty>
+			<isNotEmpty property="month" prepend=" AND ">month=#month#</isNotEmpty>
+			<isNotEmpty property="productId" prepend=" AND ">productId=#productId#</isNotEmpty>
+			<isNotEmpty property="createTime" prepend=" AND ">createTime=#createTime#</isNotEmpty>
+			<isNotEmpty property="statTime" prepend=" AND ">DATE_FORMAT(statTime, '%Y-%m-%d') >= DATE_FORMAT(#statTime#, '%Y-%m-%d')</isNotEmpty>
+			<isNotEmpty property="stateTimeMonthEnd" prepend=" AND "> DATE_FORMAT(statTime, '%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#stateTimeMonthEnd#, '%Y-%m-%d')</isNotEmpty>
+			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+		) org left join t_product ad on org.productId = ad.productId
+	</select>
+	
+</sqlMap>

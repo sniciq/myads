@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE sqlMap      PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="advert.AdvbarPrice">
+	<insert id="insertAdvbarPrice" parameterClass="com.ku6ads.dao.entity.advert.AdvbarPrice">
+		insert into t_advbar_price(	
+			<isNotEmpty property="pos">pos,</isNotEmpty>
+			<isNotEmpty property="format">format,</isNotEmpty>
+			<isNotEmpty property="impression">impression,</isNotEmpty>
+			<isNotEmpty property="clickRate">clickRate,</isNotEmpty>
+			<isNotEmpty property="saleType">saleType,</isNotEmpty>
+			<isNotEmpty property="price">price,</isNotEmpty>
+			<isNotEmpty property="storage">storage,</isNotEmpty>
+			<isNotEmpty property="materiel">materiel,</isNotEmpty>
+			<isNotEmpty property="barId">barId,</isNotEmpty>
+			status
+		)values(	
+			<isNotEmpty property="pos">#pos#,</isNotEmpty>
+			<isNotEmpty property="format">#format#,</isNotEmpty>
+			<isNotEmpty property="impression">#impression#,</isNotEmpty>
+			<isNotEmpty property="clickRate">#clickRate#,</isNotEmpty>
+			<isNotEmpty property="saleType">#saleType#,</isNotEmpty>
+			<isNotEmpty property="price">#price#,</isNotEmpty>
+			<isNotEmpty property="storage">#storage#,</isNotEmpty>
+			<isNotEmpty property="materiel">#materiel#,</isNotEmpty>
+			<isNotEmpty property="barId">#barId#,</isNotEmpty>
+			0
+		)
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT @@IDENTITY AS id
+		</selectKey>
+	</insert>
+	
+	<select id="selectByEntity" resultClass="com.ku6ads.dao.entity.advert.AdvbarPrice" parameterClass="com.ku6ads.dao.entity.advert.AdvbarPrice">
+		SELECT * FROM t_advbar_price where 1=1
+		<isNotEmpty property="barId" prepend=" AND ">barId=#barId#</isNotEmpty>
+		<isNotEmpty property="saleType" prepend=" AND ">saleType=#saleType#</isNotEmpty>
+		<isNotEmpty property="status" prepend=" AND ">status=#status#</isNotEmpty>
+	</select>
+	
+	<select id="selectLimitCount" parameterClass="com.ku6ads.dao.entity.advert.AdvbarPrice" resultClass="java.lang.Integer">
+		SELECT COUNT(1) FROM t_advbar_price WHERE status != 1 and barId=#barId#
+	</select>
+	
+	<select id="selectByLimit" resultClass="com.ku6ads.dao.entity.advert.AdvbarPrice" parameterClass="com.ku6ads.dao.entity.advert.AdvbarPrice">
+		SELECT * FROM t_advbar_price
+			WHERE status != 1 and barId=#barId#
+ 			<isNotEmpty property="extLimit.sort">order by $extLimit.sort$ $extLimit.dir$</isNotEmpty>
+			<isEmpty property="extLimit.sort">order by id </isEmpty>
+			<isNotEmpty property="extLimit.limit">limit $extLimit.start$, $extLimit.limit$</isNotEmpty>
+	</select>
+
+	
+	<delete id="deleteById" parameterClass="java.lang.Integer">
+		UPDATE t_advbar_price SET status = 1 WHERE id=#value#
+	</delete>
+	
+	<update id="updateById">
+			UPDATE t_advbar_price SET 
+			<isNotEmpty property="pos">pos=#pos#,</isNotEmpty>
+			<isNotEmpty property="impression">impression=#impression#,</isNotEmpty>
+			<isNotEmpty property="clickRate">clickRate=#clickRate#,</isNotEmpty>
+			<isNotEmpty property="storage">storage=#storage#,</isNotEmpty>
+			<isNotEmpty property="materiel">materiel=#materiel#</isNotEmpty>
+			WHERE id=#id#
+	</update>
+	
+	<select id="selectById" parameterClass="java.lang.Integer" resultClass="com.ku6ads.dao.entity.advert.AdvbarPrice">
+		SELECT * FROM t_advbar_price WHERE id=#value#
+	</select >
+	
+	<update id="updatePriceById" parameterClass="com.ku6ads.dao.entity.advert.AdvbarPrice">
+			UPDATE t_advbar_price SET format=#format#,
+			<isNotEmpty property="saleType">saleType=#saleType#,</isNotEmpty>
+			<isNotEmpty property="price">price=#price#</isNotEmpty>
+			WHERE id=#id#
+	</update>
+	
+	<select id="getAdvbarSaleTypes" parameterClass="java.lang.Integer" resultClass ="com.ku6ads.dao.entity.basic.BaseData">
+		select distinct t_basedata.id, t_basedata.dataValue, t_basedata.dataName from t_basedata
+		left join
+		 t_advbar_price on dataValue = saleType
+		where
+		dataType='saleType' and barId=#value# and t_advbar_price.status = 0
+	</select>
+	
+	<select id="selectAdvbarFormatByPriceId" parameterClass="java.lang.Integer" resultClass ="com.ku6ads.dao.entity.advert.AdvbarPrice">
+			SELECT id,format FROM t_advbar_price WHERE status !=1 and id=#id#
+	</select>
+	
+	<select id="selectAdvbarPriceById" parameterClass="java.lang.Integer" resultClass ="com.ku6ads.dao.entity.advert.AdvbarPrice">
+			SELECT id,price FROM t_advbar_price WHERE status !=1 and id=#id#
+	</select>
+	
+	<select id="selectPriceFormatBaseData" resultClass="com.ku6ads.dao.entity.advert.AdvbarPrice" parameterClass="com.ku6ads.dao.entity.advert.AdvbarPrice">
+		SELECT a.id,a.format,b.dataValue as pos FROM t_advbar_price a
+		left join t_basedata b on b.dataType=#price# and a.format = b.dataName
+ 		where 1=1 
+ 		and barId=#barId# and a.saleType= #saleType# and a.status = 0;
+	</select>
+	
+	<select id="getAdvbarByStyle" resultClass="com.ku6ads.dao.entity.advert.AdvbarPrice" parameterClass="com.ku6ads.dao.entity.advert.AdvbarPrice">
+		SELECT * FROM t_advbar_price 
+ 		where saleType=#saleType# and format = #format# and status !=1 and barId=#barId#
+ 		<isNotEmpty property="id" prepend=" and ">id!=#id#</isNotEmpty>
+	</select>
+
+</sqlMap>
